@@ -1,0 +1,33 @@
+2018-05-15 09:43:58 [scrapy.utils.log] INFO: Scrapy 1.4.0 started (bot: prototyp)
+2018-05-15 09:43:58 [scrapy.utils.log] INFO: Overridden settings: {'BOT_NAME': 'prototyp', 'CONCURRENT_ITEMS': 200, 'CONCURRENT_REQUESTS': 100, 'COOKIES_ENABLED': False, 'DOWNLOAD_MAXSIZE': 10000000, 'FEED_URI': 'file:///I:/%21Projekte/BMBF_TOBI_131308/01_Arbeitspakete/01_Webscraper/Webscraper/crawler/neu/items/prototyp/protospider/b79b8f76581311e8a101005056806059.jl', 'LOG_FILE': 'logs\\prototyp\\protospider\\b79b8f76581311e8a101005056806059.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'prototyp.spiders', 'REACTOR_THREADPOOL_MAXSIZE': 30, 'RETRY_ENABLED': False, 'SPIDER_MODULES': ['prototyp.spiders']}
+2018-05-15 09:43:58 [py.warnings] WARNING: c:\users\jki\appdata\local\continuum\anaconda3\lib\site-packages\scrapy\utils\deprecate.py:156: ScrapyDeprecationWarning: `scrapy.contrib.feedexport.FeedExporter` class is deprecated, use `scrapy.extensions.feedexport.FeedExporter` instead
+  ScrapyDeprecationWarning)
+
+2018-05-15 09:43:58 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats']
+2018-05-15 09:43:59 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.ajaxcrawl.AjaxCrawlMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2018-05-15 09:43:59 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2018-05-15 09:43:59 [scrapy.middleware] INFO: Enabled item pipelines:
+['prototyp.pipelines.PrototypPipeline']
+2018-05-15 09:43:59 [scrapy.core.engine] INFO: Spider opened
+2018-05-15 09:43:59 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2018-05-15 09:44:03 [scrapy.core.downloader.tls] WARNING: Remote certificate is not valid for hostname "hinderer-zippert.de"; VerificationError(errors=[DNSMismatch(mismatched_id=DNS_ID(hostname=b'hinderer-zippert.de'))])
+2018-05-15 10:50:02 [scrapy.core.downloader.handlers.http11] WARNING: Got data loss in http://www.diehoga-hotelberatung.de/de/?pdf=499. If you want to process broken responses set the setting DOWNLOAD_FAIL_ON_DATALOSS = False -- This message won't be shown in further requests
+2018-05-15 10:50:02 [scrapy.extensions.logstats] INFO: Crawled 1291 pages (at 1291 pages/min), scraped 117 items (at 117 items/min)

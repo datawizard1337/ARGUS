@@ -1,0 +1,101 @@
+2018-05-15 09:43:58 [scrapy.utils.log] INFO: Scrapy 1.4.0 started (bot: prototyp)
+2018-05-15 09:43:58 [scrapy.utils.log] INFO: Overridden settings: {'BOT_NAME': 'prototyp', 'CONCURRENT_ITEMS': 200, 'CONCURRENT_REQUESTS': 100, 'COOKIES_ENABLED': False, 'DOWNLOAD_MAXSIZE': 10000000, 'FEED_URI': 'file:///I:/%21Projekte/BMBF_TOBI_131308/01_Arbeitspakete/01_Webscraper/Webscraper/crawler/neu/items/prototyp/protospider/b7e348ac581311e8bce5005056806059.jl', 'LOG_FILE': 'logs\\prototyp\\protospider\\b7e348ac581311e8bce5005056806059.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'prototyp.spiders', 'REACTOR_THREADPOOL_MAXSIZE': 30, 'RETRY_ENABLED': False, 'SPIDER_MODULES': ['prototyp.spiders']}
+2018-05-15 09:43:58 [py.warnings] WARNING: c:\users\jki\appdata\local\continuum\anaconda3\lib\site-packages\scrapy\utils\deprecate.py:156: ScrapyDeprecationWarning: `scrapy.contrib.feedexport.FeedExporter` class is deprecated, use `scrapy.extensions.feedexport.FeedExporter` instead
+  ScrapyDeprecationWarning)
+
+2018-05-15 09:43:58 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats']
+2018-05-15 09:43:59 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.ajaxcrawl.AjaxCrawlMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2018-05-15 09:43:59 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2018-05-15 09:43:59 [scrapy.middleware] INFO: Enabled item pipelines:
+['prototyp.pipelines.PrototypPipeline']
+2018-05-15 09:43:59 [scrapy.core.engine] INFO: Spider opened
+2018-05-15 09:43:59 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2018-05-15 09:45:00 [scrapy.extensions.logstats] INFO: Crawled 1527 pages (at 1527 pages/min), scraped 106 items (at 106 items/min)
+2018-05-15 09:45:59 [scrapy.extensions.logstats] INFO: Crawled 3090 pages (at 1563 pages/min), scraped 211 items (at 105 items/min)
+2018-05-15 09:46:19 [scrapy.core.downloader.tls] WARNING: Remote certificate is not valid for hostname "tms-team-hamburg.de"; VerificationError(errors=[DNSMismatch(mismatched_id=DNS_ID(hostname=b'tms-team-hamburg.de'))])
+2018-05-15 09:46:59 [scrapy.extensions.logstats] INFO: Crawled 4744 pages (at 1654 pages/min), scraped 327 items (at 116 items/min)
+2018-05-15 09:47:59 [scrapy.extensions.logstats] INFO: Crawled 6356 pages (at 1612 pages/min), scraped 443 items (at 116 items/min)
+2018-05-15 09:48:35 [scrapy.core.downloader.tls] WARNING: Remote certificate is not valid for hostname "autohaus-vonberckefeldt.de"; VerificationError(errors=[DNSMismatch(mismatched_id=DNS_ID(hostname=b'autohaus-vonberckefeldt.de'))])
+2018-05-15 09:48:59 [scrapy.extensions.logstats] INFO: Crawled 8081 pages (at 1725 pages/min), scraped 566 items (at 123 items/min)
+2018-05-15 09:50:06 [scrapy.extensions.logstats] INFO: Crawled 9557 pages (at 1476 pages/min), scraped 676 items (at 110 items/min)
+2018-05-15 09:50:34 [scrapy.core.downloader.handlers.http11] ERROR: Cancelling download of http://fireprosystems.com/media/AVSEQ02.flv: expected response size (23165608) larger than download max size (10000000).
+2018-05-15 09:51:00 [scrapy.extensions.logstats] INFO: Crawled 10976 pages (at 1419 pages/min), scraped 767 items (at 91 items/min)
+2018-05-15 09:51:59 [scrapy.extensions.logstats] INFO: Crawled 12566 pages (at 1590 pages/min), scraped 876 items (at 109 items/min)
+2018-05-15 09:52:20 [scrapy.core.downloader.handlers.http11] ERROR: Cancelling download of http://swing-and-fun.de/media/files/WB2012_01.ogv: expected response size (25932833) larger than download max size (10000000).
+2018-05-15 09:52:30 [scrapy.core.downloader.handlers.http11] ERROR: Cancelling download of http://swing-and-fun.de/media/files/WB2012_01.webm: expected response size (28501911) larger than download max size (10000000).
+2018-05-15 09:52:39 [scrapy.core.downloader.tls] WARNING: Remote certificate is not valid for hostname "physiotherapie-in-karow.de"; VerificationError(errors=[DNSMismatch(mismatched_id=DNS_ID(hostname=b'physiotherapie-in-karow.de'))])
+2018-05-15 09:52:45 [scrapy.core.downloader.tls] WARNING: Remote certificate is not valid for hostname "physiotherapie-in-karow.de"; VerificationError(errors=[DNSMismatch(mismatched_id=DNS_ID(hostname=b'physiotherapie-in-karow.de'))])
+2018-05-15 09:52:48 [scrapy.core.downloader.handlers.http11] ERROR: Cancelling download of http://swing-and-fun.de/media/files/Agilando-mit-Walzer.ogv: expected response size (82743540) larger than download max size (10000000).
+2018-05-15 09:52:51 [scrapy.core.downloader.handlers.http11] ERROR: Cancelling download of http://swing-and-fun.de/media/files/Agilando-mit-Walzer.ogv: expected response size (82743540) larger than download max size (10000000).
+2018-05-15 09:52:59 [scrapy.extensions.logstats] INFO: Crawled 14123 pages (at 1557 pages/min), scraped 985 items (at 109 items/min)
+2018-05-15 09:53:59 [scrapy.extensions.logstats] INFO: Crawled 15808 pages (at 1685 pages/min), scraped 1099 items (at 114 items/min)
+2018-05-15 09:54:59 [scrapy.extensions.logstats] INFO: Crawled 17559 pages (at 1751 pages/min), scraped 1214 items (at 115 items/min)
+2018-05-15 09:55:59 [scrapy.extensions.logstats] INFO: Crawled 19229 pages (at 1670 pages/min), scraped 1326 items (at 112 items/min)
+2018-05-15 09:56:14 [scrapy.core.downloader.tls] WARNING: Remote certificate is not valid for hostname "www.klatho.de"; VerificationError(errors=[DNSMismatch(mismatched_id=DNS_ID(hostname=b'www.klatho.de'))])
+2018-05-15 09:56:59 [scrapy.extensions.logstats] INFO: Crawled 20524 pages (at 1295 pages/min), scraped 1417 items (at 91 items/min)
+2018-05-15 09:57:59 [scrapy.extensions.logstats] INFO: Crawled 20767 pages (at 243 pages/min), scraped 1421 items (at 4 items/min)
+2018-05-15 09:58:59 [scrapy.extensions.logstats] INFO: Crawled 20869 pages (at 102 pages/min), scraped 1421 items (at 0 items/min)
+2018-05-15 09:59:59 [scrapy.extensions.logstats] INFO: Crawled 20968 pages (at 99 pages/min), scraped 1421 items (at 0 items/min)
+2018-05-15 10:00:59 [scrapy.extensions.logstats] INFO: Crawled 21067 pages (at 99 pages/min), scraped 1421 items (at 0 items/min)
+2018-05-15 10:01:51 [scrapy.core.engine] INFO: Closing spider (finished)
+2018-05-15 10:01:51 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'downloader/exception_count': 235,
+ 'downloader/exception_type_count/builtins.ValueError': 31,
+ 'downloader/exception_type_count/scrapy.exceptions.NotSupported': 3,
+ 'downloader/exception_type_count/twisted.internet.defer.CancelledError': 5,
+ 'downloader/exception_type_count/twisted.internet.error.ConnectionRefusedError': 1,
+ 'downloader/exception_type_count/twisted.internet.error.DNSLookupError': 118,
+ 'downloader/exception_type_count/twisted.internet.error.TCPTimedOutError': 8,
+ 'downloader/exception_type_count/twisted.web._newclient.ResponseFailed': 67,
+ 'downloader/exception_type_count/twisted.web._newclient.ResponseNeverReceived': 2,
+ 'downloader/request_bytes': 8426417,
+ 'downloader/request_count': 23289,
+ 'downloader/request_method_count/GET': 23289,
+ 'downloader/response_bytes': 573679915,
+ 'downloader/response_count': 23054,
+ 'downloader/response_status_count/200': 20470,
+ 'downloader/response_status_count/301': 1379,
+ 'downloader/response_status_count/302': 456,
+ 'downloader/response_status_count/303': 62,
+ 'downloader/response_status_count/307': 80,
+ 'downloader/response_status_count/400': 18,
+ 'downloader/response_status_count/401': 3,
+ 'downloader/response_status_count/403': 34,
+ 'downloader/response_status_count/404': 488,
+ 'downloader/response_status_count/410': 1,
+ 'downloader/response_status_count/500': 6,
+ 'downloader/response_status_count/502': 1,
+ 'downloader/response_status_count/503': 55,
+ 'downloader/response_status_count/522': 1,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2018, 5, 15, 8, 1, 51, 528010),
+ 'item_scraped_count': 1422,
+ 'log_count/ERROR': 5,
+ 'log_count/INFO': 24,
+ 'log_count/WARNING': 6,
+ 'request_depth_max': 531,
+ 'response_received_count': 21150,
+ 'scheduler/dequeued': 23289,
+ 'scheduler/dequeued/memory': 23289,
+ 'scheduler/enqueued': 23289,
+ 'scheduler/enqueued/memory': 23289,
+ 'start_time': datetime.datetime(2018, 5, 15, 7, 43, 59, 86317)}
+2018-05-15 10:01:51 [scrapy.core.engine] INFO: Spider closed (finished)

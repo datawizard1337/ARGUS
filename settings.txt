@@ -1,0 +1,12 @@
+[input-data]
+filepath = I:\!Projekte\BMBF_TOBI_131308\01_Arbeitspakete\01_Webscraper\Webscraper\todo\url_chunk.csv
+delimiter = \t
+encoding = utf-8
+ID = crefo
+url = webadresse
+
+[system]
+n_cores = 7
+
+[spider-settings]
+limit = 25

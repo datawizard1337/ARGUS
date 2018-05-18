@@ -1,0 +1,104 @@
+2018-05-15 13:17:16 [scrapy.utils.log] INFO: Scrapy 1.4.0 started (bot: prototyp)
+2018-05-15 13:17:16 [scrapy.utils.log] INFO: Overridden settings: {'BOT_NAME': 'prototyp', 'CONCURRENT_ITEMS': 200, 'CONCURRENT_REQUESTS': 100, 'COOKIES_ENABLED': False, 'DOWNLOAD_MAXSIZE': 10000000, 'FEED_URI': 'file:///I:/%21Projekte/BMBF_TOBI_131308/01_Arbeitspakete/01_Webscraper/Webscraper/crawler/neu/items/prototyp/protospider/83571ea2583111e8aafa005056806059.jl', 'LOG_FILE': 'logs\\prototyp\\protospider\\83571ea2583111e8aafa005056806059.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'prototyp.spiders', 'REACTOR_THREADPOOL_MAXSIZE': 30, 'RETRY_ENABLED': False, 'SPIDER_MODULES': ['prototyp.spiders']}
+2018-05-15 13:17:16 [py.warnings] WARNING: c:\users\jki\appdata\local\continuum\anaconda3\lib\site-packages\scrapy\utils\deprecate.py:156: ScrapyDeprecationWarning: `scrapy.contrib.feedexport.FeedExporter` class is deprecated, use `scrapy.extensions.feedexport.FeedExporter` instead
+  ScrapyDeprecationWarning)
+
+2018-05-15 13:17:16 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats']
+2018-05-15 13:17:16 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.ajaxcrawl.AjaxCrawlMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2018-05-15 13:17:16 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2018-05-15 13:17:16 [scrapy.middleware] INFO: Enabled item pipelines:
+['prototyp.pipelines.PrototypPipeline']
+2018-05-15 13:17:16 [scrapy.core.engine] INFO: Spider opened
+2018-05-15 13:17:16 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2018-05-15 13:17:31 [scrapy.core.downloader.handlers.http11] ERROR: Cancelling download of http://rosavonpraunheim.de/presse/70%20filme/70%20Filme%20Pressetrailer.flv: expected response size (270583824) larger than download max size (10000000).
+2018-05-15 13:18:16 [scrapy.extensions.logstats] INFO: Crawled 1659 pages (at 1659 pages/min), scraped 206 items (at 206 items/min)
+2018-05-15 13:18:58 [scrapy.core.downloader.tls] WARNING: Remote certificate is not valid for hostname "www.apotheke-an-der-post-salzgitter.de"; VerificationError(errors=[DNSMismatch(mismatched_id=DNS_ID(hostname=b'www.apotheke-an-der-post-salzgitter.de'))])
+2018-05-15 13:19:16 [scrapy.extensions.logstats] INFO: Crawled 3278 pages (at 1619 pages/min), scraped 350 items (at 144 items/min)
+2018-05-15 13:20:18 [scrapy.extensions.logstats] INFO: Crawled 4883 pages (at 1605 pages/min), scraped 523 items (at 173 items/min)
+2018-05-15 13:20:30 [scrapy.core.downloader.tls] WARNING: Remote certificate is not valid for hostname "zvk-hannover.de"; VerificationError(errors=[DNSMismatch(mismatched_id=DNS_ID(hostname=b'zvk-hannover.de'))])
+2018-05-15 13:21:16 [scrapy.extensions.logstats] INFO: Crawled 6473 pages (at 1590 pages/min), scraped 598 items (at 75 items/min)
+2018-05-15 13:22:16 [scrapy.extensions.logstats] INFO: Crawled 8067 pages (at 1594 pages/min), scraped 763 items (at 165 items/min)
+2018-05-15 13:23:16 [scrapy.extensions.logstats] INFO: Crawled 9730 pages (at 1663 pages/min), scraped 975 items (at 212 items/min)
+2018-05-15 13:23:39 [scrapy.core.downloader.handlers.http11] ERROR: Cancelling download of http://www.kleineallekotte-architekten.com/index.files/MOV_0012_130%20MB.ogv: expected response size (23990239) larger than download max size (10000000).
+2018-05-15 13:23:45 [scrapy.core.downloader.handlers.http11] ERROR: Cancelling download of http://www.kleineallekotte-architekten.com/index.files/MOV_0012_130%20MB.m4v: expected response size (135298957) larger than download max size (10000000).
+2018-05-15 13:23:49 [scrapy.core.downloader.handlers.http11] ERROR: Cancelling download of http://www.kleineallekotte-architekten.com/index.files/MOV_0012_130%20MB.webm: expected response size (17477752) larger than download max size (10000000).
+2018-05-15 13:24:17 [scrapy.extensions.logstats] INFO: Crawled 11232 pages (at 1502 pages/min), scraped 1076 items (at 101 items/min)
+2018-05-15 13:25:16 [scrapy.extensions.logstats] INFO: Crawled 12704 pages (at 1472 pages/min), scraped 1234 items (at 158 items/min)
+2018-05-15 13:26:16 [scrapy.extensions.logstats] INFO: Crawled 14232 pages (at 1528 pages/min), scraped 1403 items (at 169 items/min)
+2018-05-15 13:27:16 [scrapy.extensions.logstats] INFO: Crawled 14600 pages (at 368 pages/min), scraped 1421 items (at 18 items/min)
+2018-05-15 13:28:16 [scrapy.extensions.logstats] INFO: Crawled 14709 pages (at 109 pages/min), scraped 1421 items (at 0 items/min)
+2018-05-15 13:29:16 [scrapy.extensions.logstats] INFO: Crawled 14774 pages (at 65 pages/min), scraped 1422 items (at 1 items/min)
+2018-05-15 13:30:16 [scrapy.extensions.logstats] INFO: Crawled 14775 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:31:16 [scrapy.extensions.logstats] INFO: Crawled 14776 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:32:16 [scrapy.extensions.logstats] INFO: Crawled 14777 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:33:16 [scrapy.extensions.logstats] INFO: Crawled 14778 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:34:16 [scrapy.extensions.logstats] INFO: Crawled 14779 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:35:16 [scrapy.extensions.logstats] INFO: Crawled 14780 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:36:16 [scrapy.extensions.logstats] INFO: Crawled 14782 pages (at 2 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:37:16 [scrapy.extensions.logstats] INFO: Crawled 14783 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:38:16 [scrapy.extensions.logstats] INFO: Crawled 14784 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:39:16 [scrapy.extensions.logstats] INFO: Crawled 14785 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:40:16 [scrapy.extensions.logstats] INFO: Crawled 14786 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:41:16 [scrapy.extensions.logstats] INFO: Crawled 14787 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:42:16 [scrapy.extensions.logstats] INFO: Crawled 14788 pages (at 1 pages/min), scraped 1422 items (at 0 items/min)
+2018-05-15 13:43:04 [scrapy.core.engine] INFO: Closing spider (finished)
+2018-05-15 13:43:04 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'downloader/exception_count': 395,
+ 'downloader/exception_type_count/builtins.ValueError': 23,
+ 'downloader/exception_type_count/scrapy.exceptions.NotSupported': 6,
+ 'downloader/exception_type_count/twisted.internet.defer.CancelledError': 4,
+ 'downloader/exception_type_count/twisted.internet.error.ConnectionRefusedError': 3,
+ 'downloader/exception_type_count/twisted.internet.error.DNSLookupError': 358,
+ 'downloader/exception_type_count/twisted.internet.error.TCPTimedOutError': 1,
+ 'downloader/request_bytes': 5919139,
+ 'downloader/request_count': 16444,
+ 'downloader/request_method_count/GET': 16444,
+ 'downloader/response_bytes': 333955200,
+ 'downloader/response_count': 16049,
+ 'downloader/response_status_count/200': 14134,
+ 'downloader/response_status_count/300': 1,
+ 'downloader/response_status_count/301': 1030,
+ 'downloader/response_status_count/302': 391,
+ 'downloader/response_status_count/303': 16,
+ 'downloader/response_status_count/307': 36,
+ 'downloader/response_status_count/400': 18,
+ 'downloader/response_status_count/401': 4,
+ 'downloader/response_status_count/403': 28,
+ 'downloader/response_status_count/404': 291,
+ 'downloader/response_status_count/410': 56,
+ 'downloader/response_status_count/421': 1,
+ 'downloader/response_status_count/500': 36,
+ 'downloader/response_status_count/503': 6,
+ 'downloader/response_status_count/504': 1,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2018, 5, 15, 11, 43, 4, 780848),
+ 'item_scraped_count': 1423,
+ 'log_count/ERROR': 4,
+ 'log_count/INFO': 32,
+ 'log_count/WARNING': 3,
+ 'request_depth_max': 424,
+ 'response_received_count': 14789,
+ 'scheduler/dequeued': 16444,
+ 'scheduler/dequeued/memory': 16444,
+ 'scheduler/enqueued': 16444,
+ 'scheduler/enqueued/memory': 16444,
+ 'start_time': datetime.datetime(2018, 5, 15, 11, 17, 16, 283147)}
+2018-05-15 13:43:04 [scrapy.core.engine] INFO: Spider closed (finished)
