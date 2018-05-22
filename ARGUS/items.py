@@ -7,27 +7,6 @@
 
 import scrapy
 
-
-
-class PrototypItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
-
-#class Website(scrapy.Item):
-#    original_url = scrapy.Field()
-#    initial_url= scrapy.Field()
-#    initial_domain = scrapy.Field()
-#    redirect = scrapy.Field()
-#    scraped_url = scrapy.Field()
-#    scraped_text = scrapy.Field()
-#    scrape_counter = scrapy.Field()
-#    scrape_starttime = scrapy.Field()
-#    scrape_endtime = scrapy.Field()
-#    scrape_duration = scrapy.Field()
-#    final_text = scrapy.Field()
-#    pass
-
 class Collector(scrapy.Item):
     crefo = scrapy.Field()
     mup_url = scrapy.Field()

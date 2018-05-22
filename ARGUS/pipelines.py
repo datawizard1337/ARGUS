@@ -5,25 +5,15 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-#import psycopg2
 from scrapy.exporters import CsvItemExporter
 from prototyp.items import Exporter
 import time
 import datetime
-from scrapy.exceptions import DropItem
 import os
 
-class PrototypPipeline(object):
+class TextPipeline(object):
     
     
-#    #initialise csv exporter
-#    def __init__(self):
-#        try:
-#            self.fileobj = open("output.csv", "ab")
-#        except:
-#            self.fileobj = open("output.csv", "wb")
-#        self.exporter = CsvItemExporter(self.fileobj, encoding='utf-8', delimiter="\t")
-#        self.exporter.start_exporting()
     def open_spider(self, spider):
         url_chunk = spider.url_chunk
         chunk = url_chunk.split(".")[0].split("_")[-1]
@@ -41,7 +31,6 @@ class PrototypPipeline(object):
         
     
     def process_item(self, item, spider):
-
         #get scraped text from collector item
         scraped_text = item["scraped_text"]
         c=0
