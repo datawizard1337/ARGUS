@@ -1,0 +1,59 @@
+2018-05-25 10:20:17 [scrapy.utils.log] INFO: Scrapy 1.5.0 started (bot: ARGUS)
+2018-05-25 10:20:17 [scrapy.utils.log] INFO: Versions: lxml 4.1.1.0, libxml2 2.9.7, cssselect 1.0.3, parsel 1.4.0, w3lib 1.19.0, Twisted 17.9.0, Python 3.6.4 |Anaconda, Inc.| (default, Jan 16 2018, 10:22:32) [MSC v.1900 64 bit (AMD64)], pyOpenSSL 17.5.0 (OpenSSL 1.0.2n  7 Dec 2017), cryptography 2.1.4, Platform Windows-7-6.1.7601-SP1
+2018-05-25 10:20:17 [scrapy.crawler] INFO: Overridden settings: {'AJAXCRAWL_ENABLED': True, 'BOT_NAME': 'ARGUS', 'CONCURRENT_ITEMS': 200, 'CONCURRENT_REQUESTS': 100, 'COOKIES_ENABLED': False, 'DOWNLOAD_MAXSIZE': 10000000, 'FEED_URI': 'file:///I:/%21Projekte/BMBF_TOBI_131308/01_Arbeitspakete/01_Webscraper/Webscraper/crawler/ARGUS/items/ARGUS/textspider/7227ca665ff411e8a1905459596fa410.jl', 'LOG_FILE': 'logs\\ARGUS\\textspider\\7227ca665ff411e8a1905459596fa410.log', 'LOG_LEVEL': 'INFO', 'NEWSPIDER_MODULE': 'ARGUS.spiders', 'REACTOR_THREADPOOL_MAXSIZE': 30, 'RETRY_ENABLED': False, 'SPIDER_MODULES': ['ARGUS.spiders']}
+2018-05-25 10:20:17 [py.warnings] WARNING: c:\programdata\anaconda3\lib\site-packages\scrapy\utils\deprecate.py:156: ScrapyDeprecationWarning: `scrapy.contrib.feedexport.FeedExporter` class is deprecated, use `scrapy.extensions.feedexport.FeedExporter` instead
+  ScrapyDeprecationWarning)
+
+2018-05-25 10:20:17 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats']
+2018-05-25 10:20:17 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.ajaxcrawl.AjaxCrawlMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2018-05-25 10:20:17 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2018-05-25 10:20:17 [scrapy.middleware] INFO: Enabled item pipelines:
+['ARGUS.pipelines.TextPipeline']
+2018-05-25 10:20:17 [scrapy.core.engine] INFO: Spider opened
+2018-05-25 10:20:17 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2018-05-25 10:21:17 [scrapy.extensions.logstats] INFO: Crawled 469 pages (at 469 pages/min), scraped 23 items (at 23 items/min)
+2018-05-25 10:21:47 [scrapy.core.engine] INFO: Closing spider (finished)
+2018-05-25 10:21:47 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'downloader/request_bytes': 180876,
+ 'downloader/request_count': 509,
+ 'downloader/request_method_count/GET': 509,
+ 'downloader/response_bytes': 8878675,
+ 'downloader/response_count': 509,
+ 'downloader/response_status_count/200': 445,
+ 'downloader/response_status_count/301': 45,
+ 'downloader/response_status_count/302': 7,
+ 'downloader/response_status_count/303': 1,
+ 'downloader/response_status_count/307': 5,
+ 'downloader/response_status_count/403': 1,
+ 'downloader/response_status_count/404': 5,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2018, 5, 25, 8, 21, 47, 771941),
+ 'item_scraped_count': 24,
+ 'log_count/INFO': 8,
+ 'log_count/WARNING': 1,
+ 'request_depth_max': 26,
+ 'response_received_count': 479,
+ 'scheduler/dequeued': 509,
+ 'scheduler/dequeued/memory': 509,
+ 'scheduler/enqueued': 509,
+ 'scheduler/enqueued/memory': 509,
+ 'start_time': datetime.datetime(2018, 5, 25, 8, 20, 17, 434941)}
+2018-05-25 10:21:47 [scrapy.core.engine] INFO: Spider closed (finished)
