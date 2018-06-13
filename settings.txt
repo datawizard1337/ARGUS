@@ -11,3 +11,4 @@ n_cores = 2
 [spider-settings]
 limit = 25
 language = None
+log_level = DEBUG

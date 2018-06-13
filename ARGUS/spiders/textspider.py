@@ -10,25 +10,8 @@ from twisted.internet.error import DNSLookupError
 from twisted.internet.error import TimeoutError, TCPTimedOutError
 import pandas as pd
 
-
-
-
-##################################################################
-# SETTINGS
-##################################################################
-
 class TextspiderSpider(scrapy.Spider):
     name = 'textspider'
-
-    custom_settings = {
-    'LOG_STDOUT': False,
-    'DUPEFILTER_DEBUG': True,
-    "ROBOTSTXT_OBEY": False,
-#    "LOG_LEVEL": logging.DEBUG,
-#    "DEPTH_LIMIT": 2
-    "AJAXCRAWL_ENABLED": True
-    }
-    
 
 ##################################################################
 # INIT

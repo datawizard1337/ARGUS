@@ -47,12 +47,9 @@ time.sleep(3)
 #schedule scrapyd jobs
 for p in range(1, n_url_chunks+1):
     url_chunk = os.getcwd() + "\\chunks\\url_chunk_p" + str(p) + ".csv"
-    subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=textspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={}"
-                   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs))
+    subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=textspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={}"
+                   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level')))
 
 print("Scheduled ", n_url_chunks, " spiders to scrape your URLs.\nOpening web interface...")
 time.sleep(3)
 webbrowser.open("http://127.0.0.1:6800/", new=0, autoraise=True)
-
-
-
