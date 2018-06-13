@@ -43,6 +43,8 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 8
 LOG_STDOUT = False
 LOG_LEVEL = "INFO"
 
+AJAXCRAWL_ENABLED = True
+
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
