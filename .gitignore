@@ -21,16 +21,3 @@ $RECYCLE.BIN/
 
 #Spyder
 /.spyproject
-
-#scrapyd
-/.dbs
-/.ARGUS.egg-info
-/.build
-/.chunks/*
-!chunks/keep
-/.eggs
-/.items
-/.logs
-
-chunks/output_p1.csv
-chunks/output_p2.csv

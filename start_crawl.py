@@ -24,7 +24,7 @@ data = pd.read_csv(config.get('input-data', 'filepath'), delimiter=config.get('i
 
 #get ISO codes for language detection
 if config.get('spider-settings', 'language') == "None":
-    language_ISOs = None
+    language_ISOs = ""
 else:
     language = config.get('spider-settings', 'language')
     ISO_codes = pd.read_csv(os.getcwd() + "\\misc\\ISO_language_codes.txt", delimiter="\t", encoding="utf-8", error_bad_lines=False)
