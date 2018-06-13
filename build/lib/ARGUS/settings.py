@@ -28,7 +28,6 @@ REACTOR_THREADPOOL_MAXSIZE = 30
 
 RETRY_ENABLED = False
 
-
 DOWNLOAD_MAXSIZE = 10000000
 
 CONCURRENT_ITEMS = 200
@@ -42,6 +41,8 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 8
 #LOG_FILE = "log.txt"
 LOG_STDOUT = False
 LOG_LEVEL = "INFO"
+
+AJAXCRAWL_ENABLED = True
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay

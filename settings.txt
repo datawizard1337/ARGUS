@@ -10,3 +10,4 @@ n_cores = 2
 
 [spider-settings]
 limit = 25
+log_level = INFO
