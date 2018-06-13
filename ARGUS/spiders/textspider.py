@@ -35,7 +35,7 @@ class TextspiderSpider(scrapy.Spider):
 ##################################################################
     
     #load URLs from text file defined in given parameter
-    def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", *args, **kwargs):
+    def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", language="", *args, **kwargs):
         super(TextspiderSpider, self).__init__(*args, **kwargs)
         #loads urls and IDs from text file
         data = pd.read_csv(url_chunk, delimiter="\t", encoding="utf-8", error_bad_lines=False)
@@ -44,6 +44,7 @@ class TextspiderSpider(scrapy.Spider):
         self.IDs = [ID for ID in list(data[ID])]
         self.site_limit = int(limit)
         self.url_chunk = url_chunk
+        self.language = language
     
     
 ##################################################################
@@ -106,15 +107,23 @@ class TextspiderSpider(scrapy.Spider):
         return text
     
     #function which reorders the urlstack, giving highest priority to short urls and language tagged urls
-    def reorderUrlstack(self, urlstack):
-       german = []
-       other = []
-       for url in urlstack:
-           if "/de/" in url or "/de-de/" in url or "/ger/" in url or "?lang=de" in url:
-               german.append(url)
-           else:
-               other.append(url)
-       urlstack = sorted(german, key=len) + sorted(other, key=len)
+    def reorderUrlstack(self, urlstack, language):
+       preferred_language = []
+       other_language = []
+       language_tags = []
+       if language == "":
+           preferred_language = urlstack
+       else:
+           for ISO in language:
+               language_tags.append("/{}/".format(ISO))
+               language_tags.append("/{}-{}/".format(ISO, ISO))
+               language_tags.append("?lang={}".format(ISO))
+           for url in urlstack:
+               if any(tag in url for tag in language_tags):
+                   preferred_language.append(url)
+               else:
+                   other_language.append(url)
+       urlstack = sorted(preferred_language, key=len) + sorted(other_language, key=len)
        return urlstack
    
    
@@ -232,7 +241,7 @@ class TextspiderSpider(scrapy.Spider):
             del urlstack[:]
         
         #reorder the urlstack to scrape the most relevant urls first
-        urlstack = self.reorderUrlstack(urlstack)
+        urlstack = self.reorderUrlstack(urlstack, self.language)
             
         #check if the next url in the urlstack is valid
         while len(urlstack) > 0:
