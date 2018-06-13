@@ -1,2 +1,2 @@
 cd "%~dp0"
-python "%~dp0\scripts\start_crawl.py"
+python "%~dp0\start_crawl.py"
