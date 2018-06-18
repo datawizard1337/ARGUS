@@ -10,5 +10,6 @@ n_cores = 2
 
 [spider-settings]
 limit = 2
+prefer_short_urls = on
 language = German
 log_level = DEBUG
