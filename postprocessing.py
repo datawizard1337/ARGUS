@@ -37,10 +37,7 @@ merged_file.close()
 print("Merging done. Deleting leftovers...")
 time.sleep(2)
 
-#chunk_files = [os.getcwd() + "\\chunks\\" + f for f in os.listdir(os.getcwd() + "\\chunks") if f.split("_")[0] == "url"]
+chunk_files = [os.getcwd() + "\\chunks\\" + f for f in os.listdir(os.getcwd() + "\\chunks") if f.split("_")[0] == "url"]
 
-#for fn in output_files + chunk_files:
-#    os.unlink(fn)
-    
-
-
+for fn in output_files + chunk_files:
+    os.unlink(fn)
