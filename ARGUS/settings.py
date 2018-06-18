@@ -35,7 +35,7 @@ CONCURRENT_ITEMS = 200
 
 CONCURRENT_REQUESTS_PER_DOMAIN = 8
 
-#DOWNLOAD_TIMEOUT = 120
+DOWNLOAD_TIMEOUT = 20
 
 #MEMUSAGE_ENABLE = True
 
@@ -44,6 +44,8 @@ LOG_STDOUT = False
 LOG_LEVEL = "INFO"
 
 AJAXCRAWL_ENABLED = True
+
+COMPRESSION_ENABLED = False
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
@@ -75,6 +77,7 @@ DEFAULT_REQUEST_HEADERS = {
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
+    'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware': None
 }
 
 # Enable or disable extensions
