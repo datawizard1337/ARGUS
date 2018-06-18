@@ -127,6 +127,7 @@ class TextspiderSpider(scrapy.Spider):
         loader = ItemLoader(item=Collector())
         if failure.check(HttpError):
             response = failure.value.response
+            print("errorback ", response.request.meta.get('download_slot'))
             loader.add_value("dl_slot", response.request.meta.get('download_slot'))
             loader.add_value("start_page", "")
             loader.add_value("scraped_urls", "")
@@ -137,6 +138,7 @@ class TextspiderSpider(scrapy.Spider):
             yield loader.load_item()
         elif failure.check(DNSLookupError):
             request = failure.request
+            print("errorback ", request.meta.get('download_slot'))
             loader.add_value("dl_slot", request.meta.get('download_slot'))
             loader.add_value("start_page", "")
             loader.add_value("scraped_urls", "")
@@ -147,6 +149,7 @@ class TextspiderSpider(scrapy.Spider):
             yield loader.load_item() 
         elif failure.check(TimeoutError, TCPTimedOutError):
             request = failure.request
+            print("errorback ", request.meta.get('download_slot'))
             loader.add_value("dl_slot", request.meta.get('download_slot'))
             loader.add_value("start_page", "")
             loader.add_value("scraped_urls", "")
@@ -157,6 +160,7 @@ class TextspiderSpider(scrapy.Spider):
             yield loader.load_item()
         else:
             request = failure.request
+            print("errorback ", request.meta.get('download_slot'))
             loader.add_value("dl_slot", request.meta.get('download_slot'))
             loader.add_value("start_page", "")
             loader.add_value("scraped_urls", "")
@@ -172,6 +176,7 @@ class TextspiderSpider(scrapy.Spider):
 ##################################################################           
       
     def parse(self, response):
+        print("main parse ", response.request.meta.get('download_slot'))
         #initialize collector item which stores the website's content and meta data
         loader = ItemLoader(item=Collector())
         loader.add_value("dl_slot", response.request.meta.get('download_slot'))
@@ -213,11 +218,15 @@ class TextspiderSpider(scrapy.Spider):
 ##################################################################  
          
     def processURLstack(self, response):
+        print("url_stack ", response.request.meta.get('download_slot'))
+
         #get meta data from response object to revive dragged stuff
         meta = response.request.meta
         loader = meta["loader"]
         urlstack = meta["urlstack"]
         fingerprints = meta["fingerprints"]
+        
+        print(meta["urlstack"])
         
         #check whether max number of websites has been scraped for this website
         if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
@@ -261,7 +270,7 @@ class TextspiderSpider(scrapy.Spider):
 ##################################################################      
     
     def parse_subpage(self, response):
-        
+        print("parse subpage ", response.request.meta.get('download_slot'))
         #check again
         if request_fingerprint(response.request) in response.meta["fingerprints"]:
             return self.processURLstack(response)

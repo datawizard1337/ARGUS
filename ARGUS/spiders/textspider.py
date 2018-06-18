@@ -172,6 +172,7 @@ class TextspiderSpider(scrapy.Spider):
 ##################################################################           
       
     def parse(self, response):
+
         #initialize collector item which stores the website's content and meta data
         loader = ItemLoader(item=Collector())
         loader.add_value("dl_slot", response.request.meta.get('download_slot'))
@@ -213,11 +214,14 @@ class TextspiderSpider(scrapy.Spider):
 ##################################################################  
          
     def processURLstack(self, response):
+
         #get meta data from response object to revive dragged stuff
         meta = response.request.meta
         loader = meta["loader"]
         urlstack = meta["urlstack"]
         fingerprints = meta["fingerprints"]
+        
+        print(meta["urlstack"])
         
         #check whether max number of websites has been scraped for this website
         if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
@@ -261,7 +265,6 @@ class TextspiderSpider(scrapy.Spider):
 ##################################################################      
     
     def parse_subpage(self, response):
-        
         #check again
         if request_fingerprint(response.request) in response.meta["fingerprints"]:
             return self.processURLstack(response)
