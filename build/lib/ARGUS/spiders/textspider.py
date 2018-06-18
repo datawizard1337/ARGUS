@@ -18,7 +18,7 @@ class TextspiderSpider(scrapy.Spider):
 ##################################################################
     
     #load URLs from text file defined in given parameter
-    def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", language="", *args, **kwargs):
+    def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", language="", prefer_short_urls="on", *args, **kwargs):
         super(TextspiderSpider, self).__init__(*args, **kwargs)
         #loads urls and IDs from text file
         data = pd.read_csv(url_chunk, delimiter="\t", encoding="utf-8", error_bad_lines=False)
@@ -28,6 +28,7 @@ class TextspiderSpider(scrapy.Spider):
         self.site_limit = int(limit)
         self.url_chunk = url_chunk
         self.language = language.split(",")
+        self.prefer_short_urls = prefer_short_urls
     
     
 ##################################################################
@@ -90,11 +91,10 @@ class TextspiderSpider(scrapy.Spider):
         return text
     
     #function which reorders the urlstack, giving highest priority to short urls and language tagged urls
-    def reorderUrlstack(self, urlstack, language):
+    def reorderUrlstack(self, urlstack, language, prefer_short_urls):
        preferred_language = []
        other_language = []
        language_tags = []
-       print(language)
        if language == "":
            preferred_language = urlstack
        else:
@@ -107,7 +107,10 @@ class TextspiderSpider(scrapy.Spider):
                    preferred_language.append(url)
                else:
                    other_language.append(url)
-       urlstack = sorted(preferred_language, key=len) + sorted(other_language, key=len)
+       if prefer_short_urls == "on":
+           urlstack = sorted(preferred_language, key=len) + sorted(other_language, key=len)
+       else:
+           urlstack = preferred_language + other_language
        return urlstack
    
    
@@ -227,7 +230,7 @@ class TextspiderSpider(scrapy.Spider):
             del urlstack[:]
         
         #reorder the urlstack to scrape the most relevant urls first
-        urlstack = self.reorderUrlstack(urlstack, self.language)
+        urlstack = self.reorderUrlstack(urlstack, self.language, self.prefer_short_urls)
             
         #check if the next url in the urlstack is valid
         while len(urlstack) > 0:
