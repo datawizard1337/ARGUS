@@ -28,8 +28,9 @@ if config.get('spider-settings', 'language') == "None":
 else:
     language = config.get('spider-settings', 'language')
     ISO_codes = pd.read_csv(os.getcwd() + "\\misc\\ISO_language_codes.txt", delimiter="\t", encoding="utf-8", error_bad_lines=False)
-    language_ISOs = ISO_codes.loc[ISO_codes['language'] == language][['ISO1',"ISO2","ISO3"]].iloc[0].tolist()
-
+    language_ISOs = ISO_codes.loc[ISO_codes["language"] == language][["ISO1","ISO2","ISO3"]].iloc[0].tolist()
+    language_ISOs = "{},{},{}".format(language_ISOs[0], language_ISOs[1], language_ISOs[2])
+    
 #define number of url chunks to be created from URL file
 n_url_chunks = math.ceil(len(data)/10000)
 if n_url_chunks < int(config.get('system', 'n_cores')):
