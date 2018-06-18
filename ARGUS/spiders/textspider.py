@@ -27,7 +27,7 @@ class TextspiderSpider(scrapy.Spider):
         self.IDs = [ID for ID in list(data[ID])]
         self.site_limit = int(limit)
         self.url_chunk = url_chunk
-        self.language = language
+        self.language = language.split(",")
     
     
 ##################################################################
@@ -220,8 +220,6 @@ class TextspiderSpider(scrapy.Spider):
         loader = meta["loader"]
         urlstack = meta["urlstack"]
         fingerprints = meta["fingerprints"]
-        
-        print(meta["urlstack"])
         
         #check whether max number of websites has been scraped for this website
         if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:

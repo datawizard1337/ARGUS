@@ -9,6 +9,6 @@ url = webadresse
 n_cores = 2
 
 [spider-settings]
-limit = 100
+limit = 2
 language = German
 log_level = DEBUG
