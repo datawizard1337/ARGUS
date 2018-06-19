@@ -35,11 +35,11 @@ An ARGUS crawl is based on a list of user given firm website addresses (URL) and
 1.	The first webpage (a website’s main page) is requested using the first address in the given URL list.
 2.	A collector item is instantiated, which is used to collect the website’s text, meta-data (e.g. timestamps, number of scraped URLs etc.), and a so called URL stack.
 3.	The main page is processed:
-    a.	Text on the main page is extracted and stored in the collector item.
-    b.	URLs which refer to subpages of the same website (i.e. domain) are extracted and stored in the collector item’s URL stack.
+    -	Text on the main page is extracted and stored in the collector item.
+    -	URLs which refer to subpages of the same website (i.e. domain) are extracted and stored in the collector item’s URL stack.
 4.	The algorithm continues to request subpages of the website using URLs from the URL stack. Hereby, it uses a simple heuristic which gives higher priority short URLs and those which refer to subpages in a predefined language.
-    a.	Texts and URLs are collected from the subpage and stored in the collector item.
-    b.	The next URL in the URL stack is processed.
+    -	Texts and URLs are collected from the subpage and stored in the collector item.
+    -	The next URL in the URL stack is processed.
 5.	The algorithm stops to process a domain when all subpages were processed or as soon as a predefined number of subpages per domain has been processed.
 6.	The collected texts are processed (i.e. cleaned) and written to an output file.
 7.	The next website is processed by requesting the next URL from the user given URL list. The described process continues until all firm website addresses from the user given list were processed.
@@ -67,13 +67,13 @@ utf-8
 ### Starting a scraping run
 
 Before starting your scraping run, a [scrapyd](http://scrapyd.readthedocs.io/en/stable/overview.html#how-scrapyd-works) server, which handles your scraping jobs, needs to be started. This can be done by running the “start_server.bat”, which opens a separate window that should not be closed during the whole upcoming scraping run. After the server has started, the scraping process can be launched by executing “start_scraping.bat”. This little program will split your list of URLs into handy chunks and starts a separate job for each chunk to speed up the scraping process. The splitting and job scheduling may take a short while. After all jobs were scheduled, the scrapyd web interface will open up in your default web browser (you can also get there by typing “http://127.0.0.1:6800/” into your web browser).
-[scrapyd server](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/scrapyd_server.png?raw=true)
+![scrapyd server](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/scrapyd_server.png?raw=true)
 You can safely ignore the lower part about how to schedule a spider, because ARGUS did that for you already. To see the jobs which have been scheduled, click the “Jobs” link. There you will find an overview about the pending, running, and finished jobs. You can also see the time a job was started, its current runtime, and the time it was finished. By clicking on a job’s log link, you can have a look at its log file. The number of running jobs should be equal to the **n_cores** parameter you set in the “settings.txt”.
 
 ## Stopping jobs
 
 Sometimes certain jobs stop working or never finish, so you may want to stop and restart them. This can be done by running the “kill_single_job.bat”. You will be asked for the id of the job you want to cancel. The id is a long hash number which can be found in the “Job” column in the “Jobs” web interface section.
-[scrapyd jobs](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/scrapyd_jobs.png?raw=true)
+![scrapyd jobs](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/scrapyd_jobs.png?raw=true)
 You can stop all processes at once by running the “kill_all_jobs.bat”. This little program will tell the scrapyd server to stop all running and scheduled processes. You will be asked whether you want to delete the data already scraped. If you decide against deleting the scraped data, you may want to run the “postprocessing.bat” as described below.
 
 ## Postprocessing
@@ -84,7 +84,7 @@ When all jobs are finished, you may close the scrapyd server window to stop the 
 ## The output data
 
 The output file can be found in the same directory your original website address file is located (**filepath** parameter in the settings file). One row equals one webpage and n (n ≤ **limit**) webpages equal one website (identified by its ID). ARGUS outputs the scraped data in the following format.
-[ARGUS textspider output](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_textspider.png?raw=true)
+![ARGUS textspider output](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_textspider.png?raw=true)
 *	**ID** – the ID of the website as given in [input-data] section of the settings file.
 *	**dl_rank** – the chronological order the webpage was downloaded. The main page of a website (i.e. the URL in your website address file) has rank 0, the first subpage processed after the main page has rank 1, and so on.
 *	**dl_slot** – the domain name of the website.
@@ -94,3 +94,7 @@ The output file can be found in the same directory your original website address
 *	**text** – the text that was downloaded from the webpage.
 *	**timestamp** – the exact time when the webpage was downloaded.
 *	**url** – the URL of the webpage.
+
+## Why ARGUS?
+
+**ARGUS** stands for "**A**utomated **R**obot for **G**eneric **U**niversal **S**craping".
