@@ -74,6 +74,7 @@ You can safely ignore the lower part about how to schedule a spider, because ARG
 
 Sometimes certain jobs stop working or never finish, so you may want to stop and restart them. This can be done by running the “kill_single_job.bat”. You will be asked for the id of the job you want to cancel. The id is a long hash number which can be found in the “Job” column in the “Jobs” web interface section.
 ![scrapyd jobs](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/scrapyd_jobs.png?raw=true)
+
 You can stop all processes at once by running the “kill_all_jobs.bat”. This little program will tell the scrapyd server to stop all running and scheduled processes. You will be asked whether you want to delete the data already scraped. If you decide against deleting the scraped data, you may want to run the “postprocessing.bat” as described below.
 
 ## Postprocessing
