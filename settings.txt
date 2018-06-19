@@ -6,10 +6,10 @@ ID = crefo
 url = webadresse
 
 [system]
-n_cores = 2
+n_cores = 3
 
 [spider-settings]
-limit = 2
+limit = 10
 prefer_short_urls = on
 language = German
-log_level = DEBUG
+log_level = INFO
