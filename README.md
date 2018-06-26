@@ -122,7 +122,7 @@ The output file can be found in the same directory your original website address
 
 ### Linkspider output
 
-![ARGUS linkspider output](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_linkspider.png?raw=true)
+![ARGUS linkspider output](https://github.com/datawizard1337/ARGUS/blob/linkspider/misc/pics/ARGUS_linkspider.png?raw=true)
 *	**ID** – the ID of the website as given in [input-data] section of the settings file.
 *	**alias** – if there was an initial redirect (e.g. from www.example.de to www.example.com), the domain the spider got redirected to ("example.com" in the example) becomes the websites alias. During postprocessing, hyperlinks are harmonised by transferring alias domains to their associated (*dl_slot*) domains.
 *	**dl_slot** – the domain name of the website as found in the user given website address list.
