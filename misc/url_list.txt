@@ -1,0 +1,5 @@
+id	url
+1	www.zew.de
+2	www.uni-mannheim.de
+3	www.uni-salzburg.at
+4	www.dw.com
