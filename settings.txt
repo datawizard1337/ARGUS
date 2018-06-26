@@ -1,15 +1,16 @@
 [input-data]
-filepath = I:\!Projekte\BMBF_TOBI_131308\01_Arbeitspakete\01_Webscraper\Webscraper\todo\url_chunk_a.csv
+filepath = I:\!Projekte\BMBF_TOBI_131308\01_Arbeitspakete\01_Webscraper\Webscraper\URLs\MIP_2017_software.txt
 delimiter = \t
 encoding = utf-8
-ID = crefo
-url = webadresse
+ID = id
+url = url
 
 [system]
-n_cores = 3
+n_cores = 6
 
 [spider-settings]
-limit = 10
+spider = link
+limit = 100
 prefer_short_urls = on
 language = German
 log_level = INFO
