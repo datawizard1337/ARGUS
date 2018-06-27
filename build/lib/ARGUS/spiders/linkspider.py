@@ -12,7 +12,11 @@ import pandas as pd
 
 class LinkspiderSpider(scrapy.Spider):
     name = 'linkspider'
-
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'ARGUS.pipelines.LinkPipeline': 300
+        }
+    }
 ##################################################################
 # INIT
 ##################################################################

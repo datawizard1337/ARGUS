@@ -12,6 +12,11 @@ import pandas as pd
 
 class TextspiderSpider(scrapy.Spider):
     name = 'textspider'
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'ARGUS.pipelines.TextPipeline': 300
+        }
+    }
 
 ##################################################################
 # INIT
