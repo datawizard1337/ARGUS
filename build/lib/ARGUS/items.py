@@ -30,5 +30,28 @@ class Exporter(scrapy.Item):
     error = scrapy.Field()
     dl_rank = scrapy.Field()
     pass
-    
-    
+
+class LinkCollector(scrapy.Item):
+    ID = scrapy.Field()
+    dl_slot = scrapy.Field()
+    start_page = scrapy.Field()
+    start_domain = scrapy.Field()
+    redirect = scrapy.Field()
+    scraped_urls = scrapy.Field()
+    scraped_text = scrapy.Field()
+    scrape_counter = scrapy.Field()
+    error = scrapy.Field()
+    links = scrapy.Field()
+    alias = scrapy.Field()
+    pass
+
+class LinkExporter(scrapy.Item):
+    ID = scrapy.Field()
+    dl_slot = scrapy.Field()
+    redirect = scrapy.Field()
+    url = scrapy.Field()
+    timestamp = scrapy.Field()
+    error = scrapy.Field()
+    links = scrapy.Field()
+    alias = scrapy.Field()
+    pass 

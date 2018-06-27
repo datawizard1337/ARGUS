@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import tldextract
-from ARGUS.items import Collector
+from ARGUS.items import LinkCollector
 from scrapy.loader import ItemLoader
 from scrapy.utils.request import request_fingerprint
 import re
@@ -10,21 +10,20 @@ from twisted.internet.error import DNSLookupError
 from twisted.internet.error import TimeoutError, TCPTimedOutError
 import pandas as pd
 
-class TextspiderSpider(scrapy.Spider):
-    name = 'textspider'
+class LinkspiderSpider(scrapy.Spider):
+    name = 'linkspider'
     custom_settings = {
         'ITEM_PIPELINES': {
-            'ARGUS.pipelines.TextPipeline': 300
+            'ARGUS.pipelines.LinkPipeline': 300
         }
     }
-
 ##################################################################
 # INIT
 ##################################################################
     
     #load URLs from text file defined in given parameter
     def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", language="", prefer_short_urls="on", *args, **kwargs):
-        super(TextspiderSpider, self).__init__(*args, **kwargs)
+        super(LinkspiderSpider, self).__init__(*args, **kwargs)
         #loads urls and IDs from text file
         data = pd.read_csv(url_chunk, delimiter="\t", encoding="utf-8", error_bad_lines=False)
         self.allowed_domains = [url.split("www.")[-1].lower() for url in list(data[url_col])]
@@ -82,19 +81,6 @@ class TextspiderSpider(scrapy.Spider):
     def checkRedirectDomain(self, response):
         return tldextract.extract(response.url).registered_domain != tldextract.extract(response.request.meta.get("download_slot")).registered_domain
     
-    #function which extracts text using tags
-    def extractText(self, response):
-        text = []
-        text.append(["p", [" ".join(response.xpath("//p/text()").extract())]])        
-        text.append(["div", [" ".join(response.xpath("//div/text()").extract())]])
-        text.append(["tr", [" ".join(response.xpath("//tr/text()").extract())]])
-        text.append(["td", [" ".join(response.xpath("//td/text()").extract())]])
-        text.append(["p", [" ".join(response.xpath("//p/text()").extract())]])
-        text.append(["font", [" ".join(response.xpath("//font/text()").extract())]])
-        text.append(["li", [" ".join(response.xpath("//li/text()").extract())]])
-        text.append(["small", [" ".join(response.xpath("//small/text()").extract())]])
-        return text
-    
     #function which reorders the urlstack, giving highest priority to short urls and language tagged urls
     def reorderUrlstack(self, urlstack, language, prefer_short_urls):
        preferred_language = []
@@ -133,7 +119,7 @@ class TextspiderSpider(scrapy.Spider):
     
     #errorback creates an collector item, records the error type, and passes it to the pipeline   
     def errorback(self, failure):
-        loader = ItemLoader(item=Collector())
+        loader = ItemLoader(item=LinkCollector())
         if failure.check(HttpError):
             response = failure.value.response
             loader.add_value("dl_slot", response.request.meta.get('download_slot'))
@@ -143,6 +129,8 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_text", "")
             loader.add_value("error", response.status)
             loader.add_value("ID", response.request.meta["ID"])
+            loader.add_value("links", "")
+            loader.add_value("alias", "")
             yield loader.load_item()
         elif failure.check(DNSLookupError):
             request = failure.request
@@ -153,6 +141,8 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_text", "")
             loader.add_value("error", "DNS")
             loader.add_value("ID", request.meta["ID"])
+            loader.add_value("links", "")
+            loader.add_value("alias", "")
             yield loader.load_item() 
         elif failure.check(TimeoutError, TCPTimedOutError):
             request = failure.request
@@ -163,6 +153,8 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_text", "")
             loader.add_value("error", "Timeout")
             loader.add_value("ID", request.meta["ID"])
+            loader.add_value("links", "")
+            loader.add_value("alias", "")
             yield loader.load_item()
         else:
             request = failure.request
@@ -173,6 +165,8 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_text", "")
             loader.add_value("error", "other")
             loader.add_value("ID", request.meta["ID"])
+            loader.add_value("links", "")
+            loader.add_value("alias", "")
             yield loader.load_item()
 
 
@@ -183,16 +177,21 @@ class TextspiderSpider(scrapy.Spider):
     def parse(self, response):
 
         #initialize collector item which stores the website's content and meta data
-        loader = ItemLoader(item=Collector())
+        loader = ItemLoader(item=LinkCollector())
         loader.add_value("dl_slot", response.request.meta.get('download_slot'))
         loader.add_value("redirect", self.checkRedirectDomain(response))
+        #add alias if there was an initial redirect
+        if self.checkRedirectDomain(response):
+            loader.add_value("alias", self.subdomainGetter(response).split("www.")[-1])
+        else:
+            loader.add_value("alias", "") 
         loader.add_value("start_page", response.url)
         loader.add_value("start_domain", self.subdomainGetter(response))  
         loader.add_value("scraped_urls", [response.urljoin(response.url)])
         loader.add_value("scrape_counter", 1)
-        loader.add_value("scraped_text", [self.extractText(response)])
         loader.add_value("error", "None")
         loader.add_value("ID", response.request.meta["ID"])
+        loader.add_value("links", "")
 
         #initialize the fingerprints set which stores all fingerprints of visited websites
         fingerprints = set()
@@ -208,7 +207,7 @@ class TextspiderSpider(scrapy.Spider):
         #extract all urls from the page...
         urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
         #...and safe them to a urlstack
-        urlstack = [response.urljoin(url) for url in urls]   
+        urlstack = [response.urljoin(url) for url in urls]
             
         #attach the urlstack, the loader, and the fingerprints to the response...        
         response.meta["urlstack"] = urlstack
@@ -236,6 +235,19 @@ class TextspiderSpider(scrapy.Spider):
         
         #reorder the urlstack to scrape the most relevant urls first
         urlstack = self.reorderUrlstack(urlstack, self.language, self.prefer_short_urls)
+        
+        #check urlstack for links to other domains
+        for url in urlstack:
+            domain = self.subdomainGetter(url).split("www.")[-1] 
+            #if url points to domain that is not the orinigally requested domain...
+            if domain == self.subdomainGetter(loader.get_collected_values("dl_slot")[0]):
+                continue
+            #...and also not the alias domain...
+            elif domain == self.subdomainGetter(loader.get_collected_values("alias")[0]):
+                continue
+            #...add domain to link list
+            else:
+                loader.add_value("links", domain)
             
         #check if the next url in the urlstack is valid
         while len(urlstack) > 0:
@@ -306,7 +318,6 @@ class TextspiderSpider(scrapy.Spider):
                 #add info to collector item
                 loader.replace_value("scrape_counter", loader.get_collected_values("scrape_counter")[0]+1)
                 loader.add_value("scraped_urls", [response.urljoin(response.url)])
-                loader.add_value("scraped_text", [self.extractText(response)])
                     
                 #pass back the updated urlstack    
                 return self.processURLstack(response)

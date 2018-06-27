@@ -6,7 +6,7 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 from scrapy.exporters import CsvItemExporter
-from ARGUS.items import Exporter
+from ARGUS.items import Exporter, LinkExporter
 import time
 import datetime
 import os
@@ -72,6 +72,49 @@ class TextPipeline(object):
         return
 
 
+class LinkPipeline(object):
+    
+    
+    def open_spider(self, spider):
+        url_chunk = spider.url_chunk
+        chunk = url_chunk.split(".")[0].split("_")[-1]
+        try:
+            self.fileobj = open(os.getcwd() +"\\chunks\\output_" + chunk + ".csv", "ab")
+        except:
+            self.fileobj = open(os.getcwd() +"\\chunks\\output_" + chunk + ".csv", "wb")
+        self.exporter = CsvItemExporter(self.fileobj, encoding='utf-8', delimiter="\t")
+        self.exporter.start_exporting()
+    
+    #close file when finished
+    def close_spider(self, spider):
+        self.exporter.finish_exporting()
+        self.fileobj.close()
+        
+    
+    def process_item(self, item, spider):
+        #get scraped text from collector item
+        site = LinkExporter()
+        site["dl_slot"] = item["dl_slot"][0]
+        site["url"] = item["scraped_urls"][0]
+        site["redirect"] = item["redirect"][0]
+        site["error"] = item["error"]
+        site["ID"] = item["ID"][0]
+        site["alias"] = item["alias"][0]
+        site["timestamp"] = datetime.datetime.fromtimestamp(time.time()).strftime("%c")
+        links = []
+        #iterate site chunks
+        for link in item["links"]:
+            #add collected links to link list if not included yet
+            if link != "":
+                if link not in links:
+                    links.append(link)
+            
+            
+        #add links and export
+        site["links"] = links
+        self.exporter.export_item(site)
+
+        return
 
 
 
