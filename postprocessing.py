@@ -13,7 +13,10 @@ config = configparser.RawConfigParser()
 config.read("settings.txt")
 
 #get files
-merged_file = open(config.get('input-data', 'filepath').split(".")[0] +   "_scraped.csv", "w", encoding="utf-8")
+if config.get('spider-settings', 'spider') == "text":
+    merged_file = open(config.get('input-data', 'filepath').split(".")[0] +   "_scraped_texts.csv", "w", encoding="utf-8")
+elif config.get('spider-settings', 'spider') == "link":
+    merged_file = open(config.get('input-data', 'filepath').split(".")[0] +   "_scraped_links.csv", "w", encoding="utf-8")
 output_files = [os.getcwd() + "\\chunks\\" + f for f in os.listdir(os.getcwd() + "\\chunks") if f.split("_")[0] == "output"]
 
 print("Merging output files to ", config.get('input-data', 'filepath').split(".")[0] + "_scraped.csv", " ...")
