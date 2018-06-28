@@ -238,6 +238,8 @@ class LinkspiderSpider(scrapy.Spider):
         
         #check urlstack for links to other domains
         for url in urlstack:
+            url = url.replace("\r\n", "")
+            url = url.replace("\n", "")
             domain = self.subdomainGetter(url).split("www.")[-1] 
             #if url points to domain that is not the orinigally requested domain...
             if domain == self.subdomainGetter(loader.get_collected_values("dl_slot")[0]):
