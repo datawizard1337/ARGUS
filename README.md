@@ -124,7 +124,7 @@ The output file can be found in the same directory your original website address
 
 ![ARGUS linkspider output](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_linkspider.png?raw=true)
 *	**ID** – the ID of the website as given in [input-data] section of the settings file.
-*	**alias** – if there was an initial redirect (e.g. from www.example.de to www.example.com), the domain the spider got redirected to ("example.com" in the example) becomes the websites alias. During postprocessing, hyperlinks are harmonised by transferring alias domains to their associated (*dl_slot*) domains.
+*	**alias** – if there was an initial redirect (e.g. from www.example.de to www.example.com), the domain the spider got redirected to ("example.com" in the example) becomes the websites alias. ~~During postprocessing, hyperlinks are harmonised by transferring alias domains to their associated (*dl_slot*) domains.~~
 *	**dl_slot** – the domain name of the website as found in the user given website address list.
 *	**error** – not “None” if there was an error requesting the website’s main page. Can be an HTML error (e.g., “404”), DNS lookup error, or a timeout.
 *	**links_internal** – the domains of "within-sample" websites found on the focal website. The first element is the focal website itself (this format makes it easiert to import the data as an "adjacency list" into analysis software). Field is empty if no hyperlinks to within-sample websites were found.
