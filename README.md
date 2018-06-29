@@ -88,6 +88,7 @@ utf-8
 
 Before starting your scraping run, a [scrapyd](http://scrapyd.readthedocs.io/en/stable/overview.html#how-scrapyd-works) server, which handles your scraping jobs, needs to be started. This can be done by running the “start_server.bat”, which opens a separate window that should not be closed during the whole upcoming scraping run. After the server has started, the scraping process can be launched by executing “start_scraping.bat”. This little program will split your list of URLs into handy chunks and starts a separate job for each chunk to speed up the scraping process. The splitting and job scheduling may take a short while. After all jobs were scheduled, the scrapyd web interface will open up in your default web browser (you can also get there by typing “http://127.0.0.1:6800/” into your web browser).
 ![scrapyd server](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/scrapyd_server.png?raw=true)
+
 You can safely ignore the lower part about how to schedule a spider, because ARGUS did that for you already. To see the jobs which have been scheduled, click the “Jobs” link. There you will find an overview about the pending, running, and finished jobs. You can also see the time a job was started, its current runtime, and the time it was finished. By clicking on a job’s log link, you can have a look at its log file. The number of running jobs should be equal to the **n_cores** parameter you set in the “settings.txt”.
 
 ### Stopping jobs
