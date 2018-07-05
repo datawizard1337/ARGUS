@@ -45,15 +45,15 @@ If you are interested in how ARGUS processes websites, read the following descri
 
 An ARGUS crawl is based on a list of user given firm website addresses (URL) and proceeds as follows:
 1.	The first webpage (a website’s main page) is requested using the first address in the given URL list.
-2.	A collector item is instantiated, which is used to collect the website’s text, meta-data (e.g. timestamps, number of scraped URLs etc.), and a so called URL stack.
+2.	A collector item is instantiated, which is used to collect the website’s content, meta-data (e.g. timestamps, number of scraped URLs etc.), and a so called URL stack.
 3.	The main page is processed:
-    -	Text on the main page is extracted and stored in the collector item.
+    -	Content from the main page is extracted and stored in the collector item.
     -	URLs which refer to subpages of the same website (i.e. domain) are extracted and stored in the collector item’s URL stack.
-4.	The algorithm continues to request subpages of the website using URLs from the URL stack. Hereby, it uses a simple heuristic which gives higher priority short URLs and those which refer to subpages in a predefined language.
-    -	Texts and URLs are collected from the subpage and stored in the collector item.
+4.	The algorithm continues to request subpages of the website using URLs from the URL stack. Hereby, it can use a simple heuristic which gives higher priority short URLs and those URLs which refer to subpages in a predefined language.
+    -	Content and URLs are collected from the subpage and stored in the collector item.
     -	The next URL in the URL stack is processed.
 5.	The algorithm stops to process a domain when all subpages were processed or as soon as a predefined number of subpages per domain has been processed.
-6.	The collected texts are processed (i.e. cleaned) and written to an output file.
+6.	The collected content is processed and written to an output file.
 7.	The next website is processed by requesting the next URL from the user given URL list. The described process continues until all firm website addresses from the user given list were processed.
 
 ### Spider types
