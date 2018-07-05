@@ -105,10 +105,12 @@ When all jobs are finished, you may close the scrapyd server window to stop the 
 
 ## Output data
 
-The output file can be found in the same directory your original website address file is located (**filepath** parameter in the settings file). One row equals one webpage and n (n ≤ **limit**) webpages equal one website (identified by its ID). 
+The output file can be found in the same directory your original website address file is located (**filepath** parameter in the settings file). 
 
 
 ### Textspider output
+
+One row equals one webpage and n (n ≤ **limit**) webpages equal one website (identified by its ID).
 
 ![ARGUS textspider output](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_textspider.png?raw=true)
 *	**ID** – the ID of the website as given in [input-data] section of the settings file.
@@ -122,6 +124,8 @@ The output file can be found in the same directory your original website address
 *	**url** – the URL of the webpage.
 
 ### Linkspider output
+
+One row equals one website (identified by its ID). All hyperlinks found on n (n ≤ **limit**) webpages are aggregated to the website (domain) level and duplicates are removed.
 
 ![ARGUS linkspider output](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_linkspider.png?raw=true)
 *	**ID** – the ID of the website as given in [input-data] section of the settings file.
