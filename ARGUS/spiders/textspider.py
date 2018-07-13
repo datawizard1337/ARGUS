@@ -45,11 +45,11 @@ class TextspiderSpider(scrapy.Spider):
     filetypes = set(filetype for filetype in ['mng', 'pct', 'bmp', 'gif', 'jpg', 'jpeg', 'png', 'pst', 'psp', 'tif', 'tiff', 'ai', 'drw', 'dxf', 'eps', 'ps', 'svg',
                 'mp3', 'wma', 'ogg', 'wav', 'ra', 'aac', 'mid', 'au', 'aiff',
                 '3gp', 'asf', 'asx', 'avi', 'mov', 'mp4', 'mpg', 'qt', 'rm', 'swf', 'wmv', 'm4a',
-                'css', 'pdf', 'doc', 'exe', 'bin', 'rss', 'zip', 'rar', 'msu', 'flv',
+                'css', 'pdf', 'doc', 'exe', 'bin', 'rss', 'zip', 'rar', 'msu', 'flv', 'dmg',
                 'mng?download=true', 'pct?download=true', 'bmp?download=true', 'gif?download=true', 'jpg?download=true', 'jpeg?download=true', 'png?download=true', 'pst?download=true', 'psp?download=true', 'tif?download=true', 'tiff?download=true', 'ai?download=true', 'drw?download=true', 'dxf?download=true', 'eps?download=true', 'ps?download=true', 'svg?download=true',
                 'mp3?download=true', 'wma?download=true', 'ogg?download=true', 'wav?download=true', 'ra?download=true', 'aac?download=true', 'mid?download=true', 'au?download=true', 'aiff?download=true',
                 '3gp?download=true', 'asf?download=true', 'asx?download=true', 'avi?download=true', 'mov?download=true', 'mp4?download=true', 'mpg?download=true', 'qt?download=true', 'rm?download=true', 'swf?download=true', 'wmv?download=true', 'm4a?download=true',
-                'css?download=true', 'pdf?download=true', 'doc?download=true', 'exe?download=true', 'bin?download=true', 'rss?download=true', 'zip?download=true', 'rar?download=true', 'msu?download=true', 'flv?download=true'])
+                'css?download=true', 'pdf?download=true', 'doc?download=true', 'exe?download=true', 'bin?download=true', 'rss?download=true', 'zip?download=true', 'rar?download=true', 'msu?download=true', 'flv?download=true', 'dmg?download=true'])
 
     #function to refresh the allowed domain list after adding domains
     def refreshAllowedDomains(self):
