@@ -35,7 +35,7 @@ After downloading and extracting, you need to add a cURL environment variable to
 
 ### Installing
 
-If you are not using Python yet, the easiest way to install Python 3.6 and most of its crucial packages is to use the [Anaconda Distribution](https://www.anaconda.com/download/).
+If you are not using Python yet, the easiest way to install Python 3.6 and most of its crucial packages is to use the [Anaconda Distribution](https://www.anaconda.com/download/). Make sure that a Python environment variable was set during the installation. See [this Stackoverlow thread](https://stackoverflow.com/questions/34030373/anaconda-path-environment-variable-in-windows) if you do not know how to do that. Do the same for the Anaconda script folder in "Anaconda3\Scripts".
 After installing Anaconda, you can use pip to install the packages above by typing “pip install package_name” (e.g., “pip install scrapy”) into your system command prompt. 
 
 
