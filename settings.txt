@@ -1,5 +1,5 @@
 [input-data]
-filepath = I:\!Projekte\BMBF_TOBI_131308\01_Arbeitspakete\01_Webscraper\Working_Paper\Arbeitspakete\MUP_website_depth\MUP_2018_sample.txt
+filepath = I:\!Projekte\BMBF_TOBI_131308\01_Arbeitspakete\01_Webscraper\Webscraper\URLs\MUP_2018_lebende.txt
 delimiter = \t
 encoding = utf-8
 ID = crefo
@@ -9,8 +9,8 @@ url = webadresse
 n_cores = 7
 
 [spider-settings]
-spider = text
-limit = 2500
+spider = link
+limit = 50
 prefer_short_urls = on
 language = German
 log_level = INFO
