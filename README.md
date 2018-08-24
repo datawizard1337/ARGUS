@@ -1,6 +1,7 @@
 # ARGUS
 
 ARGUS is an easy-to-use web mining tool. The program is based on the Scrapy Python framework and is able to crawl a broad range of different websites. On the websites, ARGUS is able to perform tasks like scraping texts or collecting hyperlinks between websites.
+See related paper: http://ftp.zew.de/pub/zew-docs/dp/dp18033.pdf
 
 
 ## Getting Started
