@@ -89,7 +89,6 @@ class TextspiderSpider(scrapy.Spider):
         text.append(["div", [" ".join(response.xpath("//div/text()").extract())]])
         text.append(["tr", [" ".join(response.xpath("//tr/text()").extract())]])
         text.append(["td", [" ".join(response.xpath("//td/text()").extract())]])
-        text.append(["p", [" ".join(response.xpath("//p/text()").extract())]])
         text.append(["font", [" ".join(response.xpath("//font/text()").extract())]])
         text.append(["li", [" ".join(response.xpath("//li/text()").extract())]])
         text.append(["small", [" ".join(response.xpath("//small/text()").extract())]])
