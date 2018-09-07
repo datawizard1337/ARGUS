@@ -1,16 +1,16 @@
 [input-data]
-filepath = I:\!Projekte\BMBF_TOBI_131308\01_Arbeitspakete\01_Webscraper\Webscraper\URLs\MUP_2018_lebende.txt
+filepath = H:\Projekte\20180802_Sachsen_Webscraping\Nachschub\nachschub.txt
 delimiter = \t
 encoding = utf-8
 ID = crefo
-url = webadresse
+url = url
 
 [system]
-n_cores = 7
+n_cores = 1
 
 [spider-settings]
-spider = link
-limit = 50
+spider = text
+limit = 25
 prefer_short_urls = on
 language = German
 log_level = INFO

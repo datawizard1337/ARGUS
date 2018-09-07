@@ -22,6 +22,8 @@ output_files = [os.getcwd() + "\\chunks\\" + f for f in os.listdir(os.getcwd() +
 print("Merging output files to ", config.get('input-data', 'filepath').split(".")[0] + "_scraped.csv", " ...")
 time.sleep(2)
 
+errors = 0
+
 #textspider postprocessing
 if config.get('spider-settings', 'spider') == "text":
 #merge chunks
@@ -43,7 +45,6 @@ if config.get('spider-settings', 'spider') == "text":
         
 #linkspider postprocessing
 elif config.get('spider-settings', 'spider') == "link":
-    errors = 0
     #generate list of all internal (given in user url list) domains
     all_internal_links = []
     for fn in output_files:
