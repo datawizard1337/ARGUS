@@ -24,12 +24,13 @@ Follow these 10 easy steps, which are described in more detail below, to make a 
 
 ARGUS works with Python 3.6, is based on the Scrapy framework and has the following Python package dependencies:
 
-*	Scrapy 1.5.0
-*	scrapyd 1.2.0
-*	scrapyd-client 1.1.0
-*	scrapy-fake-useragent 1.1.0
-*	tldextract 2.2.0
-*	pandas 0.22.0
+*	Scrapy 
+*	scrapyd
+*	scrapyd-client
+*	scrapy-fake-useragent 
+*	tldextract
+*	pandas 
+*   pywin32
 
 Installation of scrapyd required you to install [C++ Build Tools](https://www.microsoft.com/en-US/download/details.aspx?id=48159) first. Additionally, you need [cURL](https://curl.haxx.se/download.html) to communicate with the ARGUS user interface. An executable Windows 64bit version of cURL can be downloaded [here](https://dl.uxnr.de/build/curl/curl_winssl_msys2_mingw64_stc/curl-7.59.0/curl-7.59.0.zip), for example.
 After downloading and extracting, you need to add a cURL environment variable to your system. See [this Stackoverlow thread](https://stackoverflow.com/questions/9507353/how-do-i-install-set-up-and-use-curl-on-windows) if you do not know how to do that.
