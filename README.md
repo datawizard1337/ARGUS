@@ -42,6 +42,8 @@ After installing Anaconda, you can use pip to install the packages above by typi
 
 ## Start Scraping
 
+**Warning: Please make sure that ARGUS and your URL file are not located in directories with paths containing ".", e.g. "C:\my.folder\data.txt"!**
+
 ![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_GUI.PNG?raw=true)
 
 ### File Settings
