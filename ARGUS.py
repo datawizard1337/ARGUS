@@ -225,7 +225,7 @@ tkvar7.trace('w', change_dropdown7)
 # Limit
 tk.Label(master, text="Scrape Limit:", font=("Calibri", 12)).grid(row=4, column=1, sticky=tk.W)
 
-e8 = tk.Spinbox(master, from_=1, to=9999, validate="key", width=9, font=("Calibri", 12))
+e8 = tk.Spinbox(master, from_=0, to=9999, validate="key", width=9, font=("Calibri", 12))
 e8.grid(row=4, column=1, sticky=tk.N + tk.E)
 
 
