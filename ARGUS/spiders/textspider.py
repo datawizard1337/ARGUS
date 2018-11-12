@@ -26,7 +26,7 @@ class TextspiderSpider(scrapy.Spider):
     def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", language="", prefer_short_urls="on", *args, **kwargs):
         super(TextspiderSpider, self).__init__(*args, **kwargs)
         #loads urls and IDs from text file
-        data = pd.read_csv(url_chunk, delimiter="\t", encoding="utf-8", error_bad_lines=False)
+        data = pd.read_csv(url_chunk, delimiter="\t", encoding="utf-8", error_bad_lines=False, engine="python")
         self.allowed_domains = [url.split("www.")[-1].lower() for url in list(data[url_col])]
         self.start_urls = ["http://" + url.lower() for url in self.allowed_domains]
         self.IDs = [ID for ID in list(data[ID])]
