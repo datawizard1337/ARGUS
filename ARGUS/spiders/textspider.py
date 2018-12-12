@@ -294,6 +294,14 @@ class TextspiderSpider(scrapy.Spider):
             #if http client errors
             if response.status > 308:
                 return self.processURLstack(response)
+				
+            #if moved permanently
+            if response.status == 301:
+                return self.processURLstack(response)
+				
+            #if moved temporarily
+            if response.status == 302:
+                return self.processURLstack(response)
         
             #if redirect sent us to an non-allowed domain
             elif self.subdomainGetter(response) not in self.allowed_domains:
