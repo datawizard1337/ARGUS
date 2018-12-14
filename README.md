@@ -54,7 +54,7 @@ After installing Anaconda, you can use pip to install the packages above by typi
 -	**Encoding** – the encoding of your text file.
 -	**Load Columns** – after defining your file, delimiter, and column, hit this button to load column names.
 -	**ID Column** – the field name of your unique website identifier in your website address file.
--	**URL Column** – the field name of your URLs in your website address file.
+-	**URL Column** – the field name of your URLs in your website address file. Make sure there are not empty URL entries (rows) in your data.
 
 ### Web Scraper Settings
 
