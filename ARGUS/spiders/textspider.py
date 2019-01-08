@@ -240,9 +240,10 @@ class TextspiderSpider(scrapy.Spider):
         urlstack = meta["urlstack"]
         fingerprints = meta["fingerprints"]
         
-        #check whether max number of websites has been scraped for this website
-        if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
-            del urlstack[:]
+        #check whether max number of webpages has been scraped for this website
+        if self.site_limit != 0:
+            if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
+                del urlstack[:]
         
         #reorder the urlstack to scrape the most relevant urls first
         urlstack = self.reorderUrlstack(urlstack, self.language, self.prefer_short_urls)
@@ -297,6 +298,23 @@ class TextspiderSpider(scrapy.Spider):
 				
             #if moved permanently
             if response.status == 301:
+			    
+                #revive the loader from the respsonse meta data
+                loader = response.meta["loader"]
+                
+                #check whether this request was redirected to a allowed url which is actually another firm
+                if loader.get_collected_values("start_domain")[0] != self.subdomainGetter(response):
+                    raise ValueError()
+
+                #extract urls and add them to the urlstack
+                urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
+                for url in urls:
+                    response.meta["urlstack"].append(response.urljoin(url))
+                        
+                #add info to collector item
+                loader.add_value("scraped_urls", [response.urljoin(response.url)])
+                    
+                #pass back the updated urlstack    
                 return self.processURLstack(response)
 				
             #if moved temporarily

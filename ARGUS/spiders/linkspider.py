@@ -229,9 +229,11 @@ class LinkspiderSpider(scrapy.Spider):
         urlstack = meta["urlstack"]
         fingerprints = meta["fingerprints"]
         
-        #check whether max number of websites has been scraped for this website
-        if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
-            del urlstack[:]
+        #check whether max number of webpages has been scraped for this website
+        #check whether max number of webpages has been scraped for this website
+        if self.site_limit != 0:
+            if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
+                del urlstack[:]
         
         #reorder the urlstack to scrape the most relevant urls first
         urlstack = self.reorderUrlstack(urlstack, self.language, self.prefer_short_urls)
