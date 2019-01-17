@@ -3,7 +3,7 @@
 ARGUS is an easy-to-use web scraping tool. The program is based on the Scrapy Python framework and is able to crawl a broad range of different websites. On these websites, ARGUS performs tasks like scraping texts or collecting hyperlinks between websites.
 See related paper: http://ftp.zew.de/pub/zew-docs/dp/dp18033.pdf
 
-![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/url_list.PNG?raw=true)
+![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_GUI.PNG?raw=true)
 
 ## Getting Started
 
@@ -49,7 +49,7 @@ After installing Anaconda, you can use pip to install the packages above by typi
 ### File Settings
 
 -	**Browse** – browse for your file containing website URLs and IDs. The file should be without BOM (byte order mark). An easy way to see whether your text file uses BOM is to use [Notepad++](https://notepad-plus-plus.org/) and check the “Encoding” in the top panel. The URLs need to be in the format “www.example.com”. The directory of your URL list will also be used to output the scraped data. An example website address can be found in /misc:
-![example url list](https://github.com/datawizard1337/ARGUS/blob/linkspider/misc/pics/url_list.PNG?raw=true)
+![example url list](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/url_list.PNG?raw=true)
 
 -	**Delimiter** – the type of delimiter your text file uses.
 -	**Encoding** – the encoding of your text file.
