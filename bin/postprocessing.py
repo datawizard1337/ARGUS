@@ -7,6 +7,7 @@ Created on Wed Mar 28 15:55:05 2018
 import configparser
 import os
 import time
+from tkinter import messagebox
 
 
 def postprocessing(cwd=None):
@@ -21,14 +22,15 @@ def postprocessing(cwd=None):
     elif config.get('spider-settings', 'spider') == "link":
         merged_file = open(config.get('input-data', 'filepath').split(".")[0] +   "_scraped_links.csv", "w", encoding="utf-8")
         output = config.get('input-data', 'filepath').split(".")[0] + "_scraped_links.csv"
+    elif config.get('spider-settings', 'spider') == "webarchive":
+        merged_file = open(config.get('input-data', 'filepath').split(".")[0] +   "_webarchive_scraped_texts.csv", "w", encoding="utf-8")
+        output = config.get('input-data', 'filepath').split(".")[0] + "_webarchive_scraped_texts.csv"
     output_files = [cwd + "\\chunks\\" + f for f in os.listdir(cwd + "\\chunks") if f.split("_")[0] == "output"]
 
     len_output_files = len(output_files)
     if len_output_files == 0:
-        print("Nothing found to postprocess.\nMaybe postprocessing was executed already. Check location:\n{}".format(output))
+        messagebox.showinfo("Nothing found to postprocess", "Nothing found to postprocess.\nMaybe postprocessing was executed already. Check location:\n{}".format(output))
         return
-    if len_output_files >= 10:
-        report_ticks = {"5%%": int(len_output_files * 0.05), "15%%": int(len_output_files * 0.15), "25%%": int(len_output_files * 0.25), "50%%": int(len_output_files * 0.50), "75%%": int(len_output_files * 0.75)}
 
     print("Merging output files to ", output , " ...")
     time.sleep(2)
@@ -43,9 +45,20 @@ def postprocessing(cwd=None):
         c=0
         for fn in output_files:
             tick += 1
-            if len_output_files >= 10:
-                if tick in list(report_ticks.values()):
-                    print("Processed {} of files".format(report_ticks[tick]))
+
+            if tick == int(len_output_files * 0.05):
+                print ("Processed 5 % of files")
+            elif tick == int(len_output_files * 0.15):
+                print ("Processed 15 % of files")
+            elif tick == int(len_output_files * 0.25):
+                print ("Processed 25 % of files")
+            elif tick == int(len_output_files * 0.50):
+                print ("Processed 50 % of files")
+            elif tick == int(len_output_files * 0.75):
+                print ("Processed 75 % of files")
+            elif tick == int(len_output_files):
+                print ("Processed 100 % of files")
+            
             f = open(fn, encoding="utf-8")
             #if first file write the column names
             if c == 0:
@@ -59,7 +72,42 @@ def postprocessing(cwd=None):
                     break
                 merged_file.write(line)
             f.close()
-            
+    
+    #webarchive textspider postprocessing
+    if config.get('spider-settings', 'spider') == "webarchive":
+        print("Using webarchive text spider postprocessing procedure. This may take a few minutes...")
+    #merge chunks
+        c=0
+        for fn in output_files:
+            tick += 1
+
+            if tick == int(len_output_files * 0.05):
+                print ("Processed 5 % of files")
+            elif tick == int(len_output_files * 0.15):
+                print ("Processed 15 % of files")
+            elif tick == int(len_output_files * 0.25):
+                print ("Processed 25 % of files")
+            elif tick == int(len_output_files * 0.50):
+                print ("Processed 50 % of files")
+            elif tick == int(len_output_files * 0.75):
+                print ("Processed 75 % of files")
+            elif tick == int(len_output_files):
+                print ("Processed 100 % of files")
+
+            f = open(fn, encoding="utf-8")
+            #if first file write the column names
+            if c == 0:
+                merged_file.write(f.readline())
+                c+=1
+            else:
+                f.readline()
+            while 1:
+                line = f.readline()
+                if not line:
+                    break
+                merged_file.write(line)
+            f.close()
+
     #linkspider postprocessing
     elif config.get('spider-settings', 'spider') == "link":
         print("Using link spider postprocessing procedure. This may take a few minutes...")
@@ -87,10 +135,20 @@ def postprocessing(cwd=None):
         c=0
         for fn in output_files:
             tick += 1
-            if len_output_files >= 10:
-                if tick in list(report_ticks.values()):
-                    print("Processed {} of files".format(report_ticks[tick]))
-            f = open(fn, encoding="utf-8")
+
+            if tick == int(len_output_files * 0.05):
+                print ("Processed 5 % of files")
+            elif tick == int(len_output_files * 0.15):
+                print ("Processed 15 % of files")
+            elif tick == int(len_output_files * 0.25):
+                print ("Processed 25 % of files")
+            elif tick == int(len_output_files * 0.50):
+                print ("Processed 50 % of files")
+            elif tick == int(len_output_files * 0.75):
+                print ("Processed 75 % of files")
+            elif tick == int(len_output_files):
+                print ("Processed 100 % of files")
+            
             #if first chunk write the column names
             if c == 0:
                 line = f.readline().split("\t")
@@ -154,4 +212,4 @@ def postprocessing(cwd=None):
     
     for fn in output_files + chunk_files:
         os.unlink(fn)
-    print("Postprocessing successful. Scraped data can be found:\n{}".format(output))
+    messagebox.showinfo("Postprocessing successful", "Postprocessing successful. Scraped data can be found:\n{}".format(output))
