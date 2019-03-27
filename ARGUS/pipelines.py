@@ -33,6 +33,7 @@ class TextPipeline(object):
     def process_item(self, item, spider):
         #get scraped text from collector item
         scraped_text = item["scraped_text"]
+        header_text = item["header"]
         c=0
         #iterate site chunks
         for sitechunk in scraped_text:
@@ -44,6 +45,7 @@ class TextPipeline(object):
             site["redirect"] = item["redirect"][0]
             site["error"] = item["error"]
             site["ID"] = item["ID"][0]
+            
             
             #generate site text
             site_text = ""
@@ -60,8 +62,25 @@ class TextPipeline(object):
                 #add tag text to site text
                 site_text = site_text + text_piece
             
+            for headchunk in header_text:
+                #generate site text
+                header_text = ""
+                #iterate extracted tag texts, clean them and merge them
+                for tagchunk in headchunk:
+                    text_piece = tagchunk[-1]
+                    text_piece = " ".join(text_piece[0].split())
+                    text_piece = text_piece.replace("\n", "")
+                    text_piece = text_piece.replace("\t", "")
+                    text_piece = text_piece.replace("\r\n", "")
+                    #if empty skip
+                    if text_piece.strip().strip('"') == "":
+                        text_piece = "-"
+                    #add tag text to site text
+                    header_text = header_text + text_piece
+
             #add text and timestamp to exporter item and export it
-            site["text"] = site_text
+            site["text"] = site_text            
+            site["header"] = header_text
             site["timestamp"] = datetime.datetime.fromtimestamp(time.time()).strftime("%c")
             site["dl_rank"] = c
             self.exporter.export_item(site)
