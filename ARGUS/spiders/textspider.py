@@ -105,7 +105,7 @@ class TextspiderSpider(scrapy.Spider):
         text.append(["em", [" ".join(response.xpath("//em/text()").extract())]]) # emphasized text
         return text
 
-    def extractTextMainPage(self, response):
+    def extractHeader(self, response):
         text = []
         text.extend("Title:",)
         text.append(["title", [" ".join(response.xpath("//title/text()").extract())]])
@@ -113,25 +113,6 @@ class TextspiderSpider(scrapy.Spider):
         text.append(["description", [" ".join(response.xpath("//meta[@name=\'description\']/@content").extract())]]) 
         text.extend(";Keywords:")
         text.append(["keywords", [" ".join(response.xpath("//meta[@name=\'keywords\']/@content").extract())]])
-        text.extend(";Text:")
-        text.append(["p", [" ".join(response.xpath("//p/text()").extract())]]) # paragraph
-        text.append(["div", [" ".join(response.xpath("//div/text()").extract())]]) # division
-        text.append(["tr", [" ".join(response.xpath("//tr/text()").extract())]]) # table row
-        text.append(["td", [" ".join(response.xpath("//td/text()").extract())]]) # table data
-        text.append(["th", [" ".join(response.xpath("//th/text()").extract())]]) # table header
-        text.append(["font", [" ".join(response.xpath("//font/text()").extract())]]) # font size, css should be used (only relevant for old websites)
-        text.append(["li", [" ".join(response.xpath("//li/text()").extract())]]) # list item
-        text.append(["small", [" ".join(response.xpath("//small/text()").extract())]]) # barely emphasized text
-        text.append(["strong", [" ".join(response.xpath("//strong/text()").extract())]]) # strongly emphasized text
-        text.append(["h1", [" ".join(response.xpath("//h1/text()").extract())]]) # header
-        text.append(["h2", [" ".join(response.xpath("//h2/text()").extract())]]) # header 
-        text.append(["h3", [" ".join(response.xpath("//h3/text()").extract())]]) # header
-        text.append(["h4", [" ".join(response.xpath("//h4/text()").extract())]]) # header
-        text.append(["h5", [" ".join(response.xpath("//h5/text()").extract())]]) # header
-        text.append(["h6", [" ".join(response.xpath("//h6/text()").extract())]]) # header
-        text.append(["span", [" ".join(response.xpath("//span/text()").extract())]]) # division for styling
-        text.append(["b", [" ".join(response.xpath("//b/text()").extract())]]) # bold text
-        text.append(["em", [" ".join(response.xpath("//em/text()").extract())]]) # emphasized text 
         return text
 
 
@@ -181,6 +162,7 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
+            loader.add_value("header", "")
             loader.add_value("error", response.status)
             loader.add_value("ID", response.request.meta["ID"])
             yield loader.load_item()
@@ -191,6 +173,7 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
+            loader.add_value("header", "")
             loader.add_value("error", "DNS")
             loader.add_value("ID", request.meta["ID"])
             yield loader.load_item() 
@@ -201,6 +184,7 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
+            loader.add_value("header", "")
             loader.add_value("error", "Timeout")
             loader.add_value("ID", request.meta["ID"])
             yield loader.load_item()
@@ -211,6 +195,7 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
+            loader.add_value("header", "")
             loader.add_value("error", "other")
             loader.add_value("ID", request.meta["ID"])
             yield loader.load_item()
@@ -230,7 +215,8 @@ class TextspiderSpider(scrapy.Spider):
         loader.add_value("start_domain", self.subdomainGetter(response))  
         loader.add_value("scraped_urls", [response.urljoin(response.url)])
         loader.add_value("scrape_counter", 1)
-        loader.add_value("scraped_text", [self.extractTextMainPage(response)])
+        loader.add_value("scraped_text", [self.extractText(response)])
+        loader.add_value("header", [self.extractHeader(response)])
         loader.add_value("error", "None")
         loader.add_value("ID", response.request.meta["ID"])
 
@@ -322,7 +308,6 @@ class TextspiderSpider(scrapy.Spider):
         #try to catch some errors
         try:
             #opt out and fall back to processURLstack
-            textcheck = self.extractText(response)        
 
             #if http client errors
             if response.status > 308:
@@ -384,8 +369,9 @@ class TextspiderSpider(scrapy.Spider):
             #add info to collector item
             loader.replace_value("scrape_counter", loader.get_collected_values("scrape_counter")[0]+1)
             loader.add_value("scraped_urls", [response.urljoin(response.url)])
-            loader.add_value("scraped_text", [textcheck])
-
+            loader.add_value("scraped_text", [self.extractText(response)])
+            loader.add_value("header", [self.extractHeader(response)])
+    
             #pass back the updated urlstack
             return self.processURLstack(response)
             
