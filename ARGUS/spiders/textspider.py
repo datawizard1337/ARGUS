@@ -105,15 +105,12 @@ class TextspiderSpider(scrapy.Spider):
         text.append(["em", [" ".join(response.xpath("//em/text()").extract())]]) # emphasized text
         return text
 
+    #function which extracts and returs meta information
     def extractHeader(self, response):
-        text = []
-        text.extend("Title:",)
-        text.append(["title", [" ".join(response.xpath("//title/text()").extract())]])
-        text.extend(";Description:")
-        text.append(["description", [" ".join(response.xpath("//meta[@name=\'description\']/@content").extract())]]) 
-        text.extend(";Keywords:")
-        text.append(["keywords", [" ".join(response.xpath("//meta[@name=\'keywords\']/@content").extract())]])
-        return text
+        title = " ".join(response.xpath("//title/text()").extract())
+        description = " ".join(response.xpath("//meta[@name=\'description\']/@content").extract())
+        keywords = " ".join(response.xpath("//meta[@name=\'keywords\']/@content").extract())
+        return title, description, keywords
 
 
     #function which reorders the urlstack, giving highest priority to short urls and language tagged urls
@@ -162,7 +159,9 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
-            loader.add_value("header", "")
+            loader.add_value("title", "")
+            loader.add_value("description", "")
+            loader.add_value("keywords", "")
             loader.add_value("error", response.status)
             loader.add_value("ID", response.request.meta["ID"])
             yield loader.load_item()
@@ -173,7 +172,9 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
-            loader.add_value("header", "")
+            loader.add_value("title", "")
+            loader.add_value("description", "")
+            loader.add_value("keywords", "")
             loader.add_value("error", "DNS")
             loader.add_value("ID", request.meta["ID"])
             yield loader.load_item() 
@@ -184,7 +185,9 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
-            loader.add_value("header", "")
+            loader.add_value("title", "")
+            loader.add_value("description", "")
+            loader.add_value("keywords", "")
             loader.add_value("error", "Timeout")
             loader.add_value("ID", request.meta["ID"])
             yield loader.load_item()
@@ -195,7 +198,9 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
-            loader.add_value("header", "")
+            loader.add_value("title", "")
+            loader.add_value("description", "")
+            loader.add_value("keywords", "")
             loader.add_value("error", "other")
             loader.add_value("ID", request.meta["ID"])
             yield loader.load_item()
@@ -216,7 +221,10 @@ class TextspiderSpider(scrapy.Spider):
         loader.add_value("scraped_urls", [response.urljoin(response.url)])
         loader.add_value("scrape_counter", 1)
         loader.add_value("scraped_text", [self.extractText(response)])
-        loader.add_value("header", [self.extractHeader(response)])
+        title, description, keywords = self.extractHeader(response)
+        loader.add_value("title", title)
+        loader.add_value("description", description)
+        loader.add_value("keywords", keywords)
         loader.add_value("error", "None")
         loader.add_value("ID", response.request.meta["ID"])
 

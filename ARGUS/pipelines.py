@@ -22,6 +22,7 @@ class TextPipeline(object):
         except:
             self.fileobj = open(os.getcwd() +"\\chunks\\output_" + chunk + ".csv", "wb")
         self.exporter = CsvItemExporter(self.fileobj, encoding='utf-8', delimiter="\t")
+        self.exporter.fields_to_export = ["ID", "dl_rank", "dl_slot", "error", "redirect", "start_page", "title", "keywords", "description", "text", "timestamp", "url"]
         self.exporter.start_exporting()
     
     #close file when finished
@@ -33,7 +34,6 @@ class TextPipeline(object):
     def process_item(self, item, spider):
         #get scraped text from collector item
         scraped_text = item["scraped_text"]
-        header_text = item["header"]
         c=0
         #iterate site chunks
         for sitechunk in scraped_text:
@@ -46,6 +46,11 @@ class TextPipeline(object):
             site["error"] = item["error"]
             site["ID"] = item["ID"][0]
             
+            # if this is the main page, add title, description, and keywords to the output
+            if c == 0:
+                site["title"] = " ".join(item["title"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
+                site["description"] = " ".join(item["description"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
+                site["keywords"] = " ".join(item["keywords"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
             
             #generate site text
             site_text = ""
@@ -61,26 +66,9 @@ class TextPipeline(object):
                     continue
                 #add tag text to site text
                 site_text = site_text + text_piece
-            
-            for headchunk in header_text:
-                #generate site text
-                header_text = ""
-                #iterate extracted tag texts, clean them and merge them
-                for tagchunk in headchunk:
-                    text_piece = tagchunk[-1]
-                    text_piece = " ".join(text_piece[0].split())
-                    text_piece = text_piece.replace("\n", "")
-                    text_piece = text_piece.replace("\t", "")
-                    text_piece = text_piece.replace("\r\n", "")
-                    #if empty skip
-                    if text_piece.strip().strip('"') == "":
-                        text_piece = "-"
-                    #add tag text to site text
-                    header_text = header_text + text_piece
 
             #add text and timestamp to exporter item and export it
             site["text"] = site_text            
-            site["header"] = header_text
             site["timestamp"] = datetime.datetime.fromtimestamp(time.time()).strftime("%c")
             site["dl_rank"] = c
             self.exporter.export_item(site)
@@ -119,6 +107,9 @@ class LinkPipeline(object):
         site["error"] = item["error"]
         site["ID"] = item["ID"][0]
         site["alias"] = item["alias"][0]
+        site["title"] = " ".join(item["title"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
+        site["description"] = " ".join(item["description"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
+        site["keywords"] = " ".join(item["keywords"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
         site["timestamp"] = datetime.datetime.fromtimestamp(time.time()).strftime("%c")
         links = []
         #iterate site chunks
@@ -134,30 +125,3 @@ class LinkPipeline(object):
         self.exporter.export_item(site)
 
         return
-
-
-
-
-
-
-
-
-##################################################################
-# OLD CODE
-##################################################################
-
-
-        #        #Connect to an existing database
-#        conn = psycopg2.connect("dbname=test user=postgres")
-#        # Open a cursor to perform database operations
-#        cur = conn.cursor()
-#        
-#        # Check if table exists. If not, create it.
-#        cur.execute("CREATE TABLE IF NOT EXISTS testtable (id serial PRIMARY KEY, original_url varchar, url varchar, scrape_starttime timestamp, text varchar);")
-#        
-      #            cur.execute("INSERT INTO testtable (original_url, url, scrape_starttime, text) VALUES (%s, %s, %s, %s)", (original_url, url, scrape_starttime, site_text))
-#           
-#        conn.commit()
-#        cur.close()
-#        conn.close()
-#        item["scraped_text"] = "" 
