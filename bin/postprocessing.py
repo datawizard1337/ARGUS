@@ -147,7 +147,7 @@ def postprocessing(cwd=None):
                 print ("Processed 75 % of files")
             elif tick == int(len_output_files):
                 print ("Processed 100 % of files")
-                
+            
             f = open(fn, encoding="utf-8")
             #if first chunk write the column names
             if c == 0:

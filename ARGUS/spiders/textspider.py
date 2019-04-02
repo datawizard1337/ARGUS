@@ -67,7 +67,7 @@ class TextspiderSpider(scrapy.Spider):
                 return domain
             else:
                 domain = tld.registered_domain
-                return domain            
+                return domain
         #if scrapy response object
         else:
             tld = tldextract.extract(response.url)
@@ -85,26 +85,34 @@ class TextspiderSpider(scrapy.Spider):
     #function which extracts text using tags
     def extractText(self, response):
         text = []
-        text.append(["p", [" ".join(response.xpath("//p/text()").extract())]])
-        text.append(["div", [" ".join(response.xpath("//div/text()").extract())]])
-        text.append(["tr", [" ".join(response.xpath("//tr/text()").extract())]])
-        text.append(["td", [" ".join(response.xpath("//td/text()").extract())]])
-        text.append(["font", [" ".join(response.xpath("//font/text()").extract())]])
-        text.append(["li", [" ".join(response.xpath("//li/text()").extract())]])
-        text.append(["small", [" ".join(response.xpath("//small/text()").extract())]])
-        text.append(["strong", [" ".join(response.xpath("//strong/text()").extract())]])
-        text.append(["h1", [" ".join(response.xpath("//h1/text()").extract())]])
-        text.append(["h2", [" ".join(response.xpath("//h2/text()").extract())]])
-        text.append(["h3", [" ".join(response.xpath("//h3/text()").extract())]])
-        text.append(["h4", [" ".join(response.xpath("//h4/text()").extract())]])
-        text.append(["h5", [" ".join(response.xpath("//h5/text()").extract())]])
-        text.append(["h6", [" ".join(response.xpath("//h6/text()").extract())]])
-        text.append(["span", [" ".join(response.xpath("//span/text()").extract())]])
-        text.append(["b", [" ".join(response.xpath("//b/text()").extract())]])
-        text.append(["em", [" ".join(response.xpath("//em/text()").extract())]])
-        
+        text.append(["p", [" ".join(response.xpath("//p/text()").extract())]]) # paragraph
+        text.append(["div", [" ".join(response.xpath("//div/text()").extract())]]) # division
+        text.append(["tr", [" ".join(response.xpath("//tr/text()").extract())]]) # table row
+        text.append(["td", [" ".join(response.xpath("//td/text()").extract())]]) # table data
+        text.append(["th", [" ".join(response.xpath("//th/text()").extract())]]) # table header
+        text.append(["font", [" ".join(response.xpath("//font/text()").extract())]]) # font size, css should be used (only relevant for old websites)
+        text.append(["li", [" ".join(response.xpath("//li/text()").extract())]]) # list item
+        text.append(["small", [" ".join(response.xpath("//small/text()").extract())]]) # barely emphasized text
+        text.append(["strong", [" ".join(response.xpath("//strong/text()").extract())]]) # strongly emphasized text
+        text.append(["h1", [" ".join(response.xpath("//h1/text()").extract())]]) # header
+        text.append(["h2", [" ".join(response.xpath("//h2/text()").extract())]]) # header 
+        text.append(["h3", [" ".join(response.xpath("//h3/text()").extract())]]) # header
+        text.append(["h4", [" ".join(response.xpath("//h4/text()").extract())]]) # header
+        text.append(["h5", [" ".join(response.xpath("//h5/text()").extract())]]) # header
+        text.append(["h6", [" ".join(response.xpath("//h6/text()").extract())]]) # header
+        text.append(["span", [" ".join(response.xpath("//span/text()").extract())]]) # division for styling
+        text.append(["b", [" ".join(response.xpath("//b/text()").extract())]]) # bold text
+        text.append(["em", [" ".join(response.xpath("//em/text()").extract())]]) # emphasized text
         return text
-    
+
+    #function which extracts and returs meta information
+    def extractHeader(self, response):
+        title = " ".join(response.xpath("//title/text()").extract())
+        description = " ".join(response.xpath("//meta[@name=\'description\']/@content").extract())
+        keywords = " ".join(response.xpath("//meta[@name=\'keywords\']/@content").extract())
+        return title, description, keywords
+
+
     #function which reorders the urlstack, giving highest priority to short urls and language tagged urls
     def reorderUrlstack(self, urlstack, language, prefer_short_urls):
        preferred_language = []
@@ -140,7 +148,7 @@ class TextspiderSpider(scrapy.Spider):
             i += 1
             ID = self.IDs[i]
             yield scrapy.Request(url, callback=self.parse, meta={"ID": ID}, dont_filter=True, errback=self.errorback)
-    
+  
     #errorback creates an collector item, records the error type, and passes it to the pipeline   
     def errorback(self, failure):
         loader = ItemLoader(item=Collector())
@@ -151,6 +159,9 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
+            loader.add_value("title", "")
+            loader.add_value("description", "")
+            loader.add_value("keywords", "")
             loader.add_value("error", response.status)
             loader.add_value("ID", response.request.meta["ID"])
             yield loader.load_item()
@@ -161,6 +172,9 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
+            loader.add_value("title", "")
+            loader.add_value("description", "")
+            loader.add_value("keywords", "")
             loader.add_value("error", "DNS")
             loader.add_value("ID", request.meta["ID"])
             yield loader.load_item() 
@@ -171,6 +185,9 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
+            loader.add_value("title", "")
+            loader.add_value("description", "")
+            loader.add_value("keywords", "")
             loader.add_value("error", "Timeout")
             loader.add_value("ID", request.meta["ID"])
             yield loader.load_item()
@@ -181,6 +198,9 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("scraped_urls", "")
             loader.add_value("redirect", [None])
             loader.add_value("scraped_text", "")
+            loader.add_value("title", "")
+            loader.add_value("description", "")
+            loader.add_value("keywords", "")
             loader.add_value("error", "other")
             loader.add_value("ID", request.meta["ID"])
             yield loader.load_item()
@@ -201,6 +221,10 @@ class TextspiderSpider(scrapy.Spider):
         loader.add_value("scraped_urls", [response.urljoin(response.url)])
         loader.add_value("scrape_counter", 1)
         loader.add_value("scraped_text", [self.extractText(response)])
+        title, description, keywords = self.extractHeader(response)
+        loader.add_value("title", title)
+        loader.add_value("description", description)
+        loader.add_value("keywords", keywords)
         loader.add_value("error", "None")
         loader.add_value("ID", response.request.meta["ID"])
 
@@ -218,7 +242,7 @@ class TextspiderSpider(scrapy.Spider):
         #extract all urls from the page...
         urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
         #...and safe them to a urlstack
-        urlstack = [response.urljoin(url) for url in urls]   
+        urlstack = [response.urljoin(url) for url in urls]
             
         #attach the urlstack, the loader, and the fingerprints to the response...        
         response.meta["urlstack"] = urlstack
@@ -240,7 +264,7 @@ class TextspiderSpider(scrapy.Spider):
         urlstack = meta["urlstack"]
         fingerprints = meta["fingerprints"]
         
-        #check whether max number of webpages has been scraped for this website
+        #check whether max number of websites has been scraped for this website
         if self.site_limit != 0:
             if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
                 del urlstack[:]
@@ -267,10 +291,10 @@ class TextspiderSpider(scrapy.Spider):
             else:
                 break
 
-        #if the url was assessed to be valid, send out a request and callbak the parse_subpage function
+        #if the url was assessed to be valid, send out a request and callback the parse_subpage function
         #errbacks return to processURLstack
         #ALLOW ALL HTTP STATUS: 
-        #errors must to be catched in the callback function, because middleware catched request break the sequence and collector items get lost
+        #errors must be caught in the callback function, because middleware caught request break the sequence and collector items get lost
         if len(urlstack) > 0:
             yield scrapy.Request(urlstack.pop(0), meta={"loader": loader, "urlstack": urlstack, "fingerprints": fingerprints, 'handle_httpstatus_all': True}, dont_filter=True, callback=self.parse_subpage, errback=self.processURLstack)
         #if there are no urls left in the urlstack, the website was scraped completely and the item can be sent to the pipeline
@@ -286,48 +310,26 @@ class TextspiderSpider(scrapy.Spider):
         #check again
         if request_fingerprint(response.request) in response.meta["fingerprints"]:
             return self.processURLstack(response)
+        
         #save the fingerprint to mark the page as read
         response.meta["fingerprints"].add(request_fingerprint(response.request))
         
+
         #try to catch some errors
         try:
             #opt out and fall back to processURLstack
+
             #if http client errors
             if response.status > 308:
-                return self.processURLstack(response)
-				
-            #if moved permanently
-            if response.status == 301:
-			    
-                #revive the loader from the respsonse meta data
-                loader = response.meta["loader"]
-                
-                #check whether this request was redirected to a allowed url which is actually another firm
-                if loader.get_collected_values("start_domain")[0] != self.subdomainGetter(response):
-                    raise ValueError()
-
-                #extract urls and add them to the urlstack
-                urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
-                for url in urls:
-                    response.meta["urlstack"].append(response.urljoin(url))
-                        
-                #add info to collector item
-                loader.add_value("scraped_urls", [response.urljoin(response.url)])
-                    
-                #pass back the updated urlstack    
-                return self.processURLstack(response)
-				
-            #if moved temporarily
-            if response.status == 302:
                 return self.processURLstack(response)
         
             #if redirect sent us to an non-allowed domain
             elif self.subdomainGetter(response) not in self.allowed_domains:
                 return self.processURLstack(response)
-        
-            #if everything is cool, do the normal stuff
-            else:
-                #revive the loader from the respsonse meta data
+
+            #skip broken urls
+            if response.status == 301:                         
+                #revive the loader from the response meta data
                 loader = response.meta["loader"]
                 
                 #check whether this request was redirected to a allowed url which is actually another firm
@@ -338,14 +340,52 @@ class TextspiderSpider(scrapy.Spider):
                 urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
                 for url in urls:
                     response.meta["urlstack"].append(response.urljoin(url))
-                        
+
                 #add info to collector item
-                loader.replace_value("scrape_counter", loader.get_collected_values("scrape_counter")[0]+1)
                 loader.add_value("scraped_urls", [response.urljoin(response.url)])
-                loader.add_value("scraped_text", [self.extractText(response)])
-                    
                 #pass back the updated urlstack    
                 return self.processURLstack(response)
+
+           
+            if response.status == 302:                        
+                #revive the loader from the response meta data
+                loader = response.meta["loader"]
+                
+                #check whether this request was redirected to a allowed url which is actually another firm
+                if loader.get_collected_values("start_domain")[0] != self.subdomainGetter(response):
+                    raise ValueError()
+
+                #extract urls and add them to the urlstack
+                urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
+                for url in urls:
+                    response.meta["urlstack"].append(response.urljoin(url))
+                                        
+                #pass back the updated urlstack    
+                return self.processURLstack(response)
+
+
+            #if everything is cool, do the normal stuff
+            else:
+                #revive the loader from the response meta data
+                loader = response.meta["loader"]
+                
+                #check whether this request was redirected to an allowed url which is actually another firm
+                if loader.get_collected_values("start_domain")[0] != self.subdomainGetter(response):
+                    raise ValueError()
+
+            #extract urls and add them to the urlstack
+            urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
+            for url in urls:
+                response.meta["urlstack"].append(response.urljoin(url))
+
+            #add info to collector item
+            loader.replace_value("scrape_counter", loader.get_collected_values("scrape_counter")[0]+1)
+            loader.add_value("scraped_urls", [response.urljoin(response.url)])
+            loader.add_value("scraped_text", [self.extractText(response)])
+            loader.add_value("header", [self.extractHeader(response)])
+    
+            #pass back the updated urlstack
+            return self.processURLstack(response)
             
         #in case of errors, opt out and fall back to processURLstack
         except:

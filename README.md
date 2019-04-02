@@ -118,6 +118,9 @@ One row equals one webpage and n (n ≤ **Scrape limit**) webpages equal one web
 *	**error** – not “None” if there was an error requesting the website’s main page. Can be an HTML error (e.g., “404”), DNS lookup error, or a timeout.
 *	**redirect** – is “True” if there was a redirect to another domain when requesting the first webpage from a website. This may indicate that ARGUS scraped a different website than intended. However, it may also be a less severe redirect like “www.example.de” to “www.example.com”. It is your responsibility to deal with redirects.
 *	**start_page** – gives you the first webpage that was scraped from this website. Usually, this should be the URL given in your website address file.
+*	**title** – the title of the website as indicated in the website's meta data (this column is filled for dl_rank == 0 webpages, i.e. the homepage).
+*	**keywords** – the title of the website as indicated in the website's meta data (this column is filled for dl_rank == 0 webpages, i.e. the homepage).
+*	**description** – the title of the website as indicated in the website's meta data (this column is filled for dl_rank == 0 webpages, i.e. the homepage).
 *	**text** – the text that was downloaded from the webpage.
 *	**timestamp** – the exact time when the webpage was downloaded.
 *	**url** – the URL of the webpage.
