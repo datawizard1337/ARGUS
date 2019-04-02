@@ -265,8 +265,9 @@ class TextspiderSpider(scrapy.Spider):
         fingerprints = meta["fingerprints"]
         
         #check whether max number of websites has been scraped for this website
-        if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
-            del urlstack[:]
+        if self.site_limit != 0:
+            if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
+                del urlstack[:]
         
         #reorder the urlstack to scrape the most relevant urls first
         urlstack = self.reorderUrlstack(urlstack, self.language, self.prefer_short_urls)
@@ -309,6 +310,7 @@ class TextspiderSpider(scrapy.Spider):
         #check again
         if request_fingerprint(response.request) in response.meta["fingerprints"]:
             return self.processURLstack(response)
+        
         #save the fingerprint to mark the page as read
         response.meta["fingerprints"].add(request_fingerprint(response.request))
         
@@ -338,7 +340,9 @@ class TextspiderSpider(scrapy.Spider):
                 urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
                 for url in urls:
                     response.meta["urlstack"].append(response.urljoin(url))
-                                        
+
+                #add info to collector item
+                loader.add_value("scraped_urls", [response.urljoin(response.url)])
                 #pass back the updated urlstack    
                 return self.processURLstack(response)
 
