@@ -49,9 +49,6 @@ class LinkCollector(scrapy.Item):
     error = scrapy.Field()
     links = scrapy.Field()
     alias = scrapy.Field()
-    title = scrapy.Field()
-    description = scrapy.Field()
-    keywords = scrapy.Field()
     pass
 
 class LinkExporter(scrapy.Item):
@@ -63,7 +60,4 @@ class LinkExporter(scrapy.Item):
     error = scrapy.Field()
     links = scrapy.Field()
     alias = scrapy.Field()
-    title = scrapy.Field()
-    description = scrapy.Field()
-    keywords = scrapy.Field()
     pass 

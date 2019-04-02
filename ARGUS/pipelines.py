@@ -48,9 +48,12 @@ class TextPipeline(object):
             
             # if this is the main page, add title, description, and keywords to the output
             if c == 0:
-                site["title"] = " ".join(item["title"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
-                site["description"] = " ".join(item["description"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
-                site["keywords"] = " ".join(item["keywords"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
+                title = " ".join(item["title"])
+                description = " ".join(item["description"])
+                keywords = " ".join(item["keywords"])
+                site["title"] = title.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
+                site["description"] = description.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
+                site["keywords"] = keywords.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
             
             #generate site text
             site_text = ""
@@ -58,9 +61,7 @@ class TextPipeline(object):
             for tagchunk in sitechunk:
                 text_piece = tagchunk[-1]
                 text_piece = " ".join(text_piece[0].split())
-                text_piece = text_piece.replace("\n", "")
-                text_piece = text_piece.replace("\t", "")
-                text_piece = text_piece.replace("\r\n", "")
+                text_piece = text_piece.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
                 #if empty skip
                 if text_piece.strip().strip('"') == "":
                     continue
@@ -106,9 +107,6 @@ class LinkPipeline(object):
         site["redirect"] = item["redirect"][0]
         site["error"] = item["error"]
         site["ID"] = item["ID"][0]
-        site["alias"] = item["alias"][0]
-        site["title"] = " ".join(item["title"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
-        site["description"] = " ".join(item["description"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
         site["keywords"] = " ".join(item["keywords"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
         site["timestamp"] = datetime.datetime.fromtimestamp(time.time()).strftime("%c")
         links = []
