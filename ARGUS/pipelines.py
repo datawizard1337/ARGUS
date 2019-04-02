@@ -107,7 +107,7 @@ class LinkPipeline(object):
         site["redirect"] = item["redirect"][0]
         site["error"] = item["error"]
         site["ID"] = item["ID"][0]
-        site["keywords"] = " ".join(item["keywords"]).replace("\n", "").replace("\t", "").replace("\r\n", "")
+        site["alias"] = item["alias"][0]
         site["timestamp"] = datetime.datetime.fromtimestamp(time.time()).strftime("%c")
         links = []
         #iterate site chunks
