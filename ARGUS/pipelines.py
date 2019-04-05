@@ -46,14 +46,13 @@ class TextPipeline(object):
             site["error"] = item["error"]
             site["ID"] = item["ID"][0]
             
-            # if this is the main page, add title, description, and keywords to the output
-            if c == 0:
-                title = " ".join(item["title"])
-                description = " ".join(item["description"])
-                keywords = " ".join(item["keywords"])
-                site["title"] = title.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
-                site["description"] = description.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
-                site["keywords"] = keywords.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
+            # add title, description, and keywords to the output
+            title = item["title"][c]
+            description = item["description"][c]
+            keywords = item["keywords"][c]
+            site["title"] = title.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
+            site["description"] = description.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
+            site["keywords"] = keywords.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
             
             #generate site text
             site_text = ""

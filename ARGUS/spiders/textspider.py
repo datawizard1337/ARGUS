@@ -222,9 +222,9 @@ class TextspiderSpider(scrapy.Spider):
         loader.add_value("scrape_counter", 1)
         loader.add_value("scraped_text", [self.extractText(response)])
         title, description, keywords = self.extractHeader(response)
-        loader.add_value("title", title)
-        loader.add_value("description", description)
-        loader.add_value("keywords", keywords)
+        loader.add_value("title", [title])
+        loader.add_value("description", [description])
+        loader.add_value("keywords", [keywords])
         loader.add_value("error", "None")
         loader.add_value("ID", response.request.meta["ID"])
 
@@ -373,19 +373,22 @@ class TextspiderSpider(scrapy.Spider):
                 if loader.get_collected_values("start_domain")[0] != self.subdomainGetter(response):
                     raise ValueError()
 
-            #extract urls and add them to the urlstack
-            urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
-            for url in urls:
-                response.meta["urlstack"].append(response.urljoin(url))
-
-            #add info to collector item
-            loader.replace_value("scrape_counter", loader.get_collected_values("scrape_counter")[0]+1)
-            loader.add_value("scraped_urls", [response.urljoin(response.url)])
-            loader.add_value("scraped_text", [self.extractText(response)])
-            loader.add_value("header", [self.extractHeader(response)])
+                #extract urls and add them to the urlstack
+                urls = response.xpath("//a/@href").extract() + response.xpath("//frame/@src").extract() + response.xpath("//frameset/@src").extract()
+                for url in urls:
+                    response.meta["urlstack"].append(response.urljoin(url))
     
-            #pass back the updated urlstack
-            return self.processURLstack(response)
+                #add info to collector item
+                loader.replace_value("scrape_counter", loader.get_collected_values("scrape_counter")[0]+1)
+                loader.add_value("scraped_urls", [response.urljoin(response.url)])
+                loader.add_value("scraped_text", [self.extractText(response)])
+                title, description, keywords = self.extractHeader(response)
+                loader.add_value("title", [title])
+                loader.add_value("description", [description])
+                loader.add_value("keywords", [keywords])
+            
+                #pass back the updated urlstack
+                return self.processURLstack(response)
             
         #in case of errors, opt out and fall back to processURLstack
         except:
