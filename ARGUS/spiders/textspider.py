@@ -341,8 +341,6 @@ class TextspiderSpider(scrapy.Spider):
                 for url in urls:
                     response.meta["urlstack"].append(response.urljoin(url))
 
-                #add info to collector item
-                loader.add_value("scraped_urls", [response.urljoin(response.url)])
                 #pass back the updated urlstack    
                 return self.processURLstack(response)
 
