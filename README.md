@@ -3,7 +3,7 @@
 ARGUS is an easy-to-use web scraping tool. The program is based on the Scrapy Python framework and is able to crawl a broad range of different websites. On these websites, ARGUS performs tasks like scraping texts or collecting hyperlinks between websites.
 See related paper: http://ftp.zew.de/pub/zew-docs/dp/dp18033.pdf
 
-![ARGUS_LOGO](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_logo.PNG?raw=true)
+![ARGUS_LOGO](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_logo.png?raw=true)
 
 ## Getting Started
 
