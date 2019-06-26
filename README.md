@@ -12,7 +12,7 @@ See related paper: http://ftp.zew.de/pub/zew-docs/dp/dp18033.pdf
 These instructions will get you a copy of ARGUS up and running on your local machine.
 
 Follow these 10 easy steps, which are described in more detail below, to make a successfull ARGUS scraping run:
-1.  Install Python 3.6
+1.  Install Python 3.6 or newer
 2.  Install additional Python packages (see Prerequisites below).
 3.  Install cURL and add a cURL environment variable to your system (see below).
 4.  Download and extract the ARGUS files.
