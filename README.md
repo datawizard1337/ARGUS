@@ -7,6 +7,10 @@
 ARGUS is an easy-to-use web scraping tool. The program is based on the Scrapy Python framework and is able to crawl a broad range of different websites. On these websites, ARGUS performs tasks like scraping texts or collecting hyperlinks between websites.
 See related paper: http://ftp.zew.de/pub/zew-docs/dp/dp18033.pdf
 
+Here you can find two scientific papers using ARGUS scraped web data: 
+"Predicting Innovative Firms using Web Mining and Deep Learning" http://ftp.zew.de/pub/zew-docs/dp/dp19001.pdf 
+"The Digital Layer: How innovative firms relate on the Web"  http://ftp.zew.de/pub/zew-docs/dp/dp20003.pdf
+
 ## Getting Started
 
 These instructions will get you a copy of ARGUS up and running on your local machine.
