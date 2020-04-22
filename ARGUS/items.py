@@ -61,3 +61,37 @@ class LinkExporter(scrapy.Item):
     links = scrapy.Field()
     alias = scrapy.Field()
     pass 
+
+class DualCollector(scrapy.Item):
+    ID = scrapy.Field()
+    dl_slot = scrapy.Field()
+    start_page = scrapy.Field()
+    start_domain = scrapy.Field()
+    redirect = scrapy.Field()
+    scraped_urls = scrapy.Field()
+    scraped_text = scrapy.Field()
+    title = scrapy.Field()
+    description = scrapy.Field()
+    keywords = scrapy.Field()
+    scrape_counter = scrapy.Field()
+    error = scrapy.Field()
+    links = scrapy.Field()
+    alias = scrapy.Field()
+    pass
+
+class DualExporter(scrapy.Item):
+    ID = scrapy.Field()
+    dl_slot = scrapy.Field()
+    redirect = scrapy.Field()
+    start_page = scrapy.Field()
+    url = scrapy.Field()
+    timestamp = scrapy.Field()
+    text = scrapy.Field()
+    error = scrapy.Field()
+    dl_rank = scrapy.Field()
+    title = scrapy.Field()
+    description = scrapy.Field()
+    keywords = scrapy.Field()
+    links = scrapy.Field()
+    alias = scrapy.Field()
+    pass

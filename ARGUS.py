@@ -209,7 +209,7 @@ e7 = tk.Entry(master)
 
 tkvar7 = tk.StringVar(master)
 tkvar7.set("Select") # set the default option
-spiders = ["text", "link"]
+spiders = ["text", "link", "dual"]
 popupMenu7 = tk.OptionMenu(master, tkvar7, *spiders)
 popupMenu7.grid(row=3, column=1, sticky=tk.E)
 popupMenu7.config(font=("Calibri", 12))

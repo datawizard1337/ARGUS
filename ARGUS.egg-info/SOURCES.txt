@@ -11,5 +11,6 @@ ARGUS.egg-info/dependency_links.txt
 ARGUS.egg-info/entry_points.txt
 ARGUS.egg-info/top_level.txt
 ARGUS/spiders/__init__.py
+ARGUS/spiders/dualspider.py
 ARGUS/spiders/linkspider.py
 ARGUS/spiders/textspider.py

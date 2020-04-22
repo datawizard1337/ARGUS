@@ -69,7 +69,12 @@ def start_crawl():
 			elif config.get('spider-settings', 'spider') == "link":
 				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=linkspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={}"
 						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls')))
+			#schedule dual
+			elif config.get('spider-settings', 'spider') == "dual":
+				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=dualspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={}"
+						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls')))
 
+						   
 		print("Scheduled ", n_url_chunks, " spiders to scrape your URLs.\nOpening web interface...")
 		time.sleep(3)
 		webbrowser.open("http://127.0.0.1:6800/", new=0, autoraise=True)
