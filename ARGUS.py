@@ -2,18 +2,23 @@
 
 ### The GUI provides the possibility to change the settings for scraping without having to change the txt-file manually, as well as an easier way of initiating the program.
 ### runs on Python 3.6
-### author: Sebastian Schmidt
-
-
+### author: Jan Kinne, Sebastian Schmidt
 
 
 import os
 import sys
-from tkinter import filedialog
-import tkinter.messagebox
-import tkinter as tk
 import pandas as pd
 import time
+import datetime
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import messagebox
+from tkinter import ttk
+import tkinter.messagebox
+#from tkcalendar import Calendar, DateEntry
+from PIL import Image
+from PIL import ImageTk
+
 
 
 
@@ -29,7 +34,7 @@ clear()
 print("""
 ##################################################
 #    _______  ______  ______ _     _ _______     #
-#    |_____| |_____/ |  ____ |     | |____       #
+#    |_____| |_____/ |  ____ |     | |_____      #
 #    |     | |    \_ |_____| |_____| ______|     #
 #                                                #
 # Automated Robot for Generic Universal Scraping #
@@ -50,9 +55,10 @@ master.iconbitmap(r'.\misc\ARGUS.ico')
 
 
 
+
 ##### FILE SELECT #####
 
-tk.Label(master, text="File Settings", font=("Calibri", 16)).grid(row=0, column=0, sticky=tk.N)
+tk.Label(master, text="File Settings", font=("Calibri bold", 16)).grid(row=0, column=0, sticky=tk.W + tk.E)
 
 
 # List name
@@ -84,7 +90,7 @@ e2 = tk.Entry(master)
 tkvar2 = tk.StringVar(master)
 delimiters = ["Tab", "Whitespace", "Semicolon", "Comma"]
 tkvar2.set("Select") # set the default option
-tk.Label(master, text="Delimiter:", font=("Calibri", 12)).grid(row=3, column=0, sticky=tk.W)
+tk.Label(master, text="Delimiter*:", font=("Calibri", 12)).grid(row=3, column=0, sticky=tk.W)
 popupMenu = tk.OptionMenu(master, tkvar2, *delimiters)
 popupMenu.grid(row=3, column=0, sticky=tk.E)
 popupMenu.config(font=("Calibri", 12))
@@ -105,10 +111,10 @@ e3 = tk.Entry(master)
 tkvar3 = tk.StringVar(master)
 encodings = ["UTF-8", "Latin-1"]
 tkvar3.set("Select") # set the default option
-tk.Label(master, text="Encoding:", font=("Calibri", 12)).grid(row=4, column=0, sticky=tk.W)
-popupMenu = tk.OptionMenu(master, tkvar3, *encodings)
-popupMenu.grid(row=4, column=0, sticky=tk.E)
-popupMenu.config(font=("Calibri", 12))
+tk.Label(master, text="Encoding*:", font=("Calibri", 12)).grid(row=4, column=0, sticky=tk.W)
+popupMenu3 = tk.OptionMenu(master, tkvar3, *encodings)
+popupMenu3.grid(row=4, column=0, sticky=tk.E)
+popupMenu3.config(font=("Calibri", 12))
 
 read_file = False
 def change_dropdown3(*args):
@@ -126,7 +132,7 @@ e4 = tk.Entry(master)
 
 tkvar4 = tk.StringVar(master)
 tkvar4.set("Select") # set the default option
-tk.Label(master, text="ID Column:", font=("Calibri", 12)).grid(row=6, column=0, sticky=tk.W)
+tk.Label(master, text="ID Column*:", font=("Calibri", 12)).grid(row=6, column=0, sticky=tk.W)
 popupMenu4 = tk.OptionMenu(master, tkvar4, *columns)
 popupMenu4.grid(row=6, column=0, sticky=tk.E)
 popupMenu4.config(font=("Calibri", 12))
@@ -137,7 +143,7 @@ e5 = tk.Entry(master)
 
 tkvar5 = tk.StringVar(master)
 tkvar5.set("Select") # set the default option
-tk.Label(master, text="URL Column:", font=("Calibri", 12)).grid(row=7, column=0, sticky=tk.W)
+tk.Label(master, text="URL Column*:", font=("Calibri", 12)).grid(row=7, column=0, sticky=tk.W)
 popupMenu5 = tk.OptionMenu(master, tkvar5, *columns)
 popupMenu5.grid(row=7, column=0, sticky=tk.E)
 popupMenu5.config(font=("Calibri", 12))
@@ -180,10 +186,10 @@ tk.Button(master, text='Load Columns', command=refresh_dropdown45, font=("Calibr
 
 ##### Spider Settings #####
 
-tk.Label(master, text="Web Scraper Settings", font=("Calibri", 16)).grid(row=0, column=1, sticky=tk.N)
+tk.Label(master, text="Web Scraper Settings", font=("Calibri bold", 16)).grid(row=0, column=1, sticky=tk.W + tk.E)
 
 # Cores
-tk.Label(master, text="Parallel Processes:", font=("Calibri", 12)).grid(row=2, column=1, sticky=tk.W)
+tk.Label(master, text="Parallel Processes*:", font=("Calibri", 12)).grid(row=2, column=1, sticky=tk.W)
 
 e6 = tk.Entry(master)
 
@@ -202,36 +208,16 @@ def change_dropdown6(*args):
 tkvar6.trace('w', change_dropdown6)
 
 
-# Spider
-tk.Label(master, text="Spider Type:", font=("Calibri", 12)).grid(row=3, column=1, sticky=tk.W)
-
-e7 = tk.Entry(master)
-
-tkvar7 = tk.StringVar(master)
-tkvar7.set("Select") # set the default option
-spiders = ["text", "link", "dual"]
-popupMenu7 = tk.OptionMenu(master, tkvar7, *spiders)
-popupMenu7.grid(row=3, column=1, sticky=tk.E)
-popupMenu7.config(font=("Calibri", 12))
-
-def change_dropdown7(*args):
-    e7.delete(0, 'end')
-    column = tkvar7.get()
-    e7.insert (tk.END, column)
-
-tkvar7.trace('w', change_dropdown7)
-
 
 # Limit
-tk.Label(master, text="Scrape Limit:", font=("Calibri", 12)).grid(row=4, column=1, sticky=tk.W)
+tk.Label(master, text="Scrape Limit*:", font=("Calibri", 12)).grid(row=3, column=1, sticky=tk.W)
 
 e8 = tk.Spinbox(master, from_=0, to=9999, validate="key", width=9, font=("Calibri", 12))
-e8.grid(row=4, column=1, sticky=tk.N + tk.E)
-
+e8.grid(row=3, column=1, sticky=tk.S + tk. N + tk.E)
 
 
 # Short URLs
-tk.Label(master, text="Prefer Short URLs:", font=("Calibri", 12)).grid(row=5, column=1, sticky=tk.W)
+tk.Label(master, text="Prefer Short URLs:", font=("Calibri", 12)).grid(row=4, column=1, sticky=tk.W)
 
 e9 = tk.Entry(master)
 
@@ -239,7 +225,7 @@ tkvar9 = tk.StringVar(master)
 tkvar9.set("Select") # set the default option
 preferences = ["on", "off"]
 popupMenu9 = tk.OptionMenu(master, tkvar9, *preferences)
-popupMenu9.grid(row=5, column=1, stick=tk.E)
+popupMenu9.grid(row=4, column=1, stick=tk.E)
 popupMenu9.config(font=("Calibri", 12))
 
 def change_dropdown9(*args):
@@ -252,7 +238,7 @@ tkvar9.trace('w', change_dropdown9)
 
 # Language
 
-tk.Label(master, text="Preferred Language:", font=("Calibri", 12)).grid(row=6, column=1, sticky=tk.W)
+tk.Label(master, text="Preferred Language:", font=("Calibri", 12)).grid(row=5, column=1, sticky=tk.W)
 
 e10 = tk.Entry(master)
 
@@ -264,7 +250,7 @@ languages = languages["language"].values.tolist()
 languages = ["None"] + languages
 
 popupMenu10 = tk.OptionMenu(master, tkvar10, *languages)
-popupMenu10.grid(row=6, column=1, sticky=tk.E)
+popupMenu10.grid(row=5, column=1, sticky=tk.E)
 popupMenu10.config(font=("Calibri", 12))
 
 def change_dropdown10(*args):
@@ -275,8 +261,17 @@ def change_dropdown10(*args):
 tkvar10.trace('w', change_dropdown10)
 
 
+
+
+
+
+##### Advanced Settings #####
+
+tk.Label(master, text="        Advanced Settings        ", font=("Calibri bold", 16)).grid(row=0, column=2, sticky=tk.W + tk.E)
+
+
 # LOG level
-tk.Label(master, text="Logging Level:", font=("Calibri", 12)).grid(row=7, column=1, sticky=tk.W)
+tk.Label(master, text="Logging Level:", font=("Calibri", 12)).grid(row=2, column=2, sticky=tk.W)
 
 e11 = tk.Entry(master)
 e11.insert(tk.END,"INFO")
@@ -285,7 +280,7 @@ tkvar11 = tk.StringVar(master)
 tkvar11.set("INFO") # set the default option
 log_levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 popupMenu11 = tk.OptionMenu(master, tkvar11, *log_levels)
-popupMenu11.grid(row=7, column=1, sticky=tk.E)
+popupMenu11.grid(row=2, column=2, sticky=tk.E)
 popupMenu11.config(font=("Calibri", 12))
 
 def change_dropdown11(*args):
@@ -294,6 +289,21 @@ def change_dropdown11(*args):
     e11.insert (tk.END, level)
 
 tkvar11.trace('w', change_dropdown11)
+
+
+# Download Maxsize
+tk.Label(master, text="Download Maxsize [B]:", font=("Calibri", 12)).grid(row=3, column=2, sticky=tk.W)
+
+e13 = tk.Spinbox(master, from_=0, to=9999999999, validate="key", width=9, font=("Calibri", 12))
+e13.grid(row=3, column=2, sticky=tk.S + tk. N + tk.E)
+e13.insert(0, "1000000") # default value 10000000
+
+# Download Timeout
+tk.Label(master, text="Timeout [s]:", font=("Calibri", 12)).grid(row=4, column=2, sticky=tk.W)
+
+e14 = tk.Spinbox(master, from_=0, to=1000, validate="key", width=9, font=("Calibri", 12))
+e14.grid(row=4, column=2, sticky=tk.S + tk. N + tk.E)
+e14.insert(0, "2") # default value 20
 
 
 ##### Start Scraping #####
@@ -311,11 +321,13 @@ url = {}
 n_cores = {}
 
 [spider-settings]
-spider = {}
+spider = dual
 limit = {}
 prefer_short_urls = {}
 language = {}
 log_level = {}
+maxsize = {}
+timeout = {}
 """
 
 scrapyd_file = """
@@ -355,7 +367,7 @@ def start_scraping():
     print("Writing settings file...")
     settings_txt = open(r".\bin\settings.txt", "w", encoding="utf-8")
     settings_txt.truncate()
-    settings_txt.write(settings_file.format(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get(), e7.get(), e8.get(), e9.get(), e10.get(), e11.get()))
+    settings_txt.write(settings_file.format(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get(), e8.get(), e9.get(), e10.get(), e11.get(), e13.get(), e14.get()))
     settings_txt.close()
     scrapyd_txt = open(r"scrapyd.conf", "w", encoding="utf-8")
     scrapyd_txt.truncate()
@@ -368,12 +380,49 @@ def start_scraping():
     start_crawl.start_crawl()
     print("Web scraping started. Do not close server window.")
 
-tk.Button(master, text='Start Scraping', command=start_scraping, font=("Calibri bold", 12)).grid(row=18, column=0, columnspan = 2, sticky=tk.W + tk.E)
+tk.Button(master, text='Start Scraping', command=start_scraping, font=("Calibri bold", 12)).grid(row=18, column=0, columnspan = 3, sticky=tk.W + tk.E)
 
 
 ##### Functions #####
 
-tk.Label(master, text="Functions", font=("Calibri", 16)).grid(row=19, column=0, sticky=tk.N)
+tk.Label(master, text="Functions", font=("Calibri", 16)).grid(row=20, column=0, sticky=tk.N)
+
+
+# open pop-up containing information about ARGUS
+def information_box():
+    lines = [
+    'ARGUS is an easy-to-use web mining tool. The program is based on the Scrapy Python framework and is able to crawl a broad range of different websites. On the websites, ARGUS is able to perform tasks like scraping texts or collecting hyperlinks between websites.', 
+    ' ',
+    'All the parameters with an asterisk (*) have to be selected or filled in.',
+    ' ', 
+    'ARGUS scrapes HTML elements in the following order:', 
+    '<p> = paragaph',
+    '<div> = division',
+    '<tr> = table row',
+    '<td> = table data',
+    '<th> = table header',
+    '<font> = font size',
+    '<li> = list item',
+    '<small> = barely emphasized text',
+    '<strong> = strongly emphasized text',
+    '<h1> - <h6> = different types of headers',
+    '<span> = division for styling',
+    '<b> = bold text',
+    '<em> = emphasized text',
+    '<pdf> = content scraped from pdf',
+    ' ',
+    'author: Jan Kinne',
+    'years of development: 2018-2020']
+    messagebox.showinfo('Information', "\n".join(lines))
+
+width = 25
+height = 25
+img = Image.open("misc/info.gif")           # source: https://de.wikipedia.org/wiki/Datei:Information_icon.svg
+img = img.resize((width,height), Image.ANTIALIAS)
+image =  ImageTk.PhotoImage(img)
+
+tk.Button(master, image=image, command=information_box, width=25).grid(row=20, column=1, sticky=tk.W + tk.E)
+
 
 
 # stop scraping
@@ -390,7 +439,7 @@ def stop_scraping():
             kill_all_jobs.delete_leftovers(os.getcwd())
         subprocess.run(r"TSKILL scrapyd")
 
-tk.Button(master, text='Stop Scraping', command=stop_scraping, font=("Calibri", 12)).grid(row=21, column=0, sticky=tk.W + tk.E)
+tk.Button(master, text='Stop Scraping', command=stop_scraping, font=("Calibri", 12)).grid(row=22, column=0, sticky=tk.W + tk.E)
 
 
 
@@ -415,7 +464,7 @@ def get_job_id():
     job_id = StringDialog.ask_string("Terminate Job", "Enter job you want to terminate:")
     kill_job(job_id)
 
-tk.Button(master, text='Terminate Job', command=get_job_id, font=("Calibri", 12)).grid(row=22, column=0, sticky=tk.W + tk.E)
+tk.Button(master, text='Terminate Job', command=get_job_id, font=("Calibri", 12)).grid(row=22, column=2, sticky=tk.W + tk.E)
 
 
 # postprocessing
@@ -425,10 +474,10 @@ import configparser
 def start_postprocessing():
     config = configparser.RawConfigParser()
     config.read(r".\bin\settings.txt")
-    if config.get('spider-settings', 'spider') == "text":
+    if config.get('spider-settings', 'spider') == "dual":
         fn = config.get('input-data', 'filepath').split(".")[0] + "_scraped_texts.csv"
         exists = os.path.isfile(fn)
-    elif config.get('spider-settings', 'spider') == "link":
+    elif config.get('spider-settings', 'spider') == "webarchive":
         fn = config.get('input-data', 'filepath').split(".")[0] + "_scraped_links.csv"
         exists = os.path.isfile(fn)
     if exists == True:
@@ -444,7 +493,9 @@ def start_postprocessing():
         subprocess.run(r"TSKILL scrapyd")
         postprocessing.postprocessing(os.getcwd())
 
-tk.Button(master, text='Postprocessing', command=start_postprocessing, font=("Calibri", 12)).grid(row=21, column=1, sticky=tk.W + tk.E)
+
+tk.Button(master, text='Postprocessing', command=start_postprocessing, font=("Calibri", 12)).grid(row=22, column=1, sticky=tk.W + tk.E)
+
 
 
 # aggregate webpage texts
@@ -463,14 +514,7 @@ def start_aggregator(*args):
 
 
 
-tk.Button(master, text='Aggregate Webpage Texts', command=start_aggregator, font=("Calibri", 12)).grid(row=22, column=1, sticky=tk.W + tk.E)
-
-
-
-
-
-
-
+tk.Button(master, text='Aggregate Webpage Texts', command=start_aggregator, font=("Calibri", 12)).grid(row=20, column=2, sticky=tk.W + tk.E)
 
 
 
@@ -482,7 +526,7 @@ def post_process():
 
 ##### Functions #####
 
-tk.Label(master, text="Functions", font=("Calibri", 16)).grid(row=19, column=0, sticky=tk.N)
+tk.Label(master, text="Functions", font=("Calibri", 16)).grid(row=20, column=0, sticky=tk.N)
 
 
 
