@@ -50,7 +50,7 @@ After installing Anaconda, you can use pip to install the packages above by typi
 
 **Warning: Please make sure that ARGUS and your URL file are not located in directories with paths containing ".", e.g. "C:\my.folder\data.txt"!**
 
-![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_GUI.PNG?raw=true)
+![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_GUI.PNG?raw=true)
 
 ### File Settings
 
@@ -59,7 +59,7 @@ All parameters that are necessary are marked with an asterisk within the GUI. Th
 -	**Browse** – browse for your file containing website URLs and IDs. The file should be without BOM (byte order mark). An easy way to see whether your text file uses BOM is to use [Notepad++](https://notepad-plus-plus.org/) and check the “Encoding” in the top panel. The URLs need to be in the format “www.example.com”. The directory of your URL list will also be used to output the scraped data. An example website address can be found in /misc:
 
 
-![example url list](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/url_list.PNG?raw=true)
+![example url list](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/url_list.PNG?raw=true)
 
 -	**Delimiter** – the type of delimiter your text file uses. ARGUS takes the following options: *Tab*, *Whitespace*, *Semicolon*, *Comma*.
 -	**Encoding** – the encoding of your text file. ARGUS takes the following options: *UTF-8*, *Latin-1*.
@@ -85,12 +85,12 @@ All parameters that are necessary are marked with an asterisk within the GUI. Th
 Hit **Start Scraping** when all your settings are correct. This will open up a seperate Scrapy server that should not be closed during the following scraping run. 
 
 Your list of URLs will be split into handy chunks and a separate job will be started for each chunk to speed up the scraping process.  After all jobs were scheduled, the scrapyd web interface will open up in your default web browser (you can also get there by typing “http://127.0.0.1:6800/” into your web browser).
-![scrapyd server](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/scrapyd_server.png?raw=true)
+![scrapyd server](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/scrapyd_server.png?raw=true)
 
 ### Stopping jobs
 
 Sometimes certain jobs stop working or never finish, so you may want to stop and restart them. This can be done by hitting **Terminate Job**. You will be asked for the ID of the job you want to cancel. The ID is a long hash number which can be found in the “Job” column in the “Jobs” web interface section.
-![scrapyd jobs](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/scrapyd_jobs.png?raw=true)
+![scrapyd jobs](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/scrapyd_jobs.png?raw=true)
 
 You can stop all processes at once by clicking **Stop Scraping**. You will be asked whether you want to delete the data that has already been scraped. If you decide against deleting the scraped data, you may want to run **Postprocessing** to process your already scraped data (see below).
 
@@ -109,7 +109,7 @@ The output file can be found in the same directory your original website address
 
 One row equals one webpage and n (n ≤ **Scrape limit**) webpages equal one website (identified by its ID).
 
-![ARGUS textspider output](https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_dualspider.png?raw=true)
+![ARGUS textspider output](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_dualspider.png?raw=true)
 *	**ID** – the ID of the website as given in **ID Column**.
 *	**dl_rank** – the chronological order the webpage was downloaded. The main page of a website (i.e. the URL in your website address file) has rank 0, the first subpage processed after the main page has rank 1, and so on.
 *	**dl_slot** – the domain name of the website as found in the user given website address list.
