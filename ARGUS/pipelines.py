@@ -23,7 +23,7 @@ class TextPipeline(object):
         except:
             self.fileobj = open(os.getcwd() +"\\chunks\\ARGUS_chunk_web_" + chunk + ".csv", "wb")
         self.exporter = CsvItemExporter(self.fileobj, encoding='utf-8', delimiter="\t")
-        self.exporter.fields_to_export = ["ID", "dl_rank", "dl_slot", "error", "redirect", "start_page", "title", "keywords", "description", "text", "timestamp", "url"]
+        self.exporter.fields_to_export = ["ID", "dl_rank", "dl_slot", "error", "redirect", "start_page", "title", "keywords", "description", "language", "text", "timestamp", "url"]
         self.exporter.start_exporting()
 
     
@@ -54,9 +54,11 @@ class TextPipeline(object):
             title = item["title"][c]
             description = item["description"][c]
             keywords = item["keywords"][c]
+            language = item["language"][c]
             site["title"] = title.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
             site["description"] = description.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
             site["keywords"] = keywords.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
+            site["language"] = language.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
             
             #generate site text
             site_text = ""
@@ -135,7 +137,7 @@ class DualPipeline(object):
         except:
             self.fileobj = open(os.getcwd() +"\\chunks\\ARGUS_chunk_" + chunk + ".csv", "wb")
         self.exporter = CsvItemExporter(self.fileobj, encoding='utf-8', delimiter="\t")
-        self.exporter.fields_to_export = ["ID", "dl_rank", "dl_slot", "alias", "error", "redirect", "start_page", "title", "keywords", "description", "text", "links", "timestamp", "url"]
+        self.exporter.fields_to_export = ["ID", "dl_rank", "dl_slot", "alias", "error", "redirect", "start_page", "title", "keywords", "description", "language", "text", "links", "timestamp", "url"]
         self.exporter.start_exporting()
 
             
@@ -167,9 +169,11 @@ class DualPipeline(object):
             title = item["title"][c]
             description = item["description"][c]
             keywords = item["keywords"][c]
+            language = item["language"][c]
             webpage_exporter["title"] = title.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
             webpage_exporter["description"] = description.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
             webpage_exporter["keywords"] = keywords.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
+            webpage_exporter["language"] = language.replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
             
             webpage_exporter["alias"] = item["alias"][0]
             links = []

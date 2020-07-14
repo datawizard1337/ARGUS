@@ -18,6 +18,7 @@ class Collector(scrapy.Item):
     title = scrapy.Field()
     description = scrapy.Field()
     keywords = scrapy.Field()
+    language = scrapy.Field()
     scrape_counter = scrapy.Field()
     error = scrapy.Field()
     pass
@@ -35,6 +36,7 @@ class Exporter(scrapy.Item):
     title = scrapy.Field()
     description = scrapy.Field()
     keywords = scrapy.Field()
+    language = scrapy.Field()
     pass
 
 class LinkCollector(scrapy.Item):
@@ -73,6 +75,7 @@ class DualCollector(scrapy.Item):
     title = scrapy.Field()
     description = scrapy.Field()
     keywords = scrapy.Field()
+    language = scrapy.Field()
     scrape_counter = scrapy.Field()
     error = scrapy.Field()
     links = scrapy.Field()
@@ -92,6 +95,7 @@ class DualExporter(scrapy.Item):
     title = scrapy.Field()
     description = scrapy.Field()
     keywords = scrapy.Field()
+    language = scrapy.Field()
     links = scrapy.Field()
     alias = scrapy.Field()
     pass
