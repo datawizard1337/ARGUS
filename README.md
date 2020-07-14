@@ -120,6 +120,7 @@ One row equals one webpage and n (n ≤ **Scrape limit**) webpages equal one web
 *	**title** – the title of the website as indicated in the website's meta data.
 *	**keywords** – the title of the website as indicated in the website's meta data.
 *	**description** – the title of the website as indicated in the website's meta data.
+*	**language** – the language of the website as indicated in the website's HTML code.
 *	**text** – the text that was downloaded from the webpage. It includes the respective HTML tags or the tag <pdf> if the text was extracted from an online PDF.
 *	**links** – the domains of websites (*within-sample* and *out-of-sample*) found on the focal website. The field is empty if no hyperlinks were found.
 *	**timestamp** – the exact time when the webpage was downloaded.
