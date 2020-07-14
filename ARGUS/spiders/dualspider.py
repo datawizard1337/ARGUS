@@ -9,6 +9,15 @@ from scrapy.spidermiddlewares.httperror import HttpError
 from twisted.internet.error import DNSLookupError
 from twisted.internet.error import TimeoutError, TCPTimedOutError
 import pandas as pd
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from pdfminer.pdfpage import PDFPage
+from io import BytesIO
+import urllib   ###
+import urllib.request
+from urllib.request import urlopen
+from urllib.request import Request
 
 
 class DualSpider(scrapy.Spider):
@@ -36,6 +45,7 @@ class DualSpider(scrapy.Spider):
         self.language = language.split("_")
         self.prefer_short_urls = prefer_short_urls
         
+        
 ##################################################################
 # HELPER FUNCTIONS
 ##################################################################      
@@ -45,18 +55,18 @@ class DualSpider(scrapy.Spider):
     filetypes = set(filetype for filetype in ['mng', 'pct', 'bmp', 'gif', 'jpg', 'jpeg', 'png', 'pst', 'psp', 'tif', 'tiff', 'ai', 'drw', 'dxf', 'eps', 'ps', 'svg',
                 'mp3', 'wma', 'ogg', 'wav', 'ra', 'aac', 'mid', 'au', 'aiff',
                 '3gp', 'asf', 'asx', 'avi', 'mov', 'mp4', 'mpg', 'qt', 'rm', 'swf', 'wmv', 'm4a',
-                'css', 'pdf', 'doc', 'exe', 'bin', 'rss', 'zip', 'rar', 'msu', 'flv', 'dmg',
+                'css', 'doc', 'exe', 'bin', 'rss', 'zip', 'rar', 'msu', 'flv', 'dmg',
                 'mng?download=true', 'pct?download=true', 'bmp?download=true', 'gif?download=true', 'jpg?download=true', 'jpeg?download=true', 'png?download=true', 'pst?download=true', 'psp?download=true', 'tif?download=true', 'tiff?download=true', 'ai?download=true', 'drw?download=true', 'dxf?download=true', 'eps?download=true', 'ps?download=true', 'svg?download=true',
                 'mp3?download=true', 'wma?download=true', 'ogg?download=true', 'wav?download=true', 'ra?download=true', 'aac?download=true', 'mid?download=true', 'au?download=true', 'aiff?download=true',
                 '3gp?download=true', 'asf?download=true', 'asx?download=true', 'avi?download=true', 'mov?download=true', 'mp4?download=true', 'mpg?download=true', 'qt?download=true', 'rm?download=true', 'swf?download=true', 'wmv?download=true', 'm4a?download=true',
-                'css?download=true', 'pdf?download=true', 'doc?download=true', 'exe?download=true', 'bin?download=true', 'rss?download=true', 'zip?download=true', 'rar?download=true', 'msu?download=true', 'flv?download=true', 'dmg?download=true'])
+                'css?download=true', 'doc?download=true', 'exe?download=true', 'bin?download=true', 'rss?download=true', 'zip?download=true', 'rar?download=true', 'msu?download=true', 'flv?download=true', 'dmg?download=true'])
 
     #function to refresh the allowed domain list after adding domains
     def refreshAllowedDomains(self):
         for mw in self.crawler.engine.scraper.spidermw.middlewares:
             if isinstance(mw, scrapy.spidermiddlewares.offsite.OffsiteMiddleware):
                 mw.spider_opened(self)
-           
+
     #function which extracts the subdomain from a url string or response object
     def subdomainGetter(self, response):
         #if string
@@ -77,7 +87,7 @@ class DualSpider(scrapy.Spider):
             else:
                 domain = tld.registered_domain
                 return domain
-        
+
     #function which checks if there has been a redirect from the starting url
     def checkRedirectDomain(self, response):
         return tldextract.extract(response.url).registered_domain != tldextract.extract(response.request.meta.get("download_slot")).registered_domain
@@ -109,7 +119,7 @@ class DualSpider(scrapy.Spider):
             text.append(["leer", ["[->leer<-] leer"]])
         return text
 
-    #function which extracts and returs meta information
+    #function which extracts and returns meta information
     def extractHeader(self, response):
         title = " ".join(response.xpath("//title/text()").extract())
         description = " ".join(response.xpath("//meta[@name=\'description\']/@content").extract())
@@ -139,11 +149,49 @@ class DualSpider(scrapy.Spider):
        else:
            urlstack = preferred_language + other_language
        return urlstack
-   
-   
+
+
+    # function which extracts text of online PDFs
+    def pdf_scraping(self, pdf_url): 
+        text = []
+
+        pdf_url = urllib.parse.quote(pdf_url, safe="://", encoding='UTF-8') # solve ASCII url problems
+
+        # access PDF
+        remoteFile = urlopen(Request(pdf_url, headers={'User-Agent': 'Mozilla/5.0'})).read()    # catching errors by specifying user-agent
+
+        # catch 404 errors
+        if urllib.error.HTTPError == 404:
+            print("404 ERROR")
+            return text
+        
+        else:
+            memoryFile = BytesIO(remoteFile)
+
+            # read PDF content
+            manager = PDFResourceManager()
+            retstr = BytesIO()
+            layout = LAParams(all_texts=True)
+            device = TextConverter(manager, retstr, laparams=layout)
+            interpreter = PDFPageInterpreter(manager, device)
+
+            for page in PDFPage.get_pages(memoryFile, check_extractable=False): # default: True
+                interpreter.process_page(page)
+
+            # do some editing on the pdf text
+            extracted_text = retstr.getvalue().decode('utf-8').replace("\n", "").replace("\t", "").replace("\r\n", "").replace("\r", "")
+            
+            device.close()
+            retstr.close()
+            text.append(["pdf", ["[->pdf<-] " + " [->pdf<-] " + str(extracted_text)]])
+
+            # return text to make accessible for loader
+            return text
+        
+
 ##################################################################
 # START REQUEST
-##################################################################     
+##################################################################
     
     #start request and add ID to meta
     def start_requests(self):
@@ -275,13 +323,13 @@ class DualSpider(scrapy.Spider):
 ##################################################################  
          
     def processURLstack(self, response):
-
         #get meta data from response object to revive dragged stuff
         meta = response.request.meta
         loader = meta["loader"]
         urlstack = meta["urlstack"]
         fingerprints = meta["fingerprints"]
-        
+
+
         #check whether max number of websites has been scraped for this website
         if self.site_limit != 0:
             if loader.get_collected_values("scrape_counter")[0] >= self.site_limit:
@@ -295,7 +343,7 @@ class DualSpider(scrapy.Spider):
             url = url.replace("\r\n", "")
             url = url.replace("\n", "")
             domain = self.subdomainGetter(url).split("www.")[-1] 
-            #if url points to domain that is not the orinigally requested domain...
+            #if url points to domain that is not the originally requested domain...
             if domain == self.subdomainGetter(loader.get_collected_values("dl_slot")[0]):
                 continue
             #...and also not the alias domain...
@@ -327,21 +375,76 @@ class DualSpider(scrapy.Spider):
                     urlstack.pop(0)
             else:
                 break
-
         #if the url was assessed to be valid, send out a request and callback the parse_subpage function
         #errbacks return to processURLstack
         #ALLOW ALL HTTP STATUS: 
         #errors must be caught in the callback function, because middleware caught request break the sequence and collector items get lost
         if len(urlstack) > 0:
-            yield scrapy.Request(urlstack.pop(0), meta={"loader": loader, "urlstack": urlstack, "fingerprints": fingerprints, 'handle_httpstatus_all': True}, dont_filter=True, callback=self.parse_subpage, errback=self.processURLstack)
+            
+            # if url is actually a pdf file
+            if str(urlstack[0])[-4:] == '.pdf':
+                
+                # access url that has been recognized as pdf
+                pdf_url = urlstack.pop(0)
+                
+                loader.replace_value("scrape_counter", loader.get_collected_values("scrape_counter")[0]+1)
+                loader.add_value("scraped_urls", pdf_url)
+                try:
+                    loader.add_value("scraped_text", [self.pdf_scraping(pdf_url)])  # add pdf text to loader
+                except:
+                    loader.add_value("scraped_text", "")
+                #loader.add_value("scraped_text", [self.pdf_scraping(pdf_url)])  # add pdf text to loader
+                loader.add_value("title", "")
+                loader.add_value("description", "")
+                loader.add_value("keywords", "")
+
+                # check if urlstack is empty after popping pdf
+                if len(urlstack) == 0:
+                    return self.processURLstack(response)
+                
+                else:
+                    #check if the next url in the urlstack is valid
+                    while len(urlstack) > 0:
+                        #pop non-valid domains
+                        domain = self.subdomainGetter(urlstack[0])
+                        if domain not in self.allowed_domains:
+                            urlstack.pop(0)
+                        #pop some unwanted urls
+                        elif urlstack[0].startswith("mail"):
+                            urlstack.pop(0)
+                        elif urlstack[0].startswith("tel"):
+                            urlstack.pop(0)
+                        #pop unwanted filetypes
+                        elif urlstack[0].split(".")[-1].lower() in self.filetypes:
+                            urlstack.pop(0)
+                        #pop visited urls.
+                        #also pop urls that cannot be requested
+                        #(potential bottleneck: Request has to be sent to generate fingerprint from)
+                        elif request_fingerprint(scrapy.Request(urlstack[0], callback=None)) in fingerprints:
+                                urlstack.pop(0)
+                        else:
+                            break
+                    
+                    # check if urlstack is emtpy after previous checks
+                    if len(urlstack) == 0:
+                        return self.processURLstack(response)
+                    
+                    else:
+                        # make next request
+                        yield scrapy.Request(urlstack.pop(0), meta={"loader": loader, "urlstack": urlstack, "fingerprints": fingerprints, 'handle_httpstatus_all': True}, dont_filter=True, callback=self.parse_subpage, errback=self.processURLstack)
+
+
+            else:
+                yield scrapy.Request(urlstack.pop(0), meta={"loader": loader, "urlstack": urlstack, "fingerprints": fingerprints, 'handle_httpstatus_all': True}, dont_filter=True, callback=self.parse_subpage, errback=self.processURLstack)
+
         #if there are no urls left in the urlstack, the website was scraped completely and the item can be sent to the pipeline
         else:
             yield loader.load_item()
-    
-    
+
+
 ##################################################################
 # PARSE SUB PAGE
-##################################################################      
+##################################################################
     
     def parse_subpage(self, response):
         #check again
@@ -351,7 +454,6 @@ class DualSpider(scrapy.Spider):
         #save the fingerprint to mark the page as read
         response.meta["fingerprints"].add(request_fingerprint(response.request))
         
-
         #try to catch some errors
         try:
             #opt out and fall back to processURLstack
@@ -381,7 +483,7 @@ class DualSpider(scrapy.Spider):
                 #pass back the updated urlstack    
                 return self.processURLstack(response)
 
-           
+        
             if response.status == 302:                        
                 #revive the loader from the response meta data
                 loader = response.meta["loader"]
@@ -428,3 +530,4 @@ class DualSpider(scrapy.Spider):
         #in case of errors, opt out and fall back to processURLstack
         except:
             return self.processURLstack(response)
+
