@@ -90,7 +90,8 @@ Your list of URLs will be split into handy chunks and a separate job will be sta
 ### Stopping jobs
 
 Sometimes certain jobs stop working or never finish, so you may want to stop and restart them. This can be done by hitting **Terminate Job**. You will be asked for the ID of the job you want to cancel. The ID is a long hash number which can be found in the “Job” column in the “Jobs” web interface section.
-![scrapyd jobs](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/scrapyd_jobs.png?raw=true)
+
+![scrapyd jobs](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/scrapyd_jobs.PNG?raw=true)
 
 You can stop all processes at once by clicking **Stop Scraping**. You will be asked whether you want to delete the data that has already been scraped. If you decide against deleting the scraped data, you may want to run **Postprocessing** to process your already scraped data (see below).
 
