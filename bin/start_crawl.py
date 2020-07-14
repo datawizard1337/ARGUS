@@ -73,6 +73,16 @@ def start_crawl():
 			elif config.get('spider-settings', 'spider') == "dual":
 				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=dualspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={}"
 						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls')))
+			#schedule webarchive spider
+			elif config.get('spider-settings', 'spider') == "webarchive":
+				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=webarchive -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d date={}"
+						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls'), config.get('spider-settings', 'date')))
+			
+			else: 
+				print("""
+				Error: No spider selected. 
+				Please select a spider.
+				""")
 
 						   
 		print("Scheduled ", n_url_chunks, " spiders to scrape your URLs.\nOpening web interface...")

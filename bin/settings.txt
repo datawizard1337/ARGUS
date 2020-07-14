@@ -1,0 +1,19 @@
+
+[input-data]
+filepath = I:/!Hiwis/f-schmidt/liste_kurz.txt
+delimiter = \t
+encoding = utf-8
+ID = id
+url = url
+
+[system]
+n_cores = 1
+
+[spider-settings]
+spider = dual
+limit = 10
+prefer_short_urls = on
+language = German
+log_level = INFO
+maxsize = 5000000
+timeout = 20
