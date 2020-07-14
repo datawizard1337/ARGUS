@@ -85,6 +85,7 @@ All parameters that are necessary are marked with an asterisk within the GUI. Th
 Hit **Start Scraping** when all your settings are correct. This will open up a seperate Scrapy server that should not be closed during the following scraping run. 
 
 Your list of URLs will be split into handy chunks and a separate job will be started for each chunk to speed up the scraping process.  After all jobs were scheduled, the scrapyd web interface will open up in your default web browser (you can also get there by typing “http://127.0.0.1:6800/” into your web browser).
+
 ![scrapyd server](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/scrapyd_server.png?raw=true)
 
 ### Stopping jobs
