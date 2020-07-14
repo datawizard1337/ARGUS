@@ -1,11 +1,23 @@
 language	ISO1	ISO2	ISO3
+Arabic	ar	ara	ara
+Chinese	zh	zho	chi
+English	en	eng	eng
+French	fr	fra	fre
+German	de	deu	ger
+Italian	it	ita	ita
+Japanese	ja	jpn	jpn
+Korean	ko	kor	kor
+Portuguese	pt	por	por
+Russian	ru	rus	rus
+Spanish	es	spa	spa
+____________________
+ 
 Abkhazian	ab	abk	abk
 Afar	aa	aar	aar
 Afrikaans	af	afr	afr
 Akan	ak	aka	aka
 Albanian	sq	sqi	alb
 Amharic	am	amh	amh
-Arabic	ar	ara	ara
 Aragonese	an	arg	arg
 Armenian	hy	hye	arm
 Assamese	as	asm	asm
@@ -28,7 +40,6 @@ Catalan	ca	cat	cat
 Chamorro	ch	cha	cha
 Chechen	ce	che	che
 Chichewa	ny	nya	nya
-Chinese	zh	zho	chi
 Chuvash	cv	chv	chv
 Cornish	kw	cor	cor
 Corsican	co	cos	cos
@@ -39,7 +50,6 @@ Danish	da	dan	dan
 Divehi	dv	div	div
 Dutch	nl	nld	dut
 Dzongkha	dz	dzo	dzo
-English	en	eng	eng
 Esperanto	eo	epo	epo
 Estonian	et	est	est
 Ewe	ee	ewe	ewe
@@ -47,11 +57,9 @@ Faroese	fo	fao	fao
 Fijian	fj	fij	fij
 Filipino	fl	fil	fil
 Finnish	fi	fin	fin
-French	fr	fra	fre
 Fulah	ff	ful	ful
 Galician	gl	glg	glg
 Georgian	ka	kat	geo
-German	de	deu	ger
 Greek	el	ell	gre
 Guarani	gn	grn	grn
 Gujarati	gu	guj	guj
@@ -70,9 +78,7 @@ Igbo	ig	ibo	ibo
 Inupiaq	ik	ipk	ipk
 Ido	io	ido	ido
 Icelandic	is	isl	ice
-Italian	it	ita	ita
 Inuktitut	iu	iku	iku
-Japanese	ja	jpn	jpn
 Javanese	jv	jav	jav
 Kalaallisut	kl	kal	kal
 Kannada	kn	kan	kan
@@ -85,7 +91,6 @@ Kinyarwanda	rw	kin	kin
 Kirghiz	ky	kir	kir
 Komi	kv	kom	kom
 Kongo	kg	kon	kon
-Korean	ko	kor	kor
 Kurdish	ku	kur	kur
 Kuanyama	kj	kua	kua
 Latin	la	lat	lat
@@ -128,12 +133,10 @@ Pali	pi	pli	pli
 Persian	fa	fas	per
 Polish	pl	pol	pol
 Pashto	ps	pus	pus
-Portugese	pt	por	por
 Quechua	qu	que	que
 Romansh	rm	roh	roh
 Rundi	rn	run	run
 Romanian	ro	ron	rum
-Russian	ru	rus	rus
 Sanskrit	sa	san	san
 Sardinian	sc	srd	srd
 Sindhi	sd	snd	snd
@@ -148,7 +151,6 @@ Slovak	sk	slk	slo
 Slovenian	sl	slv	slv
 Somali	so	som	som
 Southern Sotho	st	sot	sot
-Spanish	es	spa	spa
 Sundanese	su	sun	sun
 Swahili	sw	swa	swa
 Swati	ss	ssw	ssw
