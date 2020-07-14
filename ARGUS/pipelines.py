@@ -19,12 +19,13 @@ class TextPipeline(object):
         url_chunk = spider.url_chunk
         chunk = url_chunk.split(".")[0].split("_")[-1]
         try:
-            self.fileobj = open("DARGUS_chunk_" + chunk + ".csv", "ab")
+            self.fileobj = open(os.getcwd() +"\\chunks\\ARGUS_chunk_web_" + chunk + ".csv", "ab")
         except:
-            self.fileobj = open("DARGUS_chunk_" + chunk + ".csv", "wb")
+            self.fileobj = open(os.getcwd() +"\\chunks\\ARGUS_chunk_web_" + chunk + ".csv", "wb")
         self.exporter = CsvItemExporter(self.fileobj, encoding='utf-8', delimiter="\t")
         self.exporter.fields_to_export = ["ID", "dl_rank", "dl_slot", "error", "redirect", "start_page", "title", "keywords", "description", "text", "timestamp", "url"]
         self.exporter.start_exporting()
+
     
     #close file when finished
     def close_spider(self, spider):
