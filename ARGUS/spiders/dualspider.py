@@ -124,7 +124,8 @@ class DualSpider(scrapy.Spider):
         title = " ".join(response.xpath("//title/text()").extract())
         description = " ".join(response.xpath("//meta[@name=\'description\']/@content").extract())
         keywords = " ".join(response.xpath("//meta[@name=\'keywords\']/@content").extract())
-        return title, description, keywords
+        language = " ".join(response.xpath("//html/@lang").extract())
+        return title, description, keywords, language
 
 
     #function which reorders the urlstack, giving highest priority to short urls and language tagged urls
@@ -214,6 +215,7 @@ class DualSpider(scrapy.Spider):
             loader.add_value("title", "")
             loader.add_value("description", "")
             loader.add_value("keywords", "")
+            loader.add_value("language", "")
             loader.add_value("error", response.status)
             loader.add_value("ID", response.request.meta["ID"])
             loader.add_value("links", "")
@@ -229,6 +231,7 @@ class DualSpider(scrapy.Spider):
             loader.add_value("title", "")
             loader.add_value("description", "")
             loader.add_value("keywords", "")
+            loader.add_value("language", "")
             loader.add_value("error", "DNS")
             loader.add_value("ID", request.meta["ID"])
             loader.add_value("links", "")
@@ -244,6 +247,7 @@ class DualSpider(scrapy.Spider):
             loader.add_value("title", "")
             loader.add_value("description", "")
             loader.add_value("keywords", "")
+            loader.add_value("language", "")
             loader.add_value("error", "Timeout")
             loader.add_value("ID", request.meta["ID"])
             loader.add_value("links", "")
@@ -259,6 +263,7 @@ class DualSpider(scrapy.Spider):
             loader.add_value("title", "")
             loader.add_value("description", "")
             loader.add_value("keywords", "")
+            loader.add_value("language", "")
             loader.add_value("error", "other")
             loader.add_value("ID", request.meta["ID"])
             loader.add_value("links", "")
@@ -281,10 +286,11 @@ class DualSpider(scrapy.Spider):
         loader.add_value("scraped_urls", [response.urljoin(response.url)])
         loader.add_value("scrape_counter", 1)
         loader.add_value("scraped_text", [self.extractText(response)])
-        title, description, keywords = self.extractHeader(response)
+        title, description, keywords, language = self.extractHeader(response)
         loader.add_value("title", [title])
         loader.add_value("description", [description])
         loader.add_value("keywords", [keywords])
+        loader.add_value("language", [language])
         loader.add_value("error", "None")
         loader.add_value("ID", response.request.meta["ID"])
         #add alias if there was an initial redirect
@@ -397,6 +403,7 @@ class DualSpider(scrapy.Spider):
                 loader.add_value("title", "")
                 loader.add_value("description", "")
                 loader.add_value("keywords", "")
+                loader.add_value("language", "")
 
                 # check if urlstack is empty after popping pdf
                 if len(urlstack) == 0:
@@ -519,10 +526,11 @@ class DualSpider(scrapy.Spider):
                 loader.replace_value("scrape_counter", loader.get_collected_values("scrape_counter")[0]+1)
                 loader.add_value("scraped_urls", [response.urljoin(response.url)])
                 loader.add_value("scraped_text", [self.extractText(response)])
-                title, description, keywords = self.extractHeader(response)
+                title, description, keywords, language = self.extractHeader(response)
                 loader.add_value("title", [title])
                 loader.add_value("description", [description])
                 loader.add_value("keywords", [keywords])
+                loader.add_value("language", [language])
             
                 #pass back the updated urlstack
                 return self.processURLstack(response)
