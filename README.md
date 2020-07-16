@@ -36,6 +36,7 @@ ARGUS works with Python 3.6, is based on the Scrapy framework and has the follow
 *	tldextract
 *	pandas 
 *   pywin32
+*	pdfminer
 
 Installation of scrapyd requires you to install [C++ Build Tools](https://www.microsoft.com/en-US/download/details.aspx?id=48159) first. Additionally, you need [cURL](https://curl.haxx.se/download.html) to communicate with the ARGUS user interface. An executable Windows 64bit version of cURL can be downloaded [here](https://dl.uxnr.de/build/curl/curl_winssl_msys2_mingw64_stc/curl-7.59.0/curl-7.59.0.zip), for example.
 After downloading and extracting, you need to add a cURL environment variable to your system. See [this Stackoverlow thread](https://stackoverflow.com/questions/9507353/how-do-i-install-set-up-and-use-curl-on-windows) if you do not know how to do that.
@@ -91,7 +92,6 @@ Your list of URLs will be split into handy chunks and a separate job will be sta
 ### Stopping jobs
 
 Sometimes certain jobs stop working or never finish, so you may want to stop and restart them. This can be done by hitting **Terminate Job**. You will be asked for the ID of the job you want to cancel. The ID is a long hash number which can be found in the “Job” column in the “Jobs” web interface section.
-
 ![scrapyd jobs](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/scrapyd_jobs.PNG?raw=true)
 
 You can stop all processes at once by clicking **Stop Scraping**. You will be asked whether you want to delete the data that has already been scraped. If you decide against deleting the scraped data, you may want to run **Postprocessing** to process your already scraped data (see below).
