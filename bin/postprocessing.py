@@ -13,11 +13,13 @@ import shutil
 import datetime
 
 start_time=time.time()
+script_dir = os.path.dirname(__file__)  ###
+script_dir_edit = str(script_dir)[:-4] 
 
 def postprocessing(cwd=None):
     #read settings file
     config = configparser.RawConfigParser()   
-    config.read(r".\bin\settings.txt")
+    config.read(script_dir + r"\settings.txt")
     
     output_files = [cwd + "\\chunks\\" + f for f in os.listdir(cwd + "\\chunks") if f.startswith('ARGUS_chunk')]
     output = config.get('input-data', 'filepath').split(".")[0]
