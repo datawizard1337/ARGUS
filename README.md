@@ -1,7 +1,7 @@
 # ARGUS: **A**utomated **R**obot for **G**eneric **U**niversal **S**craping
 
 <p align="center">
-  <img src="https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_logo.png?raw=true">
+  <img src="https://github.com/datawizard1337/ARGUS/blob/master/misc/pics/ARGUS_logo.png?raw=true">
 </p>
 
 ARGUS is an easy-to-use web scraping tool. The program is based on the Scrapy Python framework and is able to crawl a broad range of different websites. On these websites, ARGUS performs tasks like scraping texts or collecting hyperlinks between websites.
@@ -36,7 +36,8 @@ ARGUS works with Python 3.6, is based on the Scrapy framework and has the follow
 *	tldextract
 *	pandas 
 *   pywin32
-*	pdfminer
+*	pdfminer.six
+*	urllib
 
 Installation of scrapyd requires you to install [C++ Build Tools](https://www.microsoft.com/en-US/download/details.aspx?id=48159) first. Additionally, you need [cURL](https://curl.haxx.se/download.html) to communicate with the ARGUS user interface. An executable Windows 64bit version of cURL can be downloaded [here](https://dl.uxnr.de/build/curl/curl_winssl_msys2_mingw64_stc/curl-7.59.0/curl-7.59.0.zip), for example.
 After downloading and extracting, you need to add a cURL environment variable to your system. See [this Stackoverlow thread](https://stackoverflow.com/questions/9507353/how-do-i-install-set-up-and-use-curl-on-windows) if you do not know how to do that.
