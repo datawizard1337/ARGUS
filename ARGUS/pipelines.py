@@ -12,6 +12,9 @@ import datetime
 import os
 import re
 
+script_dir = os.path.dirname(__file__)  ###
+script_dir_edit = str(script_dir)[:-6] 
+
 class TextPipeline(object):
     
     
@@ -19,9 +22,9 @@ class TextPipeline(object):
         url_chunk = spider.url_chunk
         chunk = url_chunk.split(".")[0].split("_")[-1]
         try:
-            self.fileobj = open(os.getcwd() +"\\chunks\\ARGUS_chunk_web_" + chunk + ".csv", "ab")
+            self.fileobj = open(script_dir_edit +"\\chunks\\ARGUS_chunk_web_" + chunk + ".csv", "ab")
         except:
-            self.fileobj = open(os.getcwd() +"\\chunks\\ARGUS_chunk_web_" + chunk + ".csv", "wb")
+            self.fileobj = open(script_dir_edit +"\\chunks\\ARGUS_chunk_web_" + chunk + ".csv", "wb")
         self.exporter = CsvItemExporter(self.fileobj, encoding='utf-8', delimiter="\t")
         self.exporter.fields_to_export = ["ID", "dl_rank", "dl_slot", "error", "redirect", "start_page", "title", "keywords", "description", "language", "text", "timestamp", "url"]
         self.exporter.start_exporting()
@@ -90,9 +93,9 @@ class LinkPipeline(object):
         url_chunk = spider.url_chunk
         chunk = url_chunk.split(".")[0].split("_")[-1]
         try:
-            self.fileobj = open(os.getcwd() +"\\chunks\\output_" + chunk + ".csv", "ab")
+            self.fileobj = open(script_dir_edit +"\\chunks\\output_" + chunk + ".csv", "ab")
         except:
-            self.fileobj = open(os.getcwd() +"\\chunks\\output_" + chunk + ".csv", "wb")
+            self.fileobj = open(script_dir_edit +"\\chunks\\output_" + chunk + ".csv", "wb")
         self.exporter = CsvItemExporter(self.fileobj, encoding='utf-8', delimiter="\t")
         self.exporter.start_exporting()
     
@@ -133,9 +136,9 @@ class DualPipeline(object):
         url_chunk = spider.url_chunk
         chunk = url_chunk.split(".")[0].split("_")[-1]
         try:
-            self.fileobj = open(os.getcwd() +"\\chunks\\ARGUS_chunk_" + chunk + ".csv", "ab")
+            self.fileobj = open(script_dir_edit +"\\chunks\\ARGUS_chunk_" + chunk + ".csv", "ab")
         except:
-            self.fileobj = open(os.getcwd() +"\\chunks\\ARGUS_chunk_" + chunk + ".csv", "wb")
+            self.fileobj = open(script_dir_edit +"\\chunks\\ARGUS_chunk_" + chunk + ".csv", "wb")
         self.exporter = CsvItemExporter(self.fileobj, encoding='utf-8', delimiter="\t")
         self.exporter.fields_to_export = ["ID", "dl_rank", "dl_slot", "alias", "error", "redirect", "start_page", "title", "keywords", "description", "language", "text", "links", "timestamp", "url"]
         self.exporter.start_exporting()
