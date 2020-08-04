@@ -315,7 +315,7 @@ tk.Label(master, text="Download [MB]:", font=("Calibri", 12)).grid(row=3, column
 
 e13 = tk.Spinbox(master, from_=0, to=9999, validate="key", width=9, font=("Calibri", 12))
 e13.grid(row=3, column=2, sticky=tk.S + tk. N + tk.E)
-e13.insert(0, "1") # default value 1 MB
+e13.insert(0, "1") # default value 10 MB
 
 # Download Timeout
 tk.Label(master, text="Timeout [s]:", font=("Calibri", 12)).grid(row=4, column=2, sticky=tk.W)
