@@ -52,7 +52,7 @@ After installing Anaconda, you can use pip to install the packages above by typi
 
 **Warning: Please make sure that ARGUS and your URL file are not located in directories with paths containing ".", e.g. "C:\my.folder\data.txt"!**
 
-![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_GUI.PNG?raw=true)
+![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_GUI.png?raw=true)
 
 ### File Settings
 
