@@ -311,11 +311,11 @@ tkvar11.trace('w', change_dropdown11)
 
 
 # Download Maxsize
-tk.Label(master, text="Download Maxsize [B]:", font=("Calibri", 12)).grid(row=3, column=2, sticky=tk.W)
+tk.Label(master, text="Download [MB]:", font=("Calibri", 12)).grid(row=3, column=2, sticky=tk.W)
 
-e13 = tk.Spinbox(master, from_=0, to=9999999999, validate="key", width=9, font=("Calibri", 12))
+e13 = tk.Spinbox(master, from_=0, to=9999, validate="key", width=9, font=("Calibri", 12))
 e13.grid(row=3, column=2, sticky=tk.S + tk. N + tk.E)
-e13.insert(0, "1000000") # default value 10000000
+e13.insert(0, "1") # default value 1 MB
 
 # Download Timeout
 tk.Label(master, text="Timeout [s]:", font=("Calibri", 12)).grid(row=4, column=2, sticky=tk.W)
@@ -386,7 +386,8 @@ def start_scraping():
     print("Writing settings file...")
     settings_txt = open(script_dir + r"\bin\settings.txt", "w", encoding="utf-8")
     settings_txt.truncate()
-    settings_txt.write(settings_file.format(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get(), e8.get(), e9.get(), e10.get(), e11.get(), e13.get(), e14.get()))
+    byte_size = int(e13.get())*1000000    # convert from MB to B
+    settings_txt.write(settings_file.format(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get(), e8.get(), e9.get(), e10.get(), e11.get(), byte_size, e14.get()))
     settings_txt.close()
     scrapyd_txt = open(script_dir + r"scrapyd.conf", "w", encoding="utf-8")
     scrapyd_txt.truncate()
