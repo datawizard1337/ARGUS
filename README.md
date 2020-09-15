@@ -52,7 +52,7 @@ After installing Anaconda, you can use pip to install the packages above by typi
 
 **Warning: Please make sure that ARGUS and your URL file are not located in directories with paths containing ".", e.g. "C:\my.folder\data.txt"!**
 
-![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_GUI.png?raw=true)
+![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_GUI.PNG?raw=true)
 
 ### File Settings
 
@@ -64,14 +64,14 @@ All parameters that are necessary are marked with an asterisk within the GUI. Th
 ![example url list](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/url_list.PNG?raw=true)
 
 -	**Delimiter** – the type of delimiter your text file uses. ARGUS takes the following options: *Tab*, *Whitespace*, *Semicolon*, *Comma*.
--	**Encoding** – the encoding of your text file. ARGUS takes the following options: *UTF-8*, *Latin-1*.
+-	**Encoding** – the encoding of your text file. ARGUS takes the following options: *UTF-8*, *Latin-1*, *ASCII*.
 -	**Load Columns** – after defining your file, delimiter, and column, hit this button to load column names.
 -	**ID Column** – the field name of your unique website identifier in your website address file.
 -	**URL Column** – the field name of your URLs in your website address file. Make sure there are no empty URL entries (rows) in your data.
 
 ### Web Scraper Settings
 
--	**Parallel Processes** – the number of processor cores you want to dedicate to the ARGUS scraping process. It is recommended to use the total number of cores in your system -1 (i.e. if you have a quad-core processor with 4 cores, you should choose 3 cores). ARGUS takes the following options: 1, 2, 3, 4.
+-	**Parallel Processes** – the number of processor cores you want to dedicate to the ARGUS scraping process. It is recommended to use the total number of cores in your system -1 (i.e. if you have a quad-core processor with 4 cores, you should choose 3 cores).
 -	**Scrape Limit** – the maximum number of subpages (including the main/starting page) that will be scraped per domain. Set this to 0 if you want to scrape entire websites (caution is advised, as there are websites with ten-thousands of subpages).
 -	**Prefer Short URLs** – select whether you want ARGUS to prefer downloading the shortest hyperlinks it finds on a website first. ARGUS usually starts at the website’s main page and there it collects all hyperlinks directing to the website’s subpages. After processing the website’s main page, ARGUS follows the found hyperlinks to do the same to website’s subpages until it reaches the set **Scrape Limit**. If **Prefer Short URLs** is set to “on”, ARGUS will first visit those subpages with the shortest URLs. The reasoning behind that is that one can assume that the most general (and arguably most important) information is located at the website’s top level webpages (e.g. www.example.com/products).
 -	**Preferred Language** – the language that will be preferred when selecting the next subpage URL (analogous to **Prefer Short URLs**). Note that this simple heuristic just checks the URL for certain [ISO language codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes). The complete list of ISO codes is provided within the GUI. If you do not want to use this heuristic, select *None*.
@@ -79,7 +79,7 @@ All parameters that are necessary are marked with an asterisk within the GUI. Th
 ### Advanced Settings
 
 -	**Logging Level** – the amount of information that is stored in scraping log files. For larger scraping runs, the log level should be set to *INFO*. ARGUS provides the following options: *DEBUG*, *INFO*, *WARNING*, *ERROR*, *CRITICAL*.
--	**Download Maxsize** – define the maximum size of a webpage or pdf that should be considered.
+-	**Download Maxsize** – define the maximum size of a webpage or pdf in MB that should be considered.
 -	**Timeout** – define the number of seconds the scraper should wait until a timeout error is assigned to a non-responding website.
 
 ### Start Scraping
@@ -99,7 +99,7 @@ You can stop all processes at once by clicking **Stop Scraping**. You will be as
 
 ### Postprocessing
 
-When all jobs are finished (or you decided to **Stop Scraping**), you need to hit **Postprocessing** which writes your scraped data to the directory of your input data and does some clean up.
+When all jobs are finished (or you decided to **Stop Scraping**), you need to hit **Postprocessing** which writes your scraped data to the directory of your input data and does some clean up. Depending on the size of your output, this might take some time.
 
 ### Aggregate Webpage Texts
 
