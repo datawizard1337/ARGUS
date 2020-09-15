@@ -54,6 +54,9 @@ After installing Anaconda, you can use pip to install the packages above by typi
 
 ![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_GUI.png?raw=true)
 
+You can also use the ARGUS_steering.py directly in your command line instead of the GUI.
+
+
 ### File Settings
 
 All parameters that are necessary are marked with an asterisk within the GUI. The other parameters are optional.
