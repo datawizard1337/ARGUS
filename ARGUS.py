@@ -42,6 +42,7 @@ dependencies_1 = ["time", "datetime", "tkinter as tk", "tkinter.messagebox", "sc
 dependencies_2 = ["tkinter import filedialog", "tkinter import messagebox", "tkinter import ttk", "PIL import Image", "PIL import ImageTk", "twisted.internet.error import DNSLookupError, TimeoutError, TCPTimedOutError", "io import BytesIO"]
 
 
+
 for library in dependencies_1:
     try:
         exec("import {module}".format(module=library))
@@ -233,7 +234,7 @@ e8.grid(row=3, column=1, sticky=tk.S + tk. N + tk.E)
 
 
 # Short URLs
-tk.Label(master, text="Prefer Short URLs:", font=("Calibri", 12)).grid(row=4, column=1, sticky=tk.W)
+tk.Label(master, text="Prefer Short URLs*:", font=("Calibri", 12)).grid(row=4, column=1, sticky=tk.W)
 
 e9 = tk.Entry(master)
 e9.insert(tk.END, "off")  # set default option
@@ -255,7 +256,7 @@ tkvar9.trace('w', change_dropdown9)
 
 # Language
 
-tk.Label(master, text="Preferred Language:", font=("Calibri", 12)).grid(row=5, column=1, sticky=tk.W)
+tk.Label(master, text="Preferred Language*:", font=("Calibri", 12)).grid(row=5, column=1, sticky=tk.W)
 
 e10 = tk.Entry(master)
 e10.insert(tk.END, "None")  # set default option
@@ -280,6 +281,25 @@ def change_dropdown10(*args):
 tkvar10.trace('w', change_dropdown10)
 
 
+# PDF scraping
+tk.Label(master, text="Scrape PDFs*:", font=("Calibri", 12)).grid(row=6, column=1, sticky=tk.W)
+
+e15 = tk.Entry(master)
+e15.insert(tk.END, "off")  # set default option
+
+tkvar15 = tk.StringVar(master)
+tkvar15.set("Select") # set the default option
+preferences = ["on", "off"]
+popupMenu15 = tk.OptionMenu(master, tkvar15, *preferences)
+popupMenu15.grid(row=6, column=1, stick=tk.E)
+popupMenu15.config(font=("Calibri", 12))
+
+def change_dropdown15(*args):
+    e15.delete(0, 'end')
+    preference = tkvar15.get()
+    e15.insert (tk.END, preference)
+
+tkvar15.trace('w', change_dropdown15)
 
 
 
@@ -347,6 +367,7 @@ language = {}
 log_level = {}
 maxsize = {}
 timeout = {}
+pdfscrape = {}
 """
 
 scrapyd_file = """
@@ -387,9 +408,9 @@ def start_scraping():
     settings_txt = open(script_dir + r"\bin\settings.txt", "w", encoding="utf-8")
     settings_txt.truncate()
     byte_size = int(e13.get())*1000000    # convert from MB to B
-    settings_txt.write(settings_file.format(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get(), e8.get(), e9.get(), e10.get(), e11.get(), byte_size, e14.get()))
+    settings_txt.write(settings_file.format(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get(), e8.get(), e9.get(), e10.get(), e11.get(), byte_size, e14.get(), e15.get()))
     settings_txt.close()
-    scrapyd_txt = open(script_dir + r"scrapyd.conf", "w", encoding="utf-8")
+    scrapyd_txt = open(script_dir + r"/scrapyd.conf", "w", encoding="utf-8")
     scrapyd_txt.truncate()
     scrapyd_txt.write(scrapyd_file.format(e6.get()))
     scrapyd_txt.close()

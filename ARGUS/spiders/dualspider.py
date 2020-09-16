@@ -33,7 +33,7 @@ class DualSpider(scrapy.Spider):
 ##################################################################
     
     #load URLs from text file defined in given parameter
-    def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", language="", prefer_short_urls="on", *args, **kwargs):
+    def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", language="", prefer_short_urls="on", pdfscrape="off", *args, **kwargs):
         super(DualSpider, self).__init__(*args, **kwargs)
         #loads urls and IDs from text file
         data = pd.read_csv(url_chunk, delimiter="\t", encoding="utf-8", error_bad_lines=False, engine="python")
@@ -44,6 +44,7 @@ class DualSpider(scrapy.Spider):
         self.url_chunk = url_chunk
         self.language = language.split("_")
         self.prefer_short_urls = prefer_short_urls
+        self.pdfscrape = pdfscrape
         
         
 ##################################################################
@@ -366,18 +367,29 @@ class DualSpider(scrapy.Spider):
             domain = self.subdomainGetter(urlstack[0])
             if domain not in self.allowed_domains:
                 urlstack.pop(0)
+                continue                
             #pop some unwanted urls
-            elif urlstack[0].startswith("mail"):
+            if urlstack[0].startswith("mail"):
                 urlstack.pop(0)
-            elif urlstack[0].startswith("tel"):
+                continue
+            if urlstack[0].startswith("tel"):
                 urlstack.pop(0)
+                continue
+            if urlstack[0].startswith("javascript"):
+                urlstack.pop(0)
+                continue
             #pop unwanted filetypes
-            elif urlstack[0].split(".")[-1].lower() in self.filetypes:
+            if urlstack[0].split(".")[-1].lower() in self.filetypes:
                 urlstack.pop(0)
+                continue
+            if self.pdfscrape == "off":
+                if urlstack[0].split(".")[-1].lower() == "pdf":
+                    urlstack.pop(0)
+                    continue
             #pop visited urls.
             #also pop urls that cannot be requested
             #(potential bottleneck: Request has to be sent to generate fingerprint from)
-            elif request_fingerprint(scrapy.Request(urlstack[0], callback=None)) in fingerprints:
+            if request_fingerprint(scrapy.Request(urlstack[0], callback=None)) in fingerprints:
                     urlstack.pop(0)
             else:
                 break
@@ -416,18 +428,25 @@ class DualSpider(scrapy.Spider):
                         domain = self.subdomainGetter(urlstack[0])
                         if domain not in self.allowed_domains:
                             urlstack.pop(0)
+                            continue
                         #pop some unwanted urls
-                        elif urlstack[0].startswith("mail"):
+                        if urlstack[0].startswith("mail"):
                             urlstack.pop(0)
-                        elif urlstack[0].startswith("tel"):
+                            continue
+                        if urlstack[0].startswith("tel"):
                             urlstack.pop(0)
+                            continue
+                        if urlstack[0].startswith("javascript"):
+                            urlstack.pop(0)
+                            continue
                         #pop unwanted filetypes
-                        elif urlstack[0].split(".")[-1].lower() in self.filetypes:
+                        if urlstack[0].split(".")[-1].lower() in self.filetypes:
                             urlstack.pop(0)
+                            continue
                         #pop visited urls.
                         #also pop urls that cannot be requested
                         #(potential bottleneck: Request has to be sent to generate fingerprint from)
-                        elif request_fingerprint(scrapy.Request(urlstack[0], callback=None)) in fingerprints:
+                        if request_fingerprint(scrapy.Request(urlstack[0], callback=None)) in fingerprints:
                                 urlstack.pop(0)
                         else:
                             break
@@ -446,7 +465,9 @@ class DualSpider(scrapy.Spider):
 
         #if there are no urls left in the urlstack, the website was scraped completely and the item can be sent to the pipeline
         else:
+            print("ITEM TYPE: ", type(loader))
             yield loader.load_item()
+
 
 
 ##################################################################

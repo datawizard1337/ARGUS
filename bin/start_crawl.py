@@ -63,18 +63,10 @@ def start_crawl():
 		#schedule scrapyd jobs
 		for p in range(1, n_url_chunks+1):
 			url_chunk = script_dir_edit + "\\chunks\\url_chunk_p" + str(p) + ".csv"
-			#schedule textspider
-			if config.get('spider-settings', 'spider') == "text":
-				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=textspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={}"
-						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls')))
-			#schedule linkspider
-			elif config.get('spider-settings', 'spider') == "link":
-				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=linkspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={}"
-						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls')))
 			#schedule dual
-			elif config.get('spider-settings', 'spider') == "dual":
-				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=dualspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={}"
-						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls')))
+			if config.get('spider-settings', 'spider') == "dual":
+				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=dualspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d pdfscrape={}"
+						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls'), config.get("spider-settings", "pdfscrape")))
 			#schedule webarchive spider
 			elif config.get('spider-settings', 'spider') == "webarchive":
 				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=webarchive -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d date={}"
