@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import tldextract
-from ARGUS.items import Collector
+from ARGUS.items import DualCollector
 from scrapy.loader import ItemLoader
 from scrapy.utils.request import request_fingerprint
 import re
@@ -10,11 +10,12 @@ from twisted.internet.error import DNSLookupError
 from twisted.internet.error import TimeoutError, TCPTimedOutError
 import pandas as pd
 
-class TextspiderSpider(scrapy.Spider):
-    name = 'textspider'
+
+class DualSpider(scrapy.Spider):
+    name = 'dualspider'
     custom_settings = {
         'ITEM_PIPELINES': {
-            'ARGUS.pipelines.TextPipeline': 300
+            'ARGUS.pipelines.DualPipeline': 300
         }
     }
 
@@ -24,7 +25,7 @@ class TextspiderSpider(scrapy.Spider):
     
     #load URLs from text file defined in given parameter
     def __init__(self, url_chunk="", limit=5, ID="ID", url_col="url", language="", prefer_short_urls="on", *args, **kwargs):
-        super(TextspiderSpider, self).__init__(*args, **kwargs)
+        super(DualSpider, self).__init__(*args, **kwargs)
         #loads urls and IDs from text file
         data = pd.read_csv(url_chunk, delimiter="\t", encoding="utf-8", error_bad_lines=False, engine="python")
         self.allowed_domains = [url.split("www.")[-1].lower() for url in list(data[url_col])]
@@ -32,10 +33,9 @@ class TextspiderSpider(scrapy.Spider):
         self.IDs = [ID for ID in list(data[ID])]
         self.site_limit = int(limit)
         self.url_chunk = url_chunk
-        self.language = language.split(",")
+        self.language = language.split("_")
         self.prefer_short_urls = prefer_short_urls
-    
-    
+        
 ##################################################################
 # HELPER FUNCTIONS
 ##################################################################      
@@ -85,24 +85,28 @@ class TextspiderSpider(scrapy.Spider):
     #function which extracts text using tags
     def extractText(self, response):
         text = []
-        text.append(["p", [" ".join(response.xpath("//p/text()").extract())]]) # paragraph
-        text.append(["div", [" ".join(response.xpath("//div/text()").extract())]]) # division
-        text.append(["tr", [" ".join(response.xpath("//tr/text()").extract())]]) # table row
-        text.append(["td", [" ".join(response.xpath("//td/text()").extract())]]) # table data
-        text.append(["th", [" ".join(response.xpath("//th/text()").extract())]]) # table header
-        text.append(["font", [" ".join(response.xpath("//font/text()").extract())]]) # font size, css should be used (only relevant for old websites)
-        text.append(["li", [" ".join(response.xpath("//li/text()").extract())]]) # list item
-        text.append(["small", [" ".join(response.xpath("//small/text()").extract())]]) # barely emphasized text
-        text.append(["strong", [" ".join(response.xpath("//strong/text()").extract())]]) # strongly emphasized text
-        text.append(["h1", [" ".join(response.xpath("//h1/text()").extract())]]) # header
-        text.append(["h2", [" ".join(response.xpath("//h2/text()").extract())]]) # header 
-        text.append(["h3", [" ".join(response.xpath("//h3/text()").extract())]]) # header
-        text.append(["h4", [" ".join(response.xpath("//h4/text()").extract())]]) # header
-        text.append(["h5", [" ".join(response.xpath("//h5/text()").extract())]]) # header
-        text.append(["h6", [" ".join(response.xpath("//h6/text()").extract())]]) # header
-        text.append(["span", [" ".join(response.xpath("//span/text()").extract())]]) # division for styling
-        text.append(["b", [" ".join(response.xpath("//b/text()").extract())]]) # bold text
-        text.append(["em", [" ".join(response.xpath("//em/text()").extract())]]) # emphasized text
+        #sometimes "content is not text" is returned and causes strange behaviour
+        try:
+            text.append(["p", ["[->p<-] " + " [->p<-] ".join(response.xpath("//p/text()").extract())]]) # paragraph
+            text.append(["div", ["[->div<-] " + " [->div<-] ".join(response.xpath("//div/text()").extract())]]) # division
+            text.append(["tr", ["[->tr<-] " + " [->tr<-] ".join(response.xpath("//tr/text()").extract())]]) # table row
+            text.append(["td", ["[->td<-] " + " [->td<-] ".join(response.xpath("//td/text()").extract())]]) # table data
+            text.append(["th", ["[->th<-] " + " [->th<-] ".join(response.xpath("//th/text()").extract())]]) # table header
+            text.append(["font", ["[->font<-] " + " [->font<-] ".join(response.xpath("//font/text()").extract())]]) # font size, css should be used (only relevant for old websites)
+            text.append(["li", ["[->li<-] " + " [->li<-] ".join(response.xpath("//li/text()").extract())]]) # list item
+            text.append(["small", ["[->small<-] " + " [->small<-] ".join(response.xpath("//small/text()").extract())]]) # barely emphasized text
+            text.append(["strong", ["[->strong<-] " + " [->strong<-] ".join(response.xpath("//strong/text()").extract())]]) # strongly emphasized text
+            text.append(["h1", ["[->h1<-] " + " [->h1<-] ".join(response.xpath("//h1/text()").extract())]]) # header
+            text.append(["h2", ["[->h2<-] " + " [->h2<-] ".join(response.xpath("//h2/text()").extract())]]) # header 
+            text.append(["h3", ["[->h3<-] " + " [->h3<-] ".join(response.xpath("//h3/text()").extract())]]) # header
+            text.append(["h4", ["[->h4<-] " + " [->h4<-] ".join(response.xpath("//h4/text()").extract())]]) # header
+            text.append(["h5", ["[->h5<-] " + " [->h5<-] ".join(response.xpath("//h5/text()").extract())]]) # header
+            text.append(["h6", ["[->h6<-] " + " [->h6<-] ".join(response.xpath("//h6/text()").extract())]]) # header
+            text.append(["span", ["[->span<-] " + " [->span<-] ".join(response.xpath("//span/text()").extract())]]) # division for styling
+            text.append(["b", ["[->b<-] " + " [->b<-] ".join(response.xpath("//b/text()").extract())]]) # bold text
+            text.append(["em", ["[->em<-] " + " [->em<-] ".join(response.xpath("//em/text()").extract())]]) # emphasized text
+        except:
+            text.append(["leer", ["[->leer<-] leer"]])
         return text
 
     #function which extracts and returs meta information
@@ -118,7 +122,7 @@ class TextspiderSpider(scrapy.Spider):
        preferred_language = []
        other_language = []
        language_tags = []
-       if language == "":
+       if language == "None":
            preferred_language = urlstack
        else:
            for ISO in language:
@@ -151,7 +155,7 @@ class TextspiderSpider(scrapy.Spider):
   
     #errorback creates an collector item, records the error type, and passes it to the pipeline   
     def errorback(self, failure):
-        loader = ItemLoader(item=Collector())
+        loader = ItemLoader(item=DualCollector())
         if failure.check(HttpError):
             response = failure.value.response
             loader.add_value("dl_slot", response.request.meta.get('download_slot'))
@@ -164,6 +168,8 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("keywords", "")
             loader.add_value("error", response.status)
             loader.add_value("ID", response.request.meta["ID"])
+            loader.add_value("links", "")
+            loader.add_value("alias", "")
             yield loader.load_item()
         elif failure.check(DNSLookupError):
             request = failure.request
@@ -177,6 +183,8 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("keywords", "")
             loader.add_value("error", "DNS")
             loader.add_value("ID", request.meta["ID"])
+            loader.add_value("links", "")
+            loader.add_value("alias", "")
             yield loader.load_item() 
         elif failure.check(TimeoutError, TCPTimedOutError):
             request = failure.request
@@ -190,6 +198,8 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("keywords", "")
             loader.add_value("error", "Timeout")
             loader.add_value("ID", request.meta["ID"])
+            loader.add_value("links", "")
+            loader.add_value("alias", "")
             yield loader.load_item()
         else:
             request = failure.request
@@ -203,6 +213,8 @@ class TextspiderSpider(scrapy.Spider):
             loader.add_value("keywords", "")
             loader.add_value("error", "other")
             loader.add_value("ID", request.meta["ID"])
+            loader.add_value("links", "")
+            loader.add_value("alias", "")
             yield loader.load_item()
 
 
@@ -213,7 +225,7 @@ class TextspiderSpider(scrapy.Spider):
     def parse(self, response):
 
         #initialize collector item which stores the website's content and meta data
-        loader = ItemLoader(item=Collector())
+        loader = ItemLoader(item=DualCollector())
         loader.add_value("dl_slot", response.request.meta.get('download_slot'))
         loader.add_value("redirect", self.checkRedirectDomain(response))
         loader.add_value("start_page", response.url)
@@ -227,6 +239,12 @@ class TextspiderSpider(scrapy.Spider):
         loader.add_value("keywords", [keywords])
         loader.add_value("error", "None")
         loader.add_value("ID", response.request.meta["ID"])
+        #add alias if there was an initial redirect
+        if self.checkRedirectDomain(response):
+            loader.add_value("alias", self.subdomainGetter(response).split("www.")[-1])
+        else:
+            loader.add_value("alias", "")
+        loader.add_value("links", "")
 
         #initialize the fingerprints set which stores all fingerprints of visited websites
         fingerprints = set()
@@ -272,22 +290,41 @@ class TextspiderSpider(scrapy.Spider):
         #reorder the urlstack to scrape the most relevant urls first
         urlstack = self.reorderUrlstack(urlstack, self.language, self.prefer_short_urls)
             
+        #check urlstack for links to other domains
+        for url in urlstack:
+            url = url.replace("\r\n", "")
+            url = url.replace("\n", "")
+            domain = self.subdomainGetter(url).split("www.")[-1] 
+            #if url points to domain that is not the orinigally requested domain...
+            if domain == self.subdomainGetter(loader.get_collected_values("dl_slot")[0]):
+                continue
+            #...and also not the alias domain...
+            elif domain == self.subdomainGetter(loader.get_collected_values("alias")[0]):
+                continue
+            #...add domain to link list
+            else:
+                loader.add_value("links", domain)
+                
+                
         #check if the next url in the urlstack is valid
         while len(urlstack) > 0:
             #pop non-valid domains
             domain = self.subdomainGetter(urlstack[0])
             if domain not in self.allowed_domains:
                 urlstack.pop(0)
-            #pop "mailto" urls
-            elif re.match(r"mailto", urlstack[0]):
+            #pop some unwanted urls
+            elif urlstack[0].startswith("mail"):
+                urlstack.pop(0)
+            elif urlstack[0].startswith("tel"):
                 urlstack.pop(0)
             #pop unwanted filetypes
             elif urlstack[0].split(".")[-1].lower() in self.filetypes:
                 urlstack.pop(0)
-            #pop visited urls 
+            #pop visited urls.
+            #also pop urls that cannot be requested
             #(potential bottleneck: Request has to be sent to generate fingerprint from)
             elif request_fingerprint(scrapy.Request(urlstack[0], callback=None)) in fingerprints:
-                urlstack.pop(0)
+                    urlstack.pop(0)
             else:
                 break
 

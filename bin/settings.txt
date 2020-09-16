@@ -1,0 +1,20 @@
+
+[input-data]
+filepath = I:/!Projekte/BMBF_TOBI_131308/01_Arbeitspakete/01_Webscraper/Webscraper/URLs/MIP_Berlin_2015_sample.txt
+delimiter = \t
+encoding = utf-8
+ID = crefo
+url = webadresse
+
+[system]
+n_cores = 4
+
+[spider-settings]
+spider = dual
+limit = 10
+prefer_short_urls = on
+language = German
+log_level = INFO
+maxsize = 10000000
+timeout = 20
+pdfscrape = on

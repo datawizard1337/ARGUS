@@ -28,14 +28,33 @@ REACTOR_THREADPOOL_MAXSIZE = 30
 
 RETRY_ENABLED = False
 
+# access settings.txt
+import configparser
+config = configparser.RawConfigParser()   
+config.read(r".\bin\settings.txt")
 
-DOWNLOAD_MAXSIZE = 10000000
+maxsize_number = config.get('spider-settings', 'maxsize')
+DOWNLOAD_MAXSIZE = int(maxsize_number) 
+
+# set default maxsize
+if int(maxsize_number) == 0:
+	DOWNLOAD_MAXSIZE = 10000000     # in byte
+else:
+    DOWNLOAD_MAXSIZE = int(maxsize_number) 
+
+
 
 CONCURRENT_ITEMS = 200
 
 CONCURRENT_REQUESTS_PER_DOMAIN = 8
 
-DOWNLOAD_TIMEOUT = 20
+
+# specify the timeout based on settings.txt
+timeout_secs = config.get('spider-settings', 'timeout')
+DOWNLOAD_TIMEOUT = int(timeout_secs) 
+# DOWNLOAD_TIMEOUT = 60       # in seconds
+
+
 
 #MEMUSAGE_ENABLE = True
 
