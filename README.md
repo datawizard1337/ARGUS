@@ -20,14 +20,14 @@ Follow these easy steps, which are described in more detail below, to make a suc
 2.  Install additional Python packages (see Prerequisites below).
 3.  Install cURL and add a cURL environment variable to your system (see below).
 4.  Download and extract the ARGUS files.
-5.  Start ARGUS.exe and start scraping.
+5.  Start scraping via ARGUS.exe or the ARGUS_noGUI.py file.
 6.  Check the scraping process using the web interface and wait until it is finished.
 7.  Run postprocessing from ARGUS.exe.
 
 
 ### Prerequisites
 
-ARGUS works with Python 3.6, is based on the Scrapy framework and has the following Python package dependencies:
+ARGUS works with Python 3.6 or higher, is based on the Scrapy framework and has the following Python package dependencies:
 
 *	Scrapy 
 *	scrapyd
@@ -52,14 +52,17 @@ After installing Anaconda, you can use pip to install the packages above by typi
 
 **Warning: Please make sure that ARGUS and your URL file are not located in directories with paths containing ".", e.g. "C:\my.folder\data.txt"!**
 
+Either use the ARGUS GUI to start your scraping run:
+
 ![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_GUI.png?raw=true)
 
-You can also use the ARGUS_steering.py directly in your command line instead of the GUI.
+Alternatively you may edit the parameters in the **ARGUS_noGUI.py** file and then start it with the shell command **python ./ARGUS_noGUI.py 'c:/my_urls.txt'**. 
 
+![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_noGUI.png?raw=true)
 
 ### File Settings
 
-All parameters that are necessary are marked with an asterisk within the GUI. The other parameters are optional.
+All parameters that are necessary are marked with an asterisk ***** in the GUI. The other parameters are optional.
 
 -	**Browse** – browse for your file containing website URLs and IDs. The file should be without BOM (byte order mark). An easy way to see whether your text file uses BOM is to use [Notepad++](https://notepad-plus-plus.org/) and check the “Encoding” in the top panel. The URLs need to be in the format “www.example.com”. The directory of your URL list will also be used to output the scraped data. An example website address can be found in /misc:
 
