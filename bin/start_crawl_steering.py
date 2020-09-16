@@ -17,7 +17,7 @@ script_dir_edit = str(script_dir)[:-4]
 # %% Crawl:
 def start_crawl():
     # Import setting parameters
-    from ARGUS_steering import argus_settings
+    from ARGUS_noGUI import argus_settings
 
     filepath = argus_settings.filepath 
     delimiter = argus_settings.delimiter    
@@ -29,6 +29,7 @@ def start_crawl():
     limit = argus_settings.limit
     log_level = argus_settings.log_level
     prefer_short_urls = argus_settings.prefer_short_urls
+    pdfscrape = argus_settings.pdfscrape
 
 	#check path
     error_message = """
@@ -77,8 +78,8 @@ def start_crawl():
         for p in range(1, n_url_chunks+1):
             url_chunk = script_dir_edit + "\\chunks\\url_chunk_p" + str(p) + ".csv"
 			#schedule dual
-            subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=dualspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={}"
-                           .format(url_chunk, limit, index_col, url_col, language_ISOs, log_level, prefer_short_urls))
+            subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=dualspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d pdfscrape={}"
+                           .format(url_chunk, limit, index_col, url_col, language_ISOs, log_level, prefer_short_urls, pdfscrape))
 						   
 	   
         print("Scheduled ", n_url_chunks, " spiders to scrape your URLs.\nOpening web interface...")
