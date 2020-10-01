@@ -1,4 +1,4 @@
-# ARGUS: **A**utomated **R**obot for **G**eneric **U**niversal **S**craping
+                            				 # ARGUS:**A**utomated **R**obot for **G**eneric **U**niversal **S**craping
 
 <p align="center">
   <img src="https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_logo.png?raw=true">
