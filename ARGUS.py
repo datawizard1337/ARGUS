@@ -1,4 +1,4 @@
-####### GUI for ARGUS #######
+####### An amazing GUI for ARGUS #######
 
 ### The GUI provides the possibility to change the settings for scraping without having to change the txt-file manually, as well as an easier way of initiating the program.
 ### runs on Python 3.6
