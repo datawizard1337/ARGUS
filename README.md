@@ -127,8 +127,8 @@ One row equals one webpage and n (n ≤ **Scrape limit**) webpages equal one web
 *	**redirect** – is “True” if there was a redirect to another domain when requesting the first webpage from a website. This may indicate that ARGUS scraped a different website than intended. However, it may also be a less severe redirect like “www.example.de” to “www.example.com”. It is your responsibility to deal with redirects.
 *	**start_page** – gives you the first webpage that was scraped from this website. Usually, this should be the URL given in your website address file.
 *	**title** – the title of the website as indicated in the website's meta data.
-*	**keywords** – the title of the website as indicated in the website's meta data.
-*	**description** – the title of the website as indicated in the website's meta data.
+*	**keywords** – the keywords as indicated in the website's meta data.
+*	**description** – a short description of the website as indicated in the website's meta data.
 *	**language** – the language of the website as indicated in the website's HTML code.
 *	**text** – the text that was downloaded from the webpage. It includes the respective HTML tags or the tag <pdf> if the text was extracted from an online PDF.
 *	**links** – the domains of websites (*within-sample* and *out-of-sample*) found on the focal website. The field is empty if no hyperlinks were found.
