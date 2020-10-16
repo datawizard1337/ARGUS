@@ -410,7 +410,7 @@ def start_scraping():
     byte_size = int(e13.get())*1000000    # convert from MB to B
     settings_txt.write(settings_file.format(e1.get(), e2.get(), e3.get(), e4.get(), e5.get(), e6.get(), e8.get(), e9.get(), e10.get(), e11.get(), byte_size, e14.get(), e15.get()))
     settings_txt.close()
-    scrapyd_txt = open(script_dir + r"/scrapyd.conf", "w", encoding="utf-8")
+    scrapyd_txt = open(script_dir + r"\bin\scrapyd.conf", "w", encoding="utf-8")
     scrapyd_txt.truncate()
     scrapyd_txt.write(scrapyd_file.format(e6.get()))
     scrapyd_txt.close()
@@ -418,7 +418,8 @@ def start_scraping():
     time.sleep(2)
     os.startfile(script_dir + r"\bin\start_server.bat")
     time.sleep(2)
-    start_crawl.start_crawl()
+    scraping_type = "normal"
+    start_crawl.start_crawl(scraping_type)
     print("Web scraping started. Do not close server window.")
 
 tk.Button(master, text='Start Scraping', command=start_scraping, font=("Calibri bold", 12)).grid(row=18, column=0, columnspan = 3, sticky=tk.W + tk.E)
@@ -536,6 +537,19 @@ def start_postprocessing():
 
 
 tk.Button(master, text='Postprocessing', command=start_postprocessing, font=("Calibri", 12)).grid(row=22, column=1, sticky=tk.W + tk.E)
+
+# skipped URLs
+from bin import skipped_urls
+
+def skip_urls():
+    result = tk.messagebox.askyesno("WARNING", """Do you want to extract the skipped URLs?
+    
+Warning: Only use this function once your scraping process has finished""")
+
+    if result == True:
+        skipped_urls.skipped_urls()
+
+tk.Button(master, text='Scrape skipped URLs', command=skip_urls, font=("Calibri bold", 12)).grid(row=23, column=0, columnspan = 3, sticky=tk.W + tk.E)
 
 
 

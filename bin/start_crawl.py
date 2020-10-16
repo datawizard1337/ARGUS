@@ -10,10 +10,10 @@ import subprocess
 import os
 import webbrowser
 
-script_dir = os.path.dirname(__file__)  ###
+script_dir = os.path.dirname(__file__)
 script_dir_edit = str(script_dir)[:-4] 
 
-def start_crawl():
+def start_crawl(scraping_type):
 	#read config file
 	config = configparser.RawConfigParser()   
 	config.read(script_dir + r"\settings.txt")
@@ -51,34 +51,64 @@ def start_crawl():
 		if n_url_chunks < int(config.get('system', 'n_cores')):
 			n_url_chunks = int(config.get('system', 'n_cores'))
 
-		#generate url chunks
-		p = 1
-		for chunk in np.array_split(data, n_url_chunks):
-			chunk.to_csv(script_dir_edit +"\\chunks\\url_chunk_p" + str(p) + ".csv", sep="\t", encoding="utf-8")
-			p+=1
-			
-		print("Splitted your URLs into ", n_url_chunks, " parts.")
-		time.sleep(3)
+		if scraping_type == "normal":
+			#generate url chunks
+			p = 1
+			for chunk in np.array_split(data, n_url_chunks):
+				chunk.to_csv(script_dir_edit +"\\chunks\\url_chunk_p" + str(p) + ".csv", sep="\t", encoding="utf-8")
+				p+=1
+				
+			print("Splitted your URLs into ", n_url_chunks, " parts.")
+			time.sleep(3)
 
-		#schedule scrapyd jobs
-		for p in range(1, n_url_chunks+1):
-			url_chunk = script_dir_edit + "\\chunks\\url_chunk_p" + str(p) + ".csv"
-			#schedule dual
-			if config.get('spider-settings', 'spider') == "dual":
-				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=dualspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d pdfscrape={}"
-						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls'), config.get("spider-settings", "pdfscrape")))
-			#schedule webarchive spider
-			elif config.get('spider-settings', 'spider') == "webarchive":
-				subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=webarchive -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d date={}"
-						   .format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls'), config.get('spider-settings', 'date')))
-			
-			else: 
-				print("""
-				Error: No spider selected. 
-				Please select a spider.
-				""")
+			#schedule scrapyd jobs
+			for p in range(1, n_url_chunks+1):
+				url_chunk = script_dir_edit + "\\chunks\\url_chunk_p" + str(p) + ".csv"
+				#schedule dual
+				if config.get('spider-settings', 'spider') == "dual":
+					subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=dualspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d pdfscrape={}"
+							.format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls'), config.get("spider-settings", "pdfscrape")))
+				#schedule webarchive spider
+				elif config.get('spider-settings', 'spider') == "webarchive":
+					subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=webarchive -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d date={}"
+							.format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls'), config.get('spider-settings', 'date')))
+				
+				else: 
+					print("""
+					Error: No spider selected. 
+					Please select a spider.
+					""")
+
+		if scraping_type == "skipped":
+			#generate url chunks
+			p = 1
+			for chunk in np.array_split(data, n_url_chunks):
+				chunk.to_csv(script_dir_edit +"\\chunks\\url_chunk_p" + str(p) + "-skipped.csv", sep="\t", encoding="utf-8")
+				p+=1
+				
+			print("Splitted your URLs into ", n_url_chunks, " parts.")
+			time.sleep(3)
+
+			#schedule scrapyd jobs
+			for p in range(1, n_url_chunks+1):
+				url_chunk = script_dir_edit + "\\chunks\\url_chunk_p" + str(p) + "-skipped.csv"
+				#schedule dual
+				if config.get('spider-settings', 'spider') == "dual":
+					subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=dualspider -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d pdfscrape={}"
+							.format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls'), config.get("spider-settings", "pdfscrape")))
+				#schedule webarchive spider
+				elif config.get('spider-settings', 'spider') == "webarchive":
+					subprocess.run("curl http://localhost:6800/schedule.json -d project=ARGUS -d spider=webarchive -d url_chunk={} -d limit={} -d ID={} -d url_col={} -d language={} -d setting=LOG_LEVEL={} -d prefer_short_urls={} -d date={}"
+							.format(url_chunk, config.get('spider-settings', 'limit'), config.get('input-data', 'ID'), config.get('input-data', 'url'), language_ISOs, config.get('spider-settings', 'log_level'), config.get('spider-settings', 'prefer_short_urls'), config.get('spider-settings', 'date')))
+				
+				else: 
+					print("""
+					Error: No spider selected. 
+					Please select a spider.
+					""")
 
 						   
 		print("Scheduled ", n_url_chunks, " spiders to scrape your URLs.\nOpening web interface...")
 		time.sleep(3)
 		webbrowser.open("http://127.0.0.1:6800/", new=0, autoraise=True)
+
