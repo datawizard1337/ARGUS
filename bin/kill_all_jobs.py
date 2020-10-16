@@ -22,7 +22,7 @@ def kill_all():
 def delete_leftovers(cwd=None):
 
         print("Deleting downloaded data...")
-        output_files = [cwd + "\\chunks\\" + f for f in os.listdir(cwd + "\\chunks") if f.split("_")[0] == "output"]
+        output_files = [cwd + "\\chunks\\" + f for f in os.listdir(cwd + "\\chunks") if f.split("_")[0] == "ARGUS"]
         chunk_files = [cwd + "\\chunks\\" + f for f in os.listdir(cwd + "\\chunks") if f.split("_")[0] == "url"]
         
         for fn in output_files + chunk_files:
