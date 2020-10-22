@@ -54,7 +54,7 @@ After installing Anaconda, you can use pip to install the packages above by typi
 
 Either use the ARGUS GUI to start your scraping run:
 
-![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_GUI.PNG?raw=true)
+![ARGUS_GUI](https://github.com/datawizard1337/ARGUS/blob/dualspider_pdf/misc/pics/ARGUS_GUI.png?raw=true)
 
 Alternatively you may edit the parameters in the **ARGUS_noGUI.py** file and then start it with the shell command **python ./ARGUS_noGUI.py 'c:/my_urls.txt'**. 
 
