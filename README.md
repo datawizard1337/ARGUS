@@ -154,24 +154,24 @@ An ARGUS crawl is based on a list of user given firm website addresses (URL) and
 
 ## FAQ
 
-Why does ARGUS.exe not open?
+**Why does ARGUS.exe not open?**
 -	Check whether you have installed all the necessary prerequisites.
 -	The issue might be related to your scrapyd installation. Try opening the ARGUS.py in your command line and check for the error messages. A re-installation of some packages (e.g. lxml and numpy, depending on your error message) can help.
 -	In some cases the ARGUS_noGUI.py should work nonetheless.
 -	Check whether you have changed the inner structure of ARGUS. The ARGUS.exe should be under …/ARGUS-master/ARGUS-master/ARGUS.exe.
 -	It is also conceivable that problems are caused by another, interfering Python installation on your computer. Therefore, it is recommended to only have one Python installation while using ARGUS.
 
-ARGUS opens and starts scraping, but there is no output. What is the problem?
+**ARGUS opens and starts scraping, but there is no output. What is the problem?**
 -	This is probably related to scrapyd. Try opening the scrapyd server manually before starting ARGUS. Just type ‘scrapyd’ into your command line. You might need to re-install some packages, depending on the error message you receive.
 -	If you already had some of the packages needed by ARGUS installed, try updating them. Older version or irregular installations (e.g. mixing pip and conda) could possibly lead to problems. Perhaps you need to restart your computer afterwards.
 -	Check whether you have installed curl. Just open your command line and type in ‘curl’. If it does not work, you might have to add curl to your environment variable PATH.
 
-Why does ARGUS not open on my Unix-based system (e.g. Mac)?
+**Why does ARGUS not open on my Unix-based system (e.g. Mac)?**
 -	Even though Python is meant to be compatible on most systems, there have been problems due to some (relative) paths, as Windows and Unix systems use slashes/backslashes differently. We are currently working on a Mac version that will be released soon.
 
-I get an error message stating that ‘ID invalid’ (or similar). What is the issue?
+**I get an error message stating that ‘ID invalid’ (or similar). What is the issue?**
 -	Check whether you have chosen the correct delimiter and column names for your input file.
 
-One job is running for hours without scraping any data. What went wrong?
+**One job is running for hours without scraping any data. What went wrong?**
 -	Sometimes ARGUS encounters a website that causes the spider to malfunction. Then it is suggested to kill the job based on its ID that can be found on the Scrapy webpage.
 
