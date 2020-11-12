@@ -465,7 +465,6 @@ class DualSpider(scrapy.Spider):
 
         #if there are no urls left in the urlstack, the website was scraped completely and the item can be sent to the pipeline
         else:
-            print("ITEM TYPE: ", type(loader))
             yield loader.load_item()
 
 
