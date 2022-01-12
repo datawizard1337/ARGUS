@@ -167,11 +167,11 @@ An ARGUS crawl is based on a list of user given firm website addresses (URL) and
 -	Check whether you have installed curl. Just open your command line and type in ‘curl’. If it does not work, you might have to add curl to your environment variable PATH.
 
 **Why does ARGUS not open on my Unix-based system (e.g. Mac)?**
--	Even though Python is meant to be compatible on most systems, there have been problems due to some (relative) paths, as Windows and Unix systems use slashes/backslashes differently. We are currently working on a Mac version that will be released soon.
+-	Even though Python is meant to be compatible on most systems, there have been problems due to some (relative) paths, as Windows and Unix systems use slashes/backslashes differently.
 
 **I get an error message stating that ‘ID invalid’ (or similar). What is the issue?**
 -	Check whether you have chosen the correct delimiter and column names for your input file.
 
 **One job is running for hours without scraping any data. What went wrong?**
--	Sometimes ARGUS encounters a website that causes the spider to malfunction. Then it is suggested to kill the job based on its ID that can be found on the Scrapy webpage.
+-	Sometimes ARGUS encounters a website that causes the spider to malfunction. Then, it is suggested to kill the job based on its ID that can be found on the Scrapy webpage.
 
